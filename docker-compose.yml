@@ -1,0 +1,52 @@
+version: '2'
+
+services:
+
+  # db:
+  #   image: mongo:latest
+  #   environment:
+  #     - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
+  #     - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
+  #     - MONGODB_USERNAME=test
+  #     - MONGODB_PASSWORD=test123
+  #     - MONGODB_DATABASE=test1
+  #   ports:
+  #     - "27017:27017"
+  # db:
+  #   image: postgres
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: django
+      MYSQL_USER: django
+      MYSQL_PASSWORD: django
+      MYSQL_ROOT_HOST: '%'
+    ports:
+      - "3306:3306"
+    networks:
+      app_net:
+        ipv4_address: 172.0.0.20
+
+  web:
+    restart: on-failure
+    build: .
+    ports:
+      - "7000:8000"
+    volumes:
+      - .:/code
+    command: python3 manage.py runserver 0.0.0.0:8000
+    depends_on:
+      - db
+    networks:
+      app_net:
+        ipv4_address: 172.0.0.10
+
+networks:
+  app_net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.0.0.0/24
+          gateway: 172.0.0.1
