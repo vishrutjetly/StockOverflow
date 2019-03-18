@@ -7,6 +7,8 @@
   Hi {{ user.username }}!
   Name: {{ user.first_name }} 
   <p><a href="{% url 'logout' %}">logout</a></p>
+  <br>
+  <p><a href="{% url 'change_password' %}">Change Password</a></p>
 {% else %}
   <p>You are not logged in</p>
   <a href="{% url 'login' %}">login</a>

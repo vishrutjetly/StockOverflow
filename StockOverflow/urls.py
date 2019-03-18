@@ -26,5 +26,6 @@ urlpatterns = [
     url(r'^logout/$', auth_views.LogoutView.as_view(), name='logout'),
     url(r'^signup/$', user_views.signup, name ='signup' ),
     url(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',user_views.activate, name='activate'),
+    url(r'^passchange/$', user_views.change_password, name='change_password'),
     # url('http://127.0.0.1:8000/auth/', include('social_django.urls', namespace='social')),
 ]
