@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 
 services:
 
@@ -21,12 +21,15 @@ services:
       MYSQL_DATABASE: django
       MYSQL_USER: django
       MYSQL_PASSWORD: django
-      MYSQL_ROOT_HOST: '%'
+      MYSQL_ROOT_HOST: 'localhost'
     ports:
       - "3306:3306"
     networks:
       app_net:
         ipv4_address: 172.0.0.20
+    expose:
+      - "8000"
+      - "3306"
 
   web:
     restart: on-failure
@@ -41,6 +44,9 @@ services:
     networks:
       app_net:
         ipv4_address: 172.0.0.10
+    expose:
+      - "8000"
+      - "3306"
 
 networks:
   app_net:
@@ -49,4 +55,4 @@ networks:
       driver: default
       config:
         - subnet: 172.0.0.0/24
-          gateway: 172.0.0.1
+        # - gateway: 172.0.0.1
