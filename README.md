@@ -35,22 +35,24 @@ The system allows users to predict and analyse Stock Market.
 
 ### Error Handling:
 
-* ``` 
-	django.db.utils.OperationalError: (2003, 'Can\'t connect to MySQL server on \'db\' (111 "Connection refused")')```
-
-	Steps to be followed:
-
+1. Connection refused 
+``` 
+django.db.utils.OperationalError: (2003, 'Can\'t connect to MySQL server on \'db\' (111 "Connection refused")')
+```
+Steps to be followed:
 ```
 	sudo docker-compose down
 
 	sudo docker-compose up db
 ```	
-	Wait till the database container is ready to make connections. Close it with Ctrl + C and rerun the above process.
+Wait till the database container is ready to make connections. Close it with Ctrl + C and rerun the above process.
 
-* ```
-	django.db.utils.OperationalError: (1045, "Access denied for user 'root'@'172.0.0.10' (using password: YES)")``` 
+2. Access Denied
+```
+django.db.utils.OperationalError: (1045, "Access denied for user 'root'@'172.0.0.10' (using password: YES)")
+``` 
 
-	Steps to be followed:
+Steps to be followed:
 
 ```
 	sudo docker-compose down
@@ -60,9 +62,7 @@ The system allows users to predict and analyse Stock Market.
 	sudo docker exec -it stockoverflow_db_1 mysql -u root -p root
 
 	mysql> GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'root';
-
 	mysql> DROP USER 'root'@'localhost';
-
 	mysql> exit 
 ```
-	Rerun the above process.
+Rerun the above process.
