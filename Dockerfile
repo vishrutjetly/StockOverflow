@@ -7,4 +7,4 @@ RUN pip install -r requirements.txt
 RUN apt-get install default-libmysqlclient-dev
 ADD . /code/
 EXPOSE 8000
-RUN cp .env.docker .env
+COPY .env.docker .env
