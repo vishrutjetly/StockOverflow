@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Homepage</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+
+  <!-- AOS -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+  <script>
+    AOS.init();
+  </script>
+
+  <script src="../static/js/homepage.js"></script>
+  <link rel="stylesheet" href="../static/css/homepage.css">
+  <link rel="stylesheet" href="../static/css/cardflip_homepage.css">
+</head>
+
+<body style="padding-top:50px;">
+
+<!--***************NAVBAR******************-->
+  <nav class="navbar navbar-inverse navbar-fixed-top navbar-custom">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Website Name/Logo </a>
+      </div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav navbar-right">
+          <li class="active-custom"><a href="#" class="nav-item"><i class="fa fa-home" style="font-size:20px"></i> Home</a></li>
+          <li class="dropdown nav-item">
+            <a class="dropdown-toggle nav-item" data-toggle="dropdown" href="#">Page 1 <span class="caret"></span></a>
+            <ul class="dropdown-menu animate slideIn">
+              <li><a href="#">Page 1-1</a></li>
+              <li><a href="#">Page 1-2</a></li>
+              <li><a href="#">Page 1-3</a></li>
+            </ul>
+          </li>
+          <li><a class="nav-item" href="#">Page 2</a></li>
+          <li><a class="nav-item" href="#"><span class="nav-item glyphicon glyphicon-user"></span> Signin</a></li>
+          <li><a class="nav-item" href="#"><span class="nav-item glyphicon glyphicon-log-in"></span> Login</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+<!--**************MAIN IMAGE************-->
+  <div class="container-fluid bgimg1" >
+    <img src="../static/images/img1.JPG" alt="" style="visibility: hidden;">
+  </div>
+
+<!--***************SECOND***************-->
+  <div class="container-fluid content2" style="padding:128px 16px 0px 16px;">
+    <div class="row" style="padding:100px 30px 100px 30px;background-color:#efefef;">
+      <div class="col-12 col-sm-6" style="" data-aos="fade-right"  data-aos-duration="1000">
+        <div class="desc" style="vertical-align:middle;text-align:left;padding:30px 0px 30px 50px;">
+          <p style="font-size:30px;font-weight:600">Title</p>
+          <p style="font-size:20px;">Description : dscnsjcsc sjdcnjsdn</p>
+          <p style="font-size:20px;">Description2 : nsdcsnsn scdncjsdnc</p>
+          <p style="padding:15px 0px 15px 0px;"> <button type="button" name="button" class="btn2">CLICK</button> </p>
+        </div>
+      </div>
+      <div class="col-12 col-sm-6 bgimg2" style="" data-aos="fade-left"  data-aos-duration="1000">
+        <img src="../static/images/img1.JPG" alt="" style="visibility: hidden;">
+      </div>
+    </div>
+  </div>
+
+  <!-- **********THIRD**********-->
+
+<!--   oldone
+  <div class="container-fluid content3" style="margin:64px 0px 64px 0px;padding:64px 0px 64px 0px;">
+    <div class="row content3row" style="padding:5% 10% 5% 10%;">
+      <div class="col-md-3 col-sm-6" style="padding:0px;">
+
+
+
+      </div>
+      <div class="col-md-3 col-sm-6" style="padding:0px">
+        <div class="bgimg3" style="margin:10px;">
+          <img src="img1.JPG" alt="" style="visibility: hidden;" >
+        </div>
+        <div class="desc3">
+          <div class="desc3inner">
+              <p style="font-size:25px;">TITLE</p>
+              <p style="font-size:15px;">Description</p>
+              <p> <button type="button" name="button" class="btn3">CLICK</button> </p>
+          </div>
+        </div>
+        <div class="showdesc" data-aos="zoom-in" >
+          <button type="button" name="button" class="showdescbtn" >Know More</button>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6" style="padding:0px;">
+        <div class="bgimg3" style="margin:10px;">
+          <img src="img1.JPG" alt="" style="visibility: hidden;" >
+        </div>
+        <div class="desc3" id="desc31">
+          <div class="desc3inner" id="desc3inner1">
+              <p style="font-size:25px;">TITLE</p>
+              <p style="font-size:15px;">Description</p>
+              <p> <button type="button" name="button" class="btn3">CLICK</button> </p>
+          </div>
+        </div>
+        <div class="showdesc" id="showdesc1" data-aos="zoom-in">
+          <button type="button" name="button" class="showdescbtn" id="showdescbtn1" >Know More</button>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6" style="padding:0px;">
+        <div class="bgimg3" style="margin:10px;">
+          <img src="img1.JPG" alt="" style="visibility: hidden;" >
+        </div>
+        <div class="desc3">
+          <div class="desc3inner">
+              <p style="font-size:25px;">TITLE</p>
+              <p style="font-size:15px;">Description</p>
+              <p> <button type="button" name="button" class="btn3">CLICK</button> </p>
+          </div>
+        </div>
+        <div class="showdesc" data-aos="zoom-in" >
+          <button type="button" name="button" class="showdescbtn" >Know More</button>
+        </div>
+      </div>
+    </div>
+  </div>
+-->
+
+  <div class="container-fluid" style="background-color:black;margin:128px 0px 64px 0px;">
+    <div class="row" style="padding:128px 50px 128px 50px;text-align:center;">
+      <div class="col-md-3 col-sm-6" style="padding:20px;">
+        <div class="card" data-aos="zoom-out-right" data-aos-delay="400">
+          <div class="image">
+            <img src="../static/images/img1.JPG" style="background-size:cover;background-position:center;min-height:100%;"/>
+          </div>
+          <div class="details">
+            <div class="center">
+              <h1>TITLE<br><span>somethingelse</span></h1>
+              <p>Description</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6" style="padding:20px;">
+        <div class="card" data-aos="zoom-out-right" data-aos-delay="300">
+          <div class="image">
+            <img src="../static/images/img1.JPG" style="background-size:cover;background-position:center;min-height:100%;"/>
+          </div>
+          <div class="details">
+            <div class="center">
+              <h1>TITLE<br><span>somethingelse</span></h1>
+              <p>Description</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6" style="padding:20px;">
+        <div class="card" data-aos="zoom-out-left" data-aos-delay="300">
+          <div class="image">
+            <img src="../static/images/img1.JPG" style="background-size:cover;background-position:center;min-height:100%;"/>
+          </div>
+          <div class="details">
+            <div class="center">
+              <h1>TITLE<br><span>somethingelse</span></h1>
+              <p>Description</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6" style="padding:20px;">
+        <div class="card" data-aos="zoom-out-left" data-aos-delay="400">
+          <div class="image">
+            <img src="../static/images/img1.JPG" style="background-size:cover;background-position:center;min-height:100%;"/>
+          </div>
+          <div class="details">
+            <div class="center">
+              <h1>TITLE<br><span>somethingelse</span></h1>
+              <p>Description</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!--***************FEATURES***************-->
+  <div class="container-fluid" style="padding:64px 0px 128px 0px;">
+      <div class="row">
+        <div class="col-xs-12 center-block text-center" data-aos="zoom-out">
+          <p style="font-size:30px;font-weight:600;">TITLE - 1</p>
+          <p style="padding:20px 0px 20px 0px;font-size:20px;">Title - 2</p>
+        </div>
+      </div>
+      <div class="row" style="padding:20px 0px 20px 0px;text-align:center;">
+        <div class="col-md-3 col-sm-6">
+          <div class="abtus1 abtus-card" data-aos="flip-left">
+            <i class="fa fa-heart abtus-icon"></i>
+            <p class="abtus-title">Title</p>
+            <p>Desciption skdjafn safknask fasfk  snfsf nksajfnas </p>
+            <!--<p style="padding:15px 0px 15px 0px;"> <button type="button" name="button" class="btn3">CLICK</button> </p>-->
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+          <div class="abtus2 abtus-card" data-aos="flip-left">
+            <i class="fa fa-laptop abtus-icon"></i>
+            <p class="abtus-title">Title</p>
+            <p>Desciption skdjafn safknask fasfk  snfsf nksajfnas </p>
+            <!--<p style="padding:15px 0px 15px 0px;"> <button type="button" name="button" class="btn3">CLICK</button> </p>-->
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+          <div class="abtus3 abtus-card" data-aos="flip-right">
+            <i class="fa fa-line-chart abtus-icon"></i>
+            <p class="abtus-title">Title</p>
+            <p>Desciption skdjafn safknask fasfk  snfsf nksajfnas </p>
+            <!--<p style="padding:15px 0px 15px 0px;"> <button type="button" name="button" class="btn3">CLICK</button> </p>-->
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+          <div class="abtus4 abtus-card" data-aos="flip-right">
+            <i class="fa fa-male abtus-icon"></i>
+            <p class="abtus-title">Title</p>
+            <p>Desciption skdjafn safknask fasfk  snfsf nksajfnas </p>
+            <!--<p style="padding:15px 0px 15px 0px;"> <button type="button" name="button" class="btn3">CLICK</button> </p>-->
+          </div>
+        </div>
+      </div>
+  </div>
+
+<!--***************FOOTER***************-->
+  <div class="futer">
+    <div class="row">
+      <div class="col-12 col-sm-6">
+        Left
+      </div>
+      <div class="col-12 col-sm-6">
+        <p>CONTACT US</p>
+        <p><i class="fa fa-phone futer-icon"></i> &nbsp Phone :</p>
+        <p><i class="fa fa-envelope futer-icon"></i> &nbsp Email :</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    AOS.init();
+  </script>
+</body>
+</html>
