@@ -20,7 +20,7 @@ from django.views.generic.base import TemplateView
 from UserRegistration import views as user_views
 
 urlpatterns = [
-	url(r'^$', TemplateView.as_view(template_name='home.html'), name='home'),
+	url(r'^$', TemplateView.as_view(template_name='homepage.html'), name='home'),
     url(r'^admin/', admin.site.urls),
     url(r'^login/$', auth_views.LoginView.as_view(template_name='login.html', redirect_authenticated_user=True), name='login'),
     url(r'^logout/$', auth_views.LogoutView.as_view(), name='logout'),

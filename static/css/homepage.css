@@ -94,7 +94,7 @@ body{
 .bgimg1{
   background-position: center;
   background-size: cover;
-  background-image: url("../images/img1.JPG");
+  background-image: url("/static/images/img1.jpg");
   min-height: 100%;
   height: 738px;
 }
@@ -103,7 +103,7 @@ body{
 .bgimg2{
   background-position: center;
   background-size: cover;
-  background-image: url("../images/img1.JPG");
+  background-image: url("/static/images/img1.jpg");
   height: 400px;
   min-height: 50%;
   border-radius: 15px;
@@ -127,7 +127,7 @@ body{
 .bgimg3{
   background-position: center;
   background-size: cover;
-  background-image: url("../images/img1.JPG");
+  background-image: url("/static/images/img1.jpg");
   height: 500px;
   min-height: 100%;
   border-radius: 15px;
