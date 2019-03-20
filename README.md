@@ -59,7 +59,8 @@ Steps to be followed:
 
 	sudo docker-compose up db
 
-	sudo docker exec -it stockoverflow_db_1 mysql -u root -p root
+	sudo docker exec -it stockoverflow_db_1 mysql -u root -p
+	Enter password: root
 
 	mysql> GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'root';
 	mysql> DROP USER 'root'@'localhost';
