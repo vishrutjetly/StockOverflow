@@ -3,7 +3,7 @@ The system allows users to predict and analyse Stock Market.
 
 ## Requirements
 
-* [Python 3.6](https://python.org/)
+* [Python 3.7.2](https://python.org/)
 * [Django 1.11.20](https://www.djangoproject.com/)
 * [MySQL Server](https://www.mysql.com/)
 
