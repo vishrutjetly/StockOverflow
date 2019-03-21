@@ -5,3 +5,4 @@ oauthlib==2.1.0
 social-auth-app-django==2.1.0
 social-auth-core==1.7.0
 psycopg2
+django-widget-tweaks==1.4.3

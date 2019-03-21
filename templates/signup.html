@@ -7,90 +7,15 @@
 <div class="limiter">
       <div class="container-login100">
         <div class="wrap-login100 p-l-50 p-r-50 p-t-77 p-b-30">
-          <form class="login100-form validate-form">
+          <form class="login100-form validate-form" method="post">
             <span class="login100-form-title p-b-55">
-              Stock OverFlow
+              StockOverflow
             </span>
-            <span class="login100-form-title p-b-55">
+            <!-- <span class="login100-form-title p-b-55">
               Sign Up
-            </span>
-
-            <div class="wrap-input100 validate-input m-b-16">
-              <input
-                class="input100"
-                type="text"
-                name="fname"
-                placeholder="First Name"
-              />
-              <span class="focus-input100"></span>
-              <span class="symbol-input100">
-                <span class="lnr lnr-user"></span>
-              </span>
-            </div>
-
-            <div class="wrap-input100 validate-input m-b-16">
-              <input
-                class="input100"
-                type="text"
-                name="lname"
-                placeholder="Last Name"
-              />
-              <span class="focus-input100"></span>
-              <span class="symbol-input100">
-                <span class="lnr lnr-user"></span>
-              </span>
-            </div>
-
-            <div
-              class="wrap-input100 validate-input m-b-16"
-              data-validate="Valid email is required: ex@abc.xyz"
-            >
-              <input
-                class="input100"
-                type="text"
-                name="email"
-                placeholder="Email"
-              />
-              <span class="focus-input100"></span>
-              <span class="symbol-input100">
-                <span class="lnr lnr-envelope"></span>
-              </span>
-            </div>
-
-            <div
-              class="wrap-input100 validate-input m-b-16"
-              data-validate="Password is required"
-            >
-              <input
-                class="input100"
-                type="password"
-                name="pass"
-                id="password"
-                placeholder="Password"
-              />
-              <span class="focus-input100"></span>
-              <span class="symbol-input100">
-                <span class="lnr lnr-lock"></span>
-              </span>
-            </div>
-
-            <div
-              class="wrap-input100 validate-input m-b-16"
-              data-validate="Password is required"
-            >
-              <input
-                class="input100"
-                type="password"
-                name="pass"
-                id="confirm_password"
-                oninput="check(this)"
-                placeholder="Confirm Password"
-              />
-              <span class="focus-input100"></span>
-              <span class="symbol-input100">
-                <span class="lnr lnr-lock"></span>
-              </span>
-            </div>
+            </span> -->
+            {% csrf_token %}
+            {% include 'includes/signup.html' %}
 
             <script language="javascript" type="text/javascript">
               function check(input) {
@@ -146,7 +71,7 @@
                 Already a user?
               </span>
 
-              <a class="txt1 bo1 hov1" href="#">
+              <a class="txt1 bo1 hov1" href="{% url 'login' %}">
                 Login now
               </a>
             </div>

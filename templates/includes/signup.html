@@ -1,0 +1,121 @@
+{% load widget_tweaks %}
+
+{% if form.non_field_errors %}
+  <div class="alert alert-danger" role="alert">
+    {% for error in form.non_field_errors %}
+      <p{% if forloop.last %} class="mb-0"{% endif %}>{{ error }}</p>
+    {% endfor %}
+  </div>
+{% endif %}
+{% for field in form %}
+	{% if form.is_bound %}
+	  {% if field.errors %}
+	  	<div class="wrap-input100 validate-input m-b-16">
+	  		{% if field == form.username %}
+			  	{% render_field field class="input100" placeholder="Username" %}
+			  {% elif field == form.first_name %}
+			  	{% render_field field class="input100" placeholder="First Name" %}
+			  {% elif field == form.last_name %}
+			  	{% render_field field class="input100" placeholder="Last Name" %}
+			  {% elif field == form.email %}
+			  	{% render_field field class="input100" placeholder="Email" %}
+			  {% elif field == form.password1 %}
+			  	{% render_field field class="input100" placeholder="Password" %}
+			  {% elif field == form.password2 %}
+			  	{% render_field field class="input100" placeholder="Confirm Password" %}
+			  {% endif %}
+			  <span class="focus-input100"></span>
+			  <span class="symbol-input100">
+			  	{% if field == form.username %}
+				  	<span class="lnr lnr-user"></span>
+				  {% elif field == form.first_name %}
+				  	<span class="lnr lnr-user"></span>
+				  {% elif field == form.last_name %}
+				  	<span class="lnr lnr-user"></span>
+				  {% elif field == form.email %}
+				  	<span class="lnr lnr-envelope"></span>
+				  {% elif field == form.password1 %}
+				  	<span class="lnr lnr-lock"></span>
+				  {% elif field == form.password2 %}
+				  	<span class="lnr lnr-lock"></span>
+				  {% endif %}
+			  </span>
+			</div>
+			{% for error in field.errors %}
+	      <div class="invalidfeedback">
+	        {{ error }}
+	      </div>
+	    {% endfor %}
+		{% else %}
+			<div class="wrap-input100 validate-input m-b-16">
+	  		{% if field == form.username %}
+			  	{% render_field field class="input100" placeholder="Username" %}
+			  {% elif field == form.first_name %}
+			  	{% render_field field class="input100" placeholder="First Name" %}
+			  {% elif field == form.last_name %}
+			  	{% render_field field class="input100" placeholder="Last Name" %}
+			  {% elif field == form.email %}
+			  	{% render_field field class="input100" placeholder="Email" %}
+			  {% elif field == form.password1 %}
+			  	{% render_field field class="input100" placeholder="Password" %}
+			  {% elif field == form.password2 %}
+			  	{% render_field field class="input100" placeholder="Confirm Password" %}
+			  {% endif %}
+			  <span class="focus-input100"></span>
+			  <span class="symbol-input100">
+			  	{% if field == form.username %}
+				  	<span class="lnr lnr-user"></span>
+				  {% elif field == form.first_name %}
+				  	<span class="lnr lnr-user"></span>
+				  {% elif field == form.last_name %}
+				  	<span class="lnr lnr-user"></span>
+				  {% elif field == form.email %}
+				  	<span class="lnr lnr-envelope"></span>
+				  {% elif field == form.password1 %}
+				  	<span class="lnr lnr-lock"></span>
+				  {% elif field == form.password2 %}
+				  	<span class="lnr lnr-lock"></span>
+				  {% endif %}
+			  </span>
+			</div>
+	  {% endif %}
+	{% else %}
+		<div class="wrap-input100 validate-input m-b-16">
+	  		{% if field == form.username %}
+			  	{% render_field field class="input100" placeholder="Username" %}
+			  {% elif field == form.first_name %}
+			  	{% render_field field class="input100" placeholder="First Name" %}
+			  {% elif field == form.last_name %}
+			  	{% render_field field class="input100" placeholder="Last Name" %}
+			  {% elif field == form.email %}
+			  	{% render_field field class="input100" placeholder="Email" %}
+			  {% elif field == form.password1 %}
+			  	{% render_field field class="input100" placeholder="Password" %}
+			  {% elif field == form.password2 %}
+			  	{% render_field field class="input100" placeholder="Confirm Password" %}
+			  {% endif %}
+			  <span class="focus-input100"></span>
+			  <span class="symbol-input100">
+			  	{% if field == form.username %}
+				  	<span class="lnr lnr-user"></span>
+				  {% elif field == form.first_name %}
+				  	<span class="lnr lnr-user"></span>
+				  {% elif field == form.last_name %}
+				  	<span class="lnr lnr-user"></span>
+				  {% elif field == form.email %}
+				  	<span class="lnr lnr-envelope"></span>
+				  {% elif field == form.password1 %}
+				  	<span class="lnr lnr-lock"></span>
+				  {% elif field == form.password2 %}
+				  	<span class="lnr lnr-lock"></span>
+				  {% endif %}
+			  </span>
+			</div>
+	{% endif %}
+
+	{% if form.help_text %}
+	  <small class="form-text text-muted">
+	    {{ form.help_text|safe }}
+	  </small>
+	{% endif %}
+{% endfor %}

@@ -1,0 +1,76 @@
+{% load widget_tweaks %}
+
+{% if form.non_field_errors %}
+  <div class="alert alert-danger" role="alert">
+    {% for error in form.non_field_errors %}
+      <p{% if forloop.last %} class="mb-0"{% endif %}>{{ error }}</p>
+    {% endfor %}
+  </div>
+{% endif %}
+{% for field in form %}
+  {% if form.is_bound %}
+    {% if field.errors %}
+      <div class="wrap-input100 validate-input m-b-16">
+        {% if field == form.username %}
+          {% render_field field class="input100" placeholder="Username" %}
+        {% elif field == form.password %}
+          {% render_field field class="input100" placeholder="Password" %}
+        {% endif %}
+        <span class="focus-input100"></span>
+        <span class="symbol-input100">
+          {% if field == form.username %}
+            <span class="lnr lnr-user"></span>
+          {% elif field == form.password %}
+            <span class="lnr lnr-lock"></span>
+          {% endif %}
+        </span>
+      </div>
+      {% for error in field.errors %}
+        <div class="invalidfeedback">
+          {{ error }}
+        </div>
+      {% endfor %}
+    {% else %}
+      <div class="wrap-input100 validate-input m-b-16">
+        {% if field == form.username %}
+          {% render_field field class="input100" placeholder="Username" %}
+        {% elif field == form.password %}
+          {% render_field field class="input100" placeholder="Password" %}
+        {% endif %}
+        <span class="focus-input100"></span>
+        <span class="symbol-input100">
+          {% if field == form.username %}
+            <span class="lnr lnr-user"></span>
+          {% elif field == form.password %}
+            <span class="lnr lnr-lock"></span>
+          {% endif %}
+        </span>
+      </div>
+    {% endif %}
+  {% else %}
+    <div class="wrap-input100 validate-input m-b-16">
+      {% if field == form.username %}
+        {% render_field field class="input100" placeholder="Username" %}
+      {% elif field == form.password %}
+        {% render_field field class="input100" placeholder="Password" %}
+      {% endif %}
+      <span class="focus-input100"></span>
+      <span class="symbol-input100">
+        {% if field == form.username %}
+          <span class="lnr lnr-user"></span>
+        {% elif field == form.password %}
+          <span class="lnr lnr-lock"></span>
+        {% endif %}
+      </span>
+    </div>
+  {% endif %}
+
+  {% if field.help_text %}
+    <small class="form-text text-muted">
+      {{ field.help_text|safe }}
+    </small>
+  {% endif %}
+
+{% endfor %}
+
+

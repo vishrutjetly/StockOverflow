@@ -8,7 +8,6 @@ class Profile(models.Model):
     first_name = models.CharField(max_length=30, blank = False)
     last_name = models.CharField(max_length=30, blank = False)
     email = models.EmailField(max_length=70, unique= True)
-    birth_date = models.DateField(null=True, blank=True)
 
 @receiver(post_save, sender=User)
 def update_user_profile(sender, instance, created, **kwargs):
