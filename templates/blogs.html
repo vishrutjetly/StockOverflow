@@ -1,0 +1,173 @@
+{% extends 'base2.html' %}
+{% load static %}
+
+{% block title %}Blogs{% endblock %}
+ 
+{% block content %}
+<ul id="dropdown1" class="dropdown-content">
+      <li><a href="#!" style="color:cornflowerblue">My Profile</a></li>
+      <li>
+        <a href="{% url 'portfolio'%}" style="color:cornflowerblue">Portfolio</a>
+      </li>
+      <li><a href="{% url 'settings'%}" style="color:cornflowerblue">Settings</a></li>
+      <li><a href="{% url 'logout'%}" style="color:cornflowerblue">Logout</a></li>
+    </ul>
+    <!--===============================================================================================-->
+    <!-- Also changed the init.js javascript file -->
+    <!-- Changed style.css -->
+    <!--===============================================================================================-->
+    <nav class="light-blue lighten-1" role="navigation">
+      <div class="nav-wrapper container">
+        <a id="logo-container" href="#" class="brand-logo">StockOverflow</a>
+        <ul class="right hide-on-med-and-down">
+          <li>
+            <a class="dropdown-trigger" href="{% url 'myaccount'%}" data-target="dropdown1"
+              >My Account<i class="material-icons right">arrow_drop_down</i></a
+            >
+          </li>
+        </ul>
+        <ul class="right hide-on-med-and-down">
+          <li><a href="{% url 'compare'%}">Compare And Analyse</a></li>
+        </ul>
+        <ul class="right hide-on-med-and-down">
+          <li><a href="{% url 'homepage'%}">Home</a></li>
+        </ul>
+        <ul class="right hide-on-med-and-down">
+          <li><a href="#"></a></li>
+        </ul>
+        <ul class="right hide-on-med-and-down nav-wrapper">
+          <form>
+            <div class="input-field">
+              <input id="search" class='search' placeholder="Search" type="search" required />
+              <label class="label-icon" for="search"
+                ><i class="material-icons">search</i></label
+              >
+              <i class="material-icons">close</i>
+            </div>
+          </form>
+        </ul>
+      </div>
+    </nav>
+    <div class="section no-pad-bot" id="index-banner">
+      <div class="container">
+        <br /><br />
+        <h1 class="header center orange-text">Starter Template</h1>
+        <div class="row center">
+          <h5 class="header col s12 light">
+            A modern responsive front-end framework based on Material Design
+          </h5>
+        </div>
+        <div class="row center">
+          <a
+            href="http://materializecss.com/getting-started.html"
+            id="download-button"
+            class="btn-large waves-effect waves-light orange"
+            >Get Started</a
+          >
+        </div>
+        <br /><br />
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="section">
+        <!--   Icon Section   -->
+        <div class="row">
+          <div class="">
+            <h2 class="header">Horizontal Card</h2>
+            <div class="card horizontal">
+              <div class="card-image">
+                <img src="https://lorempixel.com/100/190/nature/6" />
+              </div>
+              <div class="card-stacked">
+                <div class="card-content">
+                  <p>
+                    I am a very simple card. I am good at containing small bits
+                    of information.
+                  </p>
+                </div>
+                <div class="card-action">
+                  <a href="#">This is a link</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="">
+            <h2 class="header">Horizontal Card</h2>
+            <div class="card horizontal">
+              <div class="card-image">
+                <img src="https://lorempixel.com/100/190/nature/6" />
+              </div>
+              <div class="card-stacked">
+                <div class="card-content">
+                  <p>
+                    I am a very simple card. I am good at containing small bits
+                    of information.
+                  </p>
+                </div>
+                <div class="card-action">
+                  <a href="#">This is a link</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="">
+            <h2 class="header">Horizontal Card</h2>
+            <div class="card horizontal">
+              <div class="card-image">
+                <img src="https://lorempixel.com/100/190/nature/6" />
+              </div>
+              <div class="card-stacked">
+                <div class="card-content">
+                  <p>
+                    I am a very simple card. I am good at containing small bits
+                    of information.
+                  </p>
+                </div>
+                <div class="card-action">
+                  <a href="#">This is a link</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br /><br />
+    </div>
+
+    <footer class="page-footer orange">
+      <div class="container">
+        <div class="row">
+          <div class="col l6 s12">
+            <h5 class="white-text">Company Bio</h5>
+            <p class="grey-text text-lighten-4">
+              We are a team of college students working on this project like
+              it's our full time job. Any amount would help support and continue
+              development on this project and is greatly appreciated.
+            </p>
+          </div>
+          <div class="col l3 s12">
+            <h5 class="white-text">Settings</h5>
+            <ul>
+              <li><a class="white-text" href="#!">Link 1</a></li>
+              <li><a class="white-text" href="#!">Link 2</a></li>
+              <li><a class="white-text" href="#!">Link 3</a></li>
+              <li><a class="white-text" href="#!">Link 4</a></li>
+            </ul>
+          </div>
+          <div class="col l3 s12">
+            <h5 class="white-text">Connect</h5>
+            <ul>
+              <li><a class="white-text" href="#!">Link 1</a></li>
+              <li><a class="white-text" href="#!">Link 2</a></li>
+              <li><a class="white-text" href="#!">Link 3</a></li>
+              <li><a class="white-text" href="#!">Link 4</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer-copyright"></div>
+    </footer>
+{% endblock %}

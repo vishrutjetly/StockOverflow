@@ -1,21 +1,157 @@
-{% extends 'base.html' %}
+{% extends 'base1.html' %}
+{% load static %}
 
+{% block title %}Sign up{% endblock %}
+ 
 {% block content %}
-  <h2>Sign up</h2>
-  <form method="post">
-    {% csrf_token %}
-    {% for field in form %}
-      <p>
-        {{ field.label_tag }}<br>
-        {{ field }}
-        {% if field.help_text %}
-          <small style="color: grey">{{ field.help_text }}</small>
-        {% endif %}
-        {% for error in field.errors %}
-          <p style="color: red">{{ error }}</p>
-        {% endfor %}
-      </p>
-    {% endfor %}
-    <button type="submit">Sign up</button>
-  </form>
-{% endblock %}	
+<div class="limiter">
+      <div class="container-login100">
+        <div class="wrap-login100 p-l-50 p-r-50 p-t-77 p-b-30">
+          <form class="login100-form validate-form">
+            <span class="login100-form-title p-b-55">
+              Stock OverFlow
+            </span>
+            <span class="login100-form-title p-b-55">
+              Sign Up
+            </span>
+
+            <div class="wrap-input100 validate-input m-b-16">
+              <input
+                class="input100"
+                type="text"
+                name="fname"
+                placeholder="First Name"
+              />
+              <span class="focus-input100"></span>
+              <span class="symbol-input100">
+                <span class="lnr lnr-user"></span>
+              </span>
+            </div>
+
+            <div class="wrap-input100 validate-input m-b-16">
+              <input
+                class="input100"
+                type="text"
+                name="lname"
+                placeholder="Last Name"
+              />
+              <span class="focus-input100"></span>
+              <span class="symbol-input100">
+                <span class="lnr lnr-user"></span>
+              </span>
+            </div>
+
+            <div
+              class="wrap-input100 validate-input m-b-16"
+              data-validate="Valid email is required: ex@abc.xyz"
+            >
+              <input
+                class="input100"
+                type="text"
+                name="email"
+                placeholder="Email"
+              />
+              <span class="focus-input100"></span>
+              <span class="symbol-input100">
+                <span class="lnr lnr-envelope"></span>
+              </span>
+            </div>
+
+            <div
+              class="wrap-input100 validate-input m-b-16"
+              data-validate="Password is required"
+            >
+              <input
+                class="input100"
+                type="password"
+                name="pass"
+                id="password"
+                placeholder="Password"
+              />
+              <span class="focus-input100"></span>
+              <span class="symbol-input100">
+                <span class="lnr lnr-lock"></span>
+              </span>
+            </div>
+
+            <div
+              class="wrap-input100 validate-input m-b-16"
+              data-validate="Password is required"
+            >
+              <input
+                class="input100"
+                type="password"
+                name="pass"
+                id="confirm_password"
+                oninput="check(this)"
+                placeholder="Confirm Password"
+              />
+              <span class="focus-input100"></span>
+              <span class="symbol-input100">
+                <span class="lnr lnr-lock"></span>
+              </span>
+            </div>
+
+            <script language="javascript" type="text/javascript">
+              function check(input) {
+                if (input.value != document.getElementById("password").value) {
+                  input.setCustomValidity("Password Must be Matching.");
+                } else {
+                  // input is valid -- reset the error message
+                  input.setCustomValidity("");
+                }
+              }
+            </script>
+
+            <div class="contact100-form-checkbox m-l-4">
+              <input
+                class="input-checkbox100"
+                id="ckb1"
+                type="checkbox"
+                name="remember-me"
+              />
+              <!-- <label class="label-checkbox100" for="ckb1">
+                Remember me
+              </label> -->
+            </div>
+
+            <!-- <a class="txt1 hov1" href="#">
+              Forgot Password
+            </a> -->
+
+            <div class="container-login100-form-btn p-t-25">
+              <button class="login100-form-btn" type="submit">
+                Sign Up
+              </button>
+            </div>
+
+            <!-- <div class="text-center w-full p-t-42 p-b-22">
+              <span class="txt1">
+                Or login with
+              </span>
+            </div> -->
+
+            <!-- <a href="#" class="btn-face m-b-10">
+              <i class="fa fa-facebook-official"></i>
+              Facebook
+            </a> -->
+
+            <!-- <a href="#" class="btn-google m-b-10">
+              <img src="images/icons/icon-google.png" alt="GOOGLE" />
+              Google
+            </a> -->
+
+            <div class="text-center w-full p-t-115">
+              <span class="txt1">
+                Already a user?
+              </span>
+
+              <a class="txt1 bo1 hov1" href="#">
+                Login now
+              </a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+{% endblock %}

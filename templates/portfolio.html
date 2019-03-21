@@ -1,0 +1,220 @@
+{% extends 'base2.html' %}
+{% load static %}
+
+{% block title %}Portfolio{% endblock %}
+ 
+{% block content %}
+<ul id="dropdown1" class="dropdown-content">
+      <li><a href="#!" style="color:cornflowerblue">My Profile</a></li>
+      <li>
+        <a href="{% url 'portfolio'%}" style="color:cornflowerblue">Portfolio</a>
+      </li>
+      <li><a href="{% url 'settings'%}" style="color:cornflowerblue">Settings</a></li>
+      <li><a href="{% url 'logout'%}" style="color:cornflowerblue">Logout</a></li>
+    </ul>
+    <!--===============================================================================================-->
+    <!-- Also changed the init.js javascript file -->
+    <!-- Changed style.css -->
+    <!--===============================================================================================-->
+    <nav class="light-blue lighten-1" role="navigation">
+      <div class="nav-wrapper container">
+        <a id="logo-container" href="#" class="brand-logo">StockOverflow</a>
+        <ul class="right hide-on-med-and-down">
+          <li>
+            <a class="dropdown-trigger" href="{% url 'myaccount'%}" data-target="dropdown1"
+              >My Account<i class="material-icons right">arrow_drop_down</i></a
+            >
+          </li>
+        </ul>
+        <ul class="right hide-on-med-and-down">
+          <li><a href="{% url 'compare'%}">Compare And Analyse</a></li>
+        </ul>
+        <ul class="right hide-on-med-and-down">
+          <li><a href="{% url 'homepage'%}">Home</a></li>
+        </ul>
+        <ul class="right hide-on-med-and-down">
+          <li><a href="#"></a></li>
+        </ul>
+        <ul class="right hide-on-med-and-down nav-wrapper">
+          <form>
+            <div class="input-field">
+              <input id="search" class='search' placeholder="Search" type="search" required />
+              <label class="label-icon" for="search"
+                ><i class="material-icons">search</i></label
+              >
+              <i class="material-icons">close</i>
+            </div>
+          </form>
+        </ul>
+      </div>
+    </nav>
+    <div class="container">
+      <br />
+      <div class="section">
+        <div class="row">
+          <div class="card col s12 m3" style="margin-left: 6%">
+            <div class="card-image waves-effect waves-block waves-light"></div>
+            <div class="card-content">
+              <span class="card-title activator grey-text text-darken-4"
+                >Your Portfolio<i class="material-icons right"
+                  >more_vert</i
+                ></span
+              >
+              <blockquote>
+                Stock Price <br />
+                Stock Name <br />
+                Stock Value
+              </blockquote>
+            </div>
+            <div class="card-reveal">
+              <span class="card-title grey-text text-darken-4"
+                >Current Value<i class="material-icons right">close</i></span
+              >
+              <p>
+                Here is some more information about this product that is only
+                revealed once clicked on.
+              </p>
+            </div>
+          </div>
+          <div class="card col s12 m3" style="margin-left: 6%">
+            <div class="card-image waves-effect waves-block waves-light"></div>
+            <div class="card-content">
+              <span class="card-title activator grey-text text-darken-4"
+                >Current Value<i class="material-icons right"
+                  >more_vert</i
+                ></span
+              >
+              <blockquote>
+                Stock Price <br />
+                Stock Name <br />
+                Stock Value
+              </blockquote>
+            </div>
+            <div class="card-reveal">
+              <span class="card-title grey-text text-darken-4"
+                >Card Title<i class="material-icons right">close</i></span
+              >
+              <p>
+                Here is some more information about this product that is only
+                revealed once clicked on.
+              </p>
+            </div>
+          </div>
+          <div class="card col s12 m3" style="margin-left: 6%">
+            <div class="card-image waves-effect waves-block waves-light"></div>
+            <div class="card-content">
+              <span class="card-title activator grey-text text-darken-4"
+                >Total Return<i class="material-icons right">more_vert</i></span
+              >
+              <blockquote>
+                Stock Price <br />
+                Stock Name <br />
+                Stock Value
+              </blockquote>
+            </div>
+            <div class="card-reveal">
+              <span class="card-title grey-text text-darken-4"
+                >Card Title<i class="material-icons right">close</i></span
+              >
+              <p>
+                Here is some more information about this product that is only
+                revealed once clicked on.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <canvas
+        id="myChart"
+        class="chartjs"
+        width="1000"
+        height="400"
+        style="display: block"
+      >
+      </canvas>
+      <br /><br />
+
+      <table class="highlight centered">
+        <thead style="font-family: Gill Sans">
+          <tr style="background-color: bisque">
+            <th>SUMMARY</th>
+            <th>CAPITAL GAIN</th>
+            <th>DIVIDENDS</th>
+            <th>CURRENCY GAIN</th>
+            <th>TOTAL RETURN</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>Alvin</td>
+            <td>Eclair</td>
+            <td>$0.87</td>
+            <td>$0.87</td>
+            <td>$0.87</td>
+          </tr>
+          <tr>
+            <td>Alan</td>
+            <td>Jellybean</td>
+            <td>$3.76</td>
+            <td>$0.87</td>
+            <td>$0.87</td>
+          </tr>
+        </tbody>
+      </table>
+      <br />
+      <br />
+      <br />
+      <a
+        class="waves-effect waves-light btn-large"
+        style="margin-left: 3%; background-color:dodgerblue"
+        ><i class="material-icons left">history</i>View Past Transactions</a
+      >
+      <a
+        class="waves-effect waves-light btn-large"
+        style="margin-left: 3%; background-color:dodgerblue"
+        ><i class="material-icons left">add_circle</i>Manually Add a Trade</a
+      >
+      <a
+        class="waves-effect waves-light btn-large"
+        style="margin-left: 3%; background-color:dodgerblue"
+        ><i class="material-icons left">file_upload</i>Import CSV of Trade</a
+      >
+      <br />
+      <br />
+      <br />
+    </div>
+    <footer class="page-footer orange">
+      <div class="container">
+        <div class="row">
+          <div class="col l6 s12">
+            <h5 class="white-text">Company Bio</h5>
+            <p class="grey-text text-lighten-4">
+              We are a team of college students working on this project like
+              it's our full time job. Any amount would help support and continue
+              development on this project and is greatly appreciated.
+            </p>
+          </div>
+          <div class="col l3 s12">
+            <h5 class="white-text">Settings</h5>
+            <ul>
+              <li><a class="white-text" href="#!">Link 1</a></li>
+              <li><a class="white-text" href="#!">Link 2</a></li>
+              <li><a class="white-text" href="#!">Link 3</a></li>
+              <li><a class="white-text" href="#!">Link 4</a></li>
+            </ul>
+          </div>
+          <div class="col l3 s12">
+            <h5 class="white-text">Connect</h5>
+            <ul>
+              <li><a class="white-text" href="#!">Link 1</a></li>
+              <li><a class="white-text" href="#!">Link 2</a></li>
+              <li><a class="white-text" href="#!">Link 3</a></li>
+              <li><a class="white-text" href="#!">Link 4</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer-copyright"></div>
+    </footer>
+{% endblock %}
