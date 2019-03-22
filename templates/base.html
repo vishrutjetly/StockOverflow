@@ -34,6 +34,14 @@
     AOS.init();
   </script>
 
+  <script language="javascript" type="text/javascript">
+  function popitup(url) {
+      newwindow=window.open(url,'{{title}}','height=200,width=150');
+      if (window.focus) {newwindow.focus()}
+      return false;
+  }
+  </script>
+
   {% block pagecss %}
   {% endblock %}
 
@@ -86,7 +94,8 @@
 	      	</li>
 	      {% else %}
 	      	<li><a class="nav-item" href="{% url 'signup' %}"><span class="nav-item glyphicon glyphicon-user"></span> Signup</a></li>
-	      	<li><a class="nav-item" href="{% url 'login' %}"><span class="nav-item glyphicon glyphicon-log-in"></span> Login</a></li>
+	      	<li><a class="nav-item" href="{% url 'login' %}">
+	      	<span class="nav-item glyphicon glyphicon-log-in"></span> Login</a></li>
 	      {% endif %}
 	    </ul>
 	    <ul class="nav navbar-nav navbar-right">
