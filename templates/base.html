@@ -41,7 +41,7 @@
       return false;
   }
   </script>
-
+  
   {% block pagecss %}
   {% endblock %}
 
@@ -50,6 +50,7 @@
 
 </head>
 <body style="padding-top:50px;">
+	{% include 'includes/session_security.html' %}
 	<nav class="navbar navbar-inverse navbar-fixed-top navbar-custom">
 	<div class="container-fluid">
 	  <div class="navbar-header">
