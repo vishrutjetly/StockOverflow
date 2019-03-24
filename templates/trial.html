@@ -1,0 +1,47 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- <script src="{%static 'https://code.jquery.com/jquery-2.1.1.min.js'%}"></script> -->
+  <script src="{%static 'js/materialize.js'%}"></script>
+  <link
+    href="{%static 'css/materialize.css'%}"
+    type="text/css"
+    rel="stylesheet"
+  />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+  <!-- <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css"
+    type="text/css"
+    rel="stylesheet"
+  /> -->
+</head>
+<body>
+  <div class="row section">
+  <div class="col">
+    <!-- Modal Trigger -->
+    <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a>
+  </div>
+</div>
+<!-- Modal Structure -->
+<div id="modal1" class="modal">
+  <div class="modal-content">
+    <h4>Modal Header</h4>
+    <p>A bunch of text</p>
+  </div>
+  <div class="modal-footer">
+    <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+  </div>
+
+  <script>
+      $(document).ready(function(){
+    // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+    $('.modal-trigger').leanModal();
+  });
+  </script>
+</div>
+</body>
+</html>

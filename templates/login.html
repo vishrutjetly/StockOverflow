@@ -4,10 +4,27 @@
 {% block title %}Login{% endblock %}
  
 {% block content %}
-<div class="limiter">
+	<div class="limiter">
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h3 class="modal-title" id="myModalLabel">Reset Password</h3>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		      </div>
+		      <div class="modal-body">
+		      	{% include 'password_reset_form.html' %}
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		        <button type="submit" class="btn btn-primary">Save changes</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
 		<div class="container-login100">
 			<div class="wrap-login100 p-l-50 p-r-50 p-t-77 p-b-30">
-				<form class="login100-form validate-form" method="post">
+				<form class="login100-form validate-form" method="post" id=email-form>
 					<span class="login100-form-title p-b-55">
 							StockOverFlow
 					</span>
@@ -19,12 +36,36 @@
 						<label class="label-checkbox100" for="ckb1">
 							Remember me
 						</label>
-					</div>
-
-					<a class="txt1 hov1" href="{% url 'password_reset' %}">
-						Forgot Password							
+					</div>					
 					</a>
-					
+					<!-- <a href="{% url 'password_reset' %}" data-toggle="modal" data-target="#myModal" data-remote="false" class="txt1 hov1" id="forgot"> -->
+					<a href="{% url 'password_reset' %}" class="txt1 hov1"> 
+					    Forgot Password
+					</a>
+					<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  				<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+					<script>
+					  $("#myModal").on("show.bs.modal", function(e) {
+					      var link = $(e.relatedTarget);
+					      $(this).find(".modal-body").load(link.attr("href"));
+					  });
+
+					 // $(window.location.hash).modal('show');
+				   //  $('a[data-toggle="modal"]').click(function(){
+				   //      window.location.hash = $(this).attr('href');
+				   //  });
+
+				   //  function revertToOriginalURL() {
+				   //      var original = window.location.href.substr(0, window.location.href.indexOf('#'))
+				   //      history.replaceState({}, document.title, original);
+				   //  }
+
+				   //  $('.modal').on('hidden.bs.modal', function () {
+				   //      revertToOriginalURL();
+				   //  });
+					</script>
+
+
 					<div class="container-login100-form-btn p-t-25">
 						<button class="login100-form-btn" type="submit">
 							Login
