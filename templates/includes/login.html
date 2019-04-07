@@ -15,6 +15,8 @@
           {% render_field field class="input100" placeholder="Username" %}
         {% elif field == form.password %}
           {% render_field field class="input100" placeholder="Password" %}
+        {% elif field == form.oldpassword %}
+          {% render_field field class="input100" placeholder="Password" %}
         {% endif %}
         <span class="focus-input100"></span>
         <span class="symbol-input100">
@@ -53,6 +55,8 @@
         {% render_field field class="input100" placeholder="Username" %}
       {% elif field == form.password %}
         {% render_field field class="input100" placeholder="Password" %}
+      {% elif field == form.old_password %}
+          {% render_field field class="input100" placeholder="Password" %}
       {% endif %}
       <span class="focus-input100"></span>
       <span class="symbol-input100">
