@@ -7,3 +7,6 @@ social-auth-core==1.7.0
 psycopg2
 django-widget-tweaks==1.4.3
 django-session-security
+pandas
+numpy
+sklearn

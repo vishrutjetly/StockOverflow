@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'social_django',
     'widget_tweaks',
     'session_security',
+    'stocks',
 ]
 
 SITE_ID = 1
@@ -101,11 +102,8 @@ TEMPLATES = [
     },
 ]
 
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY ='418311723575-ek388sv594k2l8bjlg6q466v9gj4aj9o.apps.googleusercontent.com'
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'DAh5hFfnE0KLY9oI_t58SAtm'
-
-# SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = config('OAUTH2_KEY')
-# SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = config('OAUTH2_SECRET')
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = config('OAUTH2_KEY')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = config('OAUTH2_SECRET')
 
 WSGI_APPLICATION = 'StockOverflow.wsgi.application'
 

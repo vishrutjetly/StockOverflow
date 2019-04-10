@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.views.generic.base import TemplateView
 from UserRegistration import views as user_views
+from stocks import views as stockview
 
 urlpatterns = [
 	url(r'^$', TemplateView.as_view(template_name='homepage.html'), name='home'),
@@ -38,4 +39,5 @@ urlpatterns = [
     url(r'^trial1/',TemplateView.as_view(template_name='trial1.html'), name='trial1'),
     url(r'^blogs/',TemplateView.as_view(template_name='blogs.html'), name='blogs'),
     url(r'^compare/',TemplateView.as_view(template_name='compare.html'), name='compare'),
+    url(r'^stock-view/(?P<pk>\d+)/$',stockview.stock_view,name='stockview')
 ]
