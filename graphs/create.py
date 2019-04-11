@@ -2,12 +2,13 @@ class linechart:
 		
 	def plot(self,lockto,y_val,xlabel='',ylabel='',displayheader = ''):
 		y_val=list(y_val)
+		false = False
 		body = {
 			'bindto': '#'+lockto ,
 			'data': {
 				'columns':
 					y_val,
-				# 'type': 'spline'
+				'type': 'area'
 				},
 			'axis': {
 				'x': {
@@ -20,10 +21,16 @@ class linechart:
 		            'label': {
 		                'text': ylabel,
 		                'position': 'outer-middle'
-		            }
+		            },
+		            # 'min': 0.999,
 		        }
 			},
-
+			'color': {
+		        'pattern': ['#00FF00']
+		    },
+			'area': {
+				'zerobased': 0
+			}
 #			'tooltip': {
 #		        'format': {
 #		            'title': function (d) {' +displayheader+  '},

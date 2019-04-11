@@ -30,7 +30,7 @@
           <li><a href="#">Compare And Analyse</a></li>
         </ul>
         <ul class="right hide-on-med-and-down">
-          <li><a href="#">Home</a></li>
+          <li><a href="{% url 'home' %}">Home</a></li>
         </ul>
         <ul class="right hide-on-med-and-down">
           <li><a href="#"></a></li>
@@ -81,12 +81,14 @@
       </canvas> -->
       <div id = "mygraph1" style="height: 300px"></div>
       <br /><br />
-      <a
+      <!-- <a
         class="waves-effect waves-light btn-large modal-trigger"
-        href="#modal1"
+        href="{% url 'stockpredict' 1 %}"
         style="margin-left: 3%; background-color:dodgerblue; margin: auto; display: block"
         >Predict Future Trend</a
-      >
+      > -->
+      {% block button %}
+      {% endblock %}
       <!-- Modal Structure -->
       <div id="modal1" class="modal">
         <div class="modal-content">
@@ -146,8 +148,6 @@
       <div class="footer-copyright"></div>
     </footer>
 
-<script>
-  var chart = c3.generate({{ stockview|safe }})
-</script>
+{% block cont %}{% endblock %}
 
 {% endblock %}

@@ -1,0 +1,10 @@
+{% extends 'compare.html' %}
+{% load static %}
+
+{% block title %}Stock View{% endblock %}
+
+{% block cont %}
+<script>
+  var chart = c3.generate({{ stockview|safe }});
+</script>
+{% endblock %}

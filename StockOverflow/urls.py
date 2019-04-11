@@ -39,5 +39,9 @@ urlpatterns = [
     url(r'^trial1/',TemplateView.as_view(template_name='trial1.html'), name='trial1'),
     url(r'^blogs/',TemplateView.as_view(template_name='blogs.html'), name='blogs'),
     url(r'^compare/',TemplateView.as_view(template_name='compare.html'), name='compare'),
-    url(r'^stock-view/(?P<pk>\d+)/$',stockview.stock_view,name='stockview')
+    url(r'^stock-view/(?P<pk>\d+)/$',stockview.stock_view,name='stockview'),
+    url(r'^stock-view/$',TemplateView.as_view(template_name='compare.html'), name='default-stockview'),
+    url(r'^stock-view/(?P<pk>\d+)/$',stockview.stock_view,name='stockview'),
+    url(r'^stock-predict/(?P<pk>\d+)/$',stockview.stock_predict,name='stockpredict'),
+
 ]
