@@ -74,15 +74,23 @@ body{
 }
 
 .navbar-custom {
-    background-color: #0d1e3a;
+    background-color: #000;
 }
 
 .nav-item{
-  font-weight: 600;
+/*  font-weight: 600;*/
+}
+
+.navbar-inverse .navbar-nav>li>a{
+	color:#fff;
+}
+.navbar-inverse .navbar-brand{
+	color:#fff;
 }
 
 .nav-item:hover{
   color: white;
+  transform : scale(1.12);
   transition: 0.7s;
 }
 
@@ -237,7 +245,7 @@ body{
   left: 0;
   bottom: 0;
   width: 100%;
-  background-color: #0d1e3a;
+  background-color: #000;
   color: white;
  /*text-align: center;*/
   padding: 25px 70px 25px 70px;
