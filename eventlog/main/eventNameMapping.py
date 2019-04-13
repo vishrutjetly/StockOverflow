@@ -1,7 +1,6 @@
 import re
 
 from . import urls
-from . import handlers
 
 def get_eventName_from_request(request):
     

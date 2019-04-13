@@ -18,9 +18,10 @@
 <script>
   var chart = c3.generate({{ stockview|safe }});
 </script>
-<script type="text/javascript">
+<!-- <script type=>
+	$("")
 	setTimeout(function(){// wait for 5 secs(2)
            location.reload(); // then reload the page.(3)
       }, 500000);
-</script>
+</script> -->
 {% endblock %}

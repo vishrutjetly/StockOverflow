@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'session_security',
     'stocks',
+    'eventlog',
+    'rest_framework',
 ]
 
 SITE_ID = 1
@@ -76,6 +78,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'session_security.middleware.SessionSecurityMiddleware',
+    'eventlog.middleware.Middleware',
 ]
 INTERNAL_IPS = [
     '127.0.0.1',

@@ -1,36 +1,6 @@
 import time
 import datetime
 
-from Community.models import CommunityArticles
-from Group.models import GroupArticles
-from BasicArticle.models import Articles
-
-def get_community_info_from_article_info(data):
-    args = data['view_kwargs']
-    if 'pk' in list(args.keys()):
-        article_id = args['pk']
-    else:
-        return ""
-    objs = CommunityArticles.objects.filter(article=article_id)
-    if len(objs) > 0:
-        community_id = objs.first().community_id
-        return community_id
-    else:
-        return ""
-
-def get_group_info_from_article_info(data):
-    args = data['view_kwargs']
-    if 'pk' in list(args.keys()):
-        article_id = args['pk']
-    else:
-        return ""
-    objs = GroupArticles.objects.filter(article=article_id)
-    if len(objs) > 0:
-       group_id = objs.first().group_id
-       return group_id
-    else:
-        return ""
-
 def process_user_agent(data):
     request = data['request']
     remote_addr = request.META.get('HTTP_USER_AGENT')
@@ -97,21 +67,7 @@ def process_user_info(data):
     else:
         return ""
 
-def process_community_info(data):
-    args = data['view_kwargs']
-    if 'pk' in list(args.keys()):
-        return args['pk']
-    else:
-        return ""
-
-def process_group_info(data):
-    args = data['view_kwargs']
-    if 'pk' in list(args.keys()):
-        return args['pk']
-    else:
-        return ""
-
-def process_article_info(data):
+def process_stock_info(data):
     args = data['view_kwargs']
     if 'pk' in list(args.keys()):
         return args['pk']
@@ -126,27 +82,11 @@ def process_time_stamp(data):
 def proces_attach_event_source(data):
     return 'server'
 
-def process_article_state(data):
-    request = data['request']
-    try:
-        state = request.POST.__getitem__("state")
-        return state
-    except KeyError:
-        return ""
-
 def process_cid(data):
     request = data['request']
     try:
         cid = request.POST.__getitem__('cid')
         return cid
-    except KeyError:
-        return ""
-
-def process_gid(data):
-    request = data['request']
-    try:
-        gid = request.POST.__getitem__('gid')
-        return gid
     except KeyError:
         return ""
 
@@ -165,79 +105,3 @@ def  process_username_info(data):
         return args['username']
     else:
         return ""
-
-def process_coursename_info(data):
-    request = data['request']
-    try:
-        coursename = request.POST.__getitem__('name')
-        return coursename
-    except:
-        return ""
-
-def process_course_info(data):
-    args = data['view_kwargs']
-    if 'pk' in list(args.keys()):
-        return args['pk']
-    else:
-        return ""
-
-def process_post_community_name(data):
-    request = data['request']
-    try:
-        communityname = request.POST.__getitem__('name')
-        return communityname
-    except:
-        return ""
-
-def process_comment_reply_to(data):
-    request = data['request']
-    try:
-        reply_to = request.POST.__getitem__('reply_to')
-        return reply_to
-    except:
-        return ""
-
-def process_comment_object_pk(data):
-    request = data['request']
-    try:
-        objectpk = request.POST.__getitem__('object_pk')
-        return objectpk
-    except:
-        return ""
-
-def process_post_group_name(data):
-    request = data['request']
-    try:
-        group_name = request.POST.__getitem__('name')
-        return group_name
-    except:
-        return ""
-
-def process_manage_group_role(data):
-    request = data['request']
-    try:
-        role = request.POST.__getitem__('role')
-        return role
-    except:
-        return ""
-
-def process_manage_group_status(data):
-    request = data['request']
-    try:
-        status = request.POST.__getitem__('status')
-        return status
-    except:
-        return ""
-
-def get_article_state_info(data):
-    args = data['view_kwargs']
-    if 'pk' in list(args.keys()):
-        article_id = args['pk']
-    else:
-        return ""
-    try:
-        articles = Articles.objects.get(pk=article_id)
-        return str(articles.state)
-    except:
-        return ""
-
