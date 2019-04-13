@@ -78,12 +78,12 @@
 						</span>
 					</div>
 
-					<a href="#" class="btn-face m-b-10">
+					{% comment %} <a href="#" class="btn-face m-b-10">
 						<i class="fa fa-facebook-official"></i>
 						Facebook
-					</a>
-
-					<a href="{% url 'social:begin' 'google-oauth2' %}" class="btn-google m-b-10">
+					</a> {% endcomment %}
+					
+					 <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn-google m-b-10">
 						<img src="{%static 'images/icons/icon-google.png'%}" alt="GOOGLE">
 						Google
 					</a>
