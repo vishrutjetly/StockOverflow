@@ -43,5 +43,6 @@ urlpatterns = [
     url(r'^stock-view/$',TemplateView.as_view(template_name='compare.html'), name='default-stockview'),
     url(r'^stock-view/(?P<pk>\d+)/$',stockview.stock_view,name='stockview'),
     url(r'^stock-predict/(?P<pk>\d+)/$',stockview.stock_predict,name='stockpredict'),
+    url(r'^logapi/', include('eventlog.api.urls', namespace="api-log")),
 
 ]

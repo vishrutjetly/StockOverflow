@@ -36,7 +36,7 @@ def stock_view(request,pk):
 	div_id = "mygraph1"
 
 	view = create.data_plot(div_id, 'linechart', val, data_label, xlabel, ylabel)
-	return render(request, 'stockview.html',{'stockview':view})
+	return render(request, 'stockview.html',{'stockview':view,'pk':pk})
 
 def stock_predict(request,pk):
 	if request.user.is_authenticated():

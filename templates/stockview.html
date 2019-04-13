@@ -4,16 +4,23 @@
 {% block title %}Stock View{% endblock %}
 
 {% block button %}
+{{myhtml|safe}}{% autoescape off%}
 <a
     class="waves-effect waves-light btn-large modal-trigger"
-    href="{% url 'stockpredict' 1 %}"
+    href="{% url 'stockpredict' pk %}"
     style="margin-left: 3%; background-color:dodgerblue; margin: auto; display: block"
     >Predict Future Trend</a
   >
+ {% endautoescape%}
 {% endblock %}
  
 {% block cont %}
 <script>
   var chart = c3.generate({{ stockview|safe }});
+</script>
+<script type="text/javascript">
+	setTimeout(function(){// wait for 5 secs(2)
+           location.reload(); // then reload the page.(3)
+      }, 500000);
 </script>
 {% endblock %}

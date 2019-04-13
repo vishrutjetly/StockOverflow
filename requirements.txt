@@ -10,3 +10,5 @@ django-session-security
 pandas
 numpy
 sklearn
+elasticsearch
+djangorestframework==3.6.4
