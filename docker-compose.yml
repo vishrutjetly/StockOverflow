@@ -2,19 +2,6 @@ version: '3'
 
 services:
 
-  # db:
-  #   image: mongo:latest
-  #   environment:
-  #     - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
-  #     - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
-  #     - MONGODB_USERNAME=test
-  #     - MONGODB_PASSWORD=test123
-  #     - MONGODB_DATABASE=test1
-  #   ports:
-  #     - "27017:27017"
-  # db:
-  #   image: postgres
-
   elasticsearch:
     build:
       context: elasticsearch/
@@ -45,18 +32,18 @@ services:
       app_net:
         ipv4_address: 172.0.0.40
 
-  kibana:
-    build:
-      context: kibana/
-    volumes:
-      - ./kibana/config/:/usr/share/kibana/config:ro
-    ports:
-      - "5601:5601"
-    depends_on:
-      - elasticsearch
-    networks:
-      app_net:
-        ipv4_address: 172.0.0.30
+  # kibana:
+  #   build:
+  #     context: kibana/
+  #   volumes:
+  #     - ./kibana/config/:/usr/share/kibana/config:ro
+  #   ports:
+  #     - "5601:5601"
+  #   depends_on:
+  #     - elasticsearch
+  #   networks:
+  #     app_net:
+  #       ipv4_address: 172.0.0.30
 
   db:
     image: mysql:5.7
@@ -76,7 +63,7 @@ services:
       - "3306"
 
   web:
-    restart: on-failure
+    restart: always
     build: .
     ports:
       - "7000:8000"
@@ -86,7 +73,7 @@ services:
     depends_on:
       - db
       - elasticsearch
-      - kibana 
+      # - kibana 
       - logstash
     networks:
       app_net:

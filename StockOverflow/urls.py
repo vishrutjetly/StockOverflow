@@ -44,5 +44,5 @@ urlpatterns = [
     url(r'^stock-view/(?P<pk>\d+)/$',stockview.stock_view,name='stockview'),
     url(r'^stock-predict/(?P<pk>\d+)/$',stockview.stock_predict,name='stockpredict'),
     url(r'^logapi/', include('eventlog.api.urls', namespace="api-log")),
-
+    url(r'^profile/$', user_views.user_profile, name ='userprofile' ),
 ]
