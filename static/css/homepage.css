@@ -241,7 +241,7 @@ body{
 /*----------FOOTER----------------*/
 .futer {
   padding : 50px 25px 50px 25px;
-  position: absolute;
+  /*position: absolute;*/
   left: 0;
   bottom: 0;
   width: 100%;
