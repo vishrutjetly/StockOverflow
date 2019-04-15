@@ -7,10 +7,10 @@
 <ul id="dropdown1" class="dropdown-content">
       <li><a href="#!" style="color:cornflowerblue">My Profile</a></li>
       <li>
-        <a href="{% url 'portfolio'%}" style="color:cornflowerblue">Portfolio</a>
+        <a href="#" style="color:cornflowerblue">Portfolio</a>
       </li>
-      <li><a href="{% url 'settings'%}" style="color:cornflowerblue">Settings</a></li>
-      <li><a href="{% url 'logout'%}" style="color:cornflowerblue">Logout</a></li>
+      <li><a href="#" style="color:cornflowerblue">Settings</a></li>
+      <li><a href="#" style="color:cornflowerblue">Logout</a></li>
     </ul>
     <!--===============================================================================================-->
     <!-- Also changed the init.js javascript file -->
@@ -21,16 +21,16 @@
         <a id="logo-container" href="#" class="brand-logo">StockOverflow</a>
         <ul class="right hide-on-med-and-down">
           <li>
-            <a class="dropdown-trigger" href="{% url 'myaccount'%}" data-target="dropdown1"
+            <a class="dropdown-trigger" href="#" data-target="dropdown1"
               >My Account<i class="material-icons right">arrow_drop_down</i></a
             >
           </li>
         </ul>
         <ul class="right hide-on-med-and-down">
-          <li><a href="{% url 'compare'%}">Compare And Analyse</a></li>
+          <li><a href="#">Compare And Analyse</a></li>
         </ul>
         <ul class="right hide-on-med-and-down">
-          <li><a href="{% url 'homepage'%}">Home</a></li>
+          <li><a href="{% url 'home' %}">Home</a></li>
         </ul>
         <ul class="right hide-on-med-and-down">
           <li><a href="#"></a></li>
@@ -71,21 +71,24 @@
     </div>
 
     <div class="container">
-      <canvas
-        id="myChart"
+      <!-- <canvas
+        id="mygraph1"
         class="chartjs"
         width="1000"
         height="400"
         style="display: block"
       >
-      </canvas>
+      </canvas> -->
+      <div id = "mygraph1" style="height: 300px"></div>
       <br /><br />
-      <a
+      <!-- <a
         class="waves-effect waves-light btn-large modal-trigger"
-        href="#modal1"
+        href="{% url 'stockpredict' 1 %}"
         style="margin-left: 3%; background-color:dodgerblue; margin: auto; display: block"
         >Predict Future Trend</a
-      >
+      > -->
+      {% block button %}
+      {% endblock %}
       <!-- Modal Structure -->
       <div id="modal1" class="modal">
         <div class="modal-content">
@@ -144,4 +147,7 @@
       </div>
       <div class="footer-copyright"></div>
     </footer>
+
+{% block cont %}{% endblock %}
+
 {% endblock %}

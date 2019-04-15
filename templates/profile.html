@@ -1,0 +1,60 @@
+{% extends 'base2.html' %}
+{% load static %}
+
+{% block title %}User Profile{% endblock %}
+ 
+{% block content %}
+
+<div class="col-md-4">
+	  <div class="pricing-head">
+	        <h5>Most Viewed Stocks</h5>
+	        <h6>
+	        {{myhtml|safe}}{% autoescape off%}
+	        {% if status == 'not found' %}
+	        	<h5>No recent activity</h5>
+	        {% else %}
+		        {% for stock in stocks %}
+			        <i class="fa fa-pencil" style="top:3px;"></i>
+			        <a href="{% url 'stockview' stock.stock_id %}"> {{ stock.stock_name }}</a><br>
+		        {% endfor %}
+	        {% endif %}
+	        {% endautoescape%} 
+	        </h6>
+	  </div>
+	</div>
+	<div class="col-md-4">
+	  <div class="pricing-head">
+	        <h5>Recently Viewed Stocks</h5>
+	        <h6>
+	        {{myhtml|safe}}{% autoescape off%}
+	        {% if status2 == 'not found' %}
+	        	<h5>No recent activity</h5>
+	        {% else %}
+		        {% for stock in stocks_recent %}
+			        <i class="fa fa-pencil" style="top:3px;"></i>
+			        <a href="{% url 'stockview' stock.stock_id %}"> {{ stock.stock_name }}</a><br>
+		        {% endfor %}
+	        {% endif %}
+	        {% endautoescape%} 
+	        </h6>
+	  </div>
+	</div>
+	<div class="col-md-4">
+	  <div class="pricing-head">
+	        <h5>Trending Stocks</h5>
+	        <h6>
+	        {{myhtml|safe}}{% autoescape off%}
+	        {% if status3 == 'not found' %}
+	        	<h5>No recent activity</h5>
+	        {% else %}
+		        {% for stock in stocks_trending %}
+			        <i class="fa fa-pencil" style="top:3px;"></i>
+			        <a href="{% url 'stockview' stock.stock_id %}"> {{ stock.stock_name }}</a><br>
+		        {% endfor %}
+	        {% endif %}
+	        {% endautoescape%} 
+	        </h6>
+	  </div>
+	</div>
+
+{% endblock %}

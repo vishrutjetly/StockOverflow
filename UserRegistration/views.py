@@ -11,6 +11,11 @@ from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
 from django.contrib import messages
 from django.contrib.auth.forms import PasswordChangeForm
+from decouple import config
+import requests
+from stocks.models import Stock
+
+URL_BASIC = config('URL_BASIC')
 
 def signup(request):
     if request.method == 'POST':
@@ -46,7 +51,7 @@ def signup(request):
         form = SignUpForm()
     return render(request, 'signup.html', {'form': form})
 
-def activate(request, uidb64, token):
+def activate(request, uidb64, token, backend='django.contrib.auth.backends.ModelBackend'):
     try:
         uid = force_text(urlsafe_base64_decode(uidb64))
         user = User.objects.get(pk=uid)
@@ -55,7 +60,7 @@ def activate(request, uidb64, token):
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
         user.save()
-        login(request, user)
+        login(request, user,backend='django.contrib.auth.backends.ModelBackend')
         # return redirect('home')
         return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
     else:
@@ -76,3 +81,85 @@ def change_password(request):
     return render(request, 'change_password.html', {
         'form': form
     })
+
+def user_profile(request):
+	if request.user.is_authenticated():
+		data_mostviewed = requests.get(URL_BASIC + 'logapi/user/{!s}/event/stock/view/?limit=5&agg_type=terms&agg_field=stock-id'.format(request.user.id)).json()
+
+		stocks=[]
+		status = 'found'
+		if 'status code' in list(data_mostviewed.keys()) and data_mostviewed['status code'] == 200:
+			stocks_keys = []
+			for item in data_mostviewed['result']:
+				stocks_keys.append(item['key'])
+			if len(stocks_keys) == 0:
+				status = 'not found'
+			else:
+				for key in stocks_keys:
+					try:
+						stock_name = Stock.objects.filter(id=key).first().name
+						stocks.append({'stock_id':key,'stock_name':stock_name})
+					except:
+						continue
+		else:
+			status = 'not found'
+
+		print("\n\n\n\n",stocks,"\n\n\n\n")
+		stocks_recent=[]
+		recently_viewed = []
+
+		recently_viewed = requests.get(URL_BASIC + 'logapi/user/{!s}/event/stock/view/?after=1970-1-1T0:0:0&limit=1000'.format(request.user.id)).json()
+
+		status2 = 'found'
+		if 'status code' in list(recently_viewed.keys()) and recently_viewed['status code'] == 200:
+			stocks_keys = []
+			for item in recently_viewed['result']:
+				stocks_keys.append(item['event']['stock-id'])
+			if len(stocks_keys) == 0:
+				status2 = 'not found'
+			else:
+				used = set()
+				stocks_keys = [x for x in stocks_keys  if x not in used and (used.add(x) or True)]
+				if len(stocks_keys)>5:
+					stocks_keys=stocks_keys[:5]
+				print(stocks_keys)
+				for key in stocks_keys:
+					try:
+						stock_name = Stock.objects.filter(id=key).first().name
+						stocks_recent.append({'stock_id':key,'stock_name':stock_name})
+					except:
+						continue
+		else:
+			status2 = 'not found'
+
+		stocks_trending=[]
+
+		trending = requests.get(URL_BASIC + 'logapi/event/stock/view/?after=1970-1-1T0:0:0&limit=10').json()
+
+		status3 = 'found'
+		if 'status code' in list(trending.keys()) and trending['status code'] == 200:
+			stocks_keys = []
+			for item in trending['result']:
+				stocks_keys.append(item['event']['stock-id'])
+			if len(stocks_keys) == 0:
+				status3 = 'not found'
+			else:
+				used = set()
+				stocks_keys = [x for x in stocks_keys  if x not in used and (used.add(x) or True)]
+				if len(stocks_keys)>5:
+					stocks_keys=stocks_keys[:5]
+				print(stocks_keys)
+				for key in stocks_keys:
+					try:
+						stock_name = Stock.objects.filter(id=key).first().name
+						stocks_trending.append({'stock_id':key,'stock_name':stock_name})
+					except:
+						continue
+		else:
+			status3 = 'not found'
+
+
+		return render(request, 'profile.html',{'stocks':stocks, 'stocks_recent': stocks_recent, 'status2':status2, 'status3': status3, 'stocks_trending': stocks_trending})
+
+	else:
+		return redirect('/login/?next=/profile/')	

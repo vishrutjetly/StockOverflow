@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Add Portfolio</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+
+  <!-- AOS -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+  <script src="temp.js"></script>
+  <link rel="stylesheet" href="temp.css">
+  <link rel="stylesheet" href="cardflip.css">
+</head>
+
+<body style="padding-top:50px;">
+
+<!--***************NAVBAR******************-->
+  <nav class="navbar navbar-inverse navbar-fixed-top navbar-custom">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#" style="padding-left:100px">Website Name/Logo </a>
+      </div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav navbar-right" style="padding-right:100px;">
+          <li class="active-custom"><a href="#" class="nav-item"><i class="fa fa-home" style="font-size:20px"></i> Home</a></li>
+          <li class="dropdown nav-item">
+            <a class="dropdown-toggle nav-item" data-toggle="dropdown" href="#">Page 1 <span class="caret"></span></a>
+            <ul class="dropdown-menu animate slideIn">
+              <li><a href="#">Page 1-1</a></li>
+              <li><a href="#">Page 1-2</a></li>
+              <li><a href="#">Page 1-3</a></li>
+            </ul>
+          </li>
+          <li><a class="nav-item" href="#">Page 2</a></li>
+          <li><a class="nav-item" href="#"><span class="nav-item glyphicon glyphicon-user"></span> Signin</a></li>
+          <li><a class="nav-item" href="#"><span class="nav-item glyphicon glyphicon-log-in"></span> Login</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+
+<!--****************FORM******************-->
+<div class="container">
+  <div class="row" align="center" style="padding:135px 0px 0px 0px;">
+    <h1>Add Portfolio</h1>
+  </div>
+  <form class="" action="" method="post">
+    <div class="row" style="padding:30px 0px 0px 0px;">
+      <div class="col-md-2">
+
+      </div>
+      <div class="col-md-8 col-sm-12">
+
+        <!--<div class="form-group col-md-12">
+          <label>Company/Stock Name</label>
+          <select class="form-control">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+          </select>
+        </div>-->
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label>Company/Stock Name</label>
+            <select class="form-control" style="max-height:100px;overflow-y:scroll;">
+              <option value="" disabled selected>Select name</option>
+              <option>A</option>
+              <option>B</option>
+              <option>C</option>
+              <option>D</option>
+              <option>Es</option>
+            </select>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="inputEmail4">Trade Date</label>
+            <input type="date" class="form-control">
+          </div>
+        </div>
+        <!--<div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="inputEmail4">Trade Date</label>
+            <input type="datetime-local" class="form-control">
+            <div class="input-group date" data-provide="datepicker" class="datepicker">
+                <input type="text" class="form-control">
+                <div class="input-group-addon">
+                    <span class="glyphicon glyphicon-th"></span>
+                </div>
+            </div>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="inputPassword4">Trade Type</label>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+              <label class="form-check-label" for="exampleRadios1">
+                Buy Trade
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+              <label class="form-check-label" for="exampleRadios2">
+                Opening Balance
+              </label>
+            </div>
+          </div>
+        </div>-->
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="inputAddress">Quantity</label>
+            <input type="number" class="form-control" min="" max="" value="0">
+          </div>
+          <div class="form-group col-md-6">
+            <label for="inputAddress2">Unit/Share Price</label>
+            <input type="number" class="form-control" step="0.01" min="" max="" value="0.00">
+          </div>
+        </div>
+        <!--<div class="form-group">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="gridCheck">
+            <label class="form-check-label" for="gridCheck">
+              Check me out
+            </label>
+          </div>
+        </div>-->
+      </div>
+    <div class="col-md-2">
+
+    </div>
+  </div>
+  <div class="row" align="center" style="padding:10px 0px 135px 0px;">
+    <button type="submit" class="btn btn-primary">Save Trade</button>
+  </div>
+  </form>
+</div>
+
+
+<!--***************FOOTER***************-->
+  <div class="futer">
+    <div class="row">
+      <div class="col-12 col-sm-6">
+        Left
+      </div>
+      <div class="col-12 col-sm-6">
+        <p>CONTACT US</p>
+        <p><i class="fa fa-phone futer-icon"></i> &nbsp Phone :</p>
+        <p><i class="fa fa-envelope futer-icon"></i> &nbsp Email :</p>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
