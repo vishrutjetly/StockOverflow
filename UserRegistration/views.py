@@ -67,20 +67,23 @@ def activate(request, uidb64, token, backend='django.contrib.auth.backends.Model
         return HttpResponse('Activation link is invalid!')
 
 def change_password(request):
-    if request.method == 'POST':
-        form = PasswordChangeForm(request.user, request.POST)
-        if form.is_valid():
-            user = form.save()
-            update_session_auth_hash(request, user) 
-            messages.success(request, 'Your password was successfully updated!')
-            return redirect('home')
-        else:
-            messages.error(request, 'Please correct the error below.')
-    else:
-        form = PasswordChangeForm(request.user)
-    return render(request, 'change_password_new.html', {
-        'form': form
-    })
+	if request.user.is_authenticated():
+	    if request.method == 'POST':
+	        form = PasswordChangeForm(request.user, request.POST)
+	        if form.is_valid():
+	            user = form.save()
+	            update_session_auth_hash(request, user) 
+	            messages.success(request, 'Your password was successfully updated!')
+	            return redirect('home')
+	        else:
+	            messages.error(request, 'Please correct the error below.')
+	    else:
+	        form = PasswordChangeForm(request.user)
+	    return render(request, 'change_password_new.html', {
+	        'form': form
+	    })
+	else:
+		return redirect('/login/?next=/passchange/')
 
 def user_profile(request):
 	if request.user.is_authenticated():
