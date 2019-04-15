@@ -1,5 +1,5 @@
-"""StockOverflow URL Configuration
 
+"""StockOverflow URL Configuration
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/1.11/topics/http/urls/
 Examples:
@@ -45,4 +45,5 @@ urlpatterns = [
     url(r'^stock-predict/(?P<pk>\d+)/$',stockview.stock_predict,name='stockpredict'),
     url(r'^logapi/', include('eventlog.api.urls', namespace="api-log")),
     url(r'^profile/$', user_views.user_profile, name ='userprofile' ),
+    url(r'^portfolio/',include('portfolio.urls')),
 ]
