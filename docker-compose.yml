@@ -15,7 +15,7 @@ services:
     networks:
       app_net:
         ipv4_address: 172.0.0.50
- 
+
   logstash:
     build:
       context: logstash/
@@ -32,18 +32,18 @@ services:
       app_net:
         ipv4_address: 172.0.0.40
 
-  # kibana:
-  #   build:
-  #     context: kibana/
-  #   volumes:
-  #     - ./kibana/config/:/usr/share/kibana/config:ro
-  #   ports:
-  #     - "5601:5601"
-  #   depends_on:
-  #     - elasticsearch
-  #   networks:
-  #     app_net:
-  #       ipv4_address: 172.0.0.30
+  kibana:
+    build:
+      context: kibana/
+    volumes:
+      - ./kibana/config/:/usr/share/kibana/config:ro
+    ports:
+      - "5601:5601"
+    depends_on:
+      - elasticsearch
+    networks:
+      app_net:
+        ipv4_address: 172.0.0.30
 
   db:
     image: mysql:5.7
@@ -73,7 +73,7 @@ services:
     depends_on:
       - db
       - elasticsearch
-      # - kibana 
+      # - kibana
       - logstash
     networks:
       app_net:
