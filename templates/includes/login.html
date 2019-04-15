@@ -8,6 +8,7 @@
   </div>
 {% endif %}
 {% for field in form %}
+<h5>{{ field.text.label }}</h5>
   {% if form.is_bound %}
     {% if field.errors %}
       <div class="wrap-input100 validate-input m-b-16">
