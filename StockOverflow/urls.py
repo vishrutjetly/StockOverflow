@@ -36,4 +36,5 @@ urlpatterns = [
     url(r'^reset/done/$', auth_views.password_reset_complete, {'template_name':'password_reset_complete.html'}, name='password_reset_complete'),
     url(r'^trial/',TemplateView.as_view(template_name='trial.html'), name='trial'),
     url(r'^trial123',TemplateView.as_view(template_name='trial1.html'), name='trial1'),
+    url(r'^portfolio/',include('portfolio.urls')),
 ]

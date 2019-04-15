@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'social_django',
     'widget_tweaks',
     'session_security',
+    'portfolio',
 ]
 
 SITE_ID = 1
@@ -86,7 +87,7 @@ ROOT_URLCONF = 'StockOverflow.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [ os.path.join(BASE_DIR, "templates"),],
+        'DIRS': [ os.path.join(BASE_DIR, "templates"), "template_portfolio"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -162,7 +163,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'), 
+    os.path.join(BASE_DIR, 'static'),
 ]
 
 LOGIN_REDIRECT_URL = 'home'
@@ -176,3 +177,7 @@ EMAIL_PORT = config('EMAIL_PORT', cast=int)
 
 SESSION_SECURITY_EXPIRE_AFTER=10
 SESSION_EXPIRE_AT_BROWSER_CLOSE=True
+
+
+MEDIA_URL = '/portfolio/'
+MEDIA_ROOT = os.path.join(BASE_DIR,'portfolio')
