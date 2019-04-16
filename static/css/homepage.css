@@ -74,7 +74,7 @@ body{
 }
 
 .navbar-custom {
-    background-color: #000;
+    background-color: #2ab6f6;
 }
 
 .nav-item{
@@ -96,7 +96,7 @@ body{
 }
 
 li:hover{
-  background-color:#686a6d;
+  background-color:#0091d3;
 }
 
 .active-custom{
@@ -250,7 +250,7 @@ li:hover{
   left: 0;
   bottom: 0;
   width: 100%;
-  background-color: #000;
+  background-color: #ff9b44;
   color: white;
  /*text-align: center;*/
   padding: 25px 70px 25px 70px;
