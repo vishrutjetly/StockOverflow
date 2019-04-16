@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.shortcuts import get_object_or_404
 from stocks.models import Stock
 from graphs import create
-from stocks.models import Stock
+from stocks.models import Stock,Wishlist
 
 import pandas as pd
 import numpy as np
@@ -23,6 +23,7 @@ from sklearn.linear_model import LinearRegression
 # from sklearn import preprocessing, cross_validation, svm
 
 from decouple import config
+from .forms import SearchStock
 
 URL_BASIC = config('URL_BASIC')
 
@@ -66,3 +67,52 @@ def stock_predict(request,pk):
 
 	else:
 		return redirect('/login/?next=/stock-predict/'+str(pk)+'/')
+
+def add_wishlist(request):
+	if request.user.is_authenticated():
+		if request.method == 'POST':
+			print("\n\n\n\n\nOKAY!!\n\n\n\n")
+			# status = request.POST['status']
+			# pk = request.POST['stock-id']
+			# stock = get_object_or_404(Stock, pk = pk)
+			# # a1 = Wishlist(user = request.user)
+			# # a1.save()
+			# # a1.stock.add(stock)
+			# # a1.save()
+			# wishlist = Wishlist.objects.create(user = request.user, stock = stock)
+			# return redirect('userprofile')
+	else:
+		return redirect('login')
+
+def rem_wishlist(request):
+	if request.user.is_authenticated():
+		if request.method == "POST":
+			status = request.POST['status']
+			pk = request.POST['wishlist-id']
+			wishlist = get_object_or_404(Wishlist, pk)
+			wishlist.delete()
+			return redirect('userprofile')
+	else:
+		return redirect('login')
+
+def find_stock(request):
+	stock_all = Stock.objects.all()
+	stock_name = []
+	for item in stock_all:
+		stock_name.append(str(item))
+	if request.method == "POST":
+		form = SearchStock(request.POST)
+		if form.is_valid():
+			stockname = form.cleaned_data['stock_name']
+			if stockname not in stock_name:
+				print(stockname)
+				not_found = stockname
+				return render(request, 'search_stock_notfound.html', {'form': form, 'stock_name': stock_name, 'not_found': not_found })
+			else:
+				stock = Stock.objects.filter(name = stockname)
+				# print(stock[0].pk)
+				return redirect('/stock-view/'+ str(stock[0].pk))
+	else:
+		form = SearchStock()
+		print("Norm")
+	return render(request, 'search_stock.html', {'form': form, 'stock_name': stock_name	})
