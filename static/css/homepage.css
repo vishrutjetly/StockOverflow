@@ -90,8 +90,13 @@ body{
 
 .nav-item:hover{
   color: white;
-  transform : scale(1.12);
+  /*transform : scale(1.12);*/
+  /*font-weight: 600;*/
   transition: 0.7s;
+}
+
+li:hover{
+  background-color:#686a6d;
 }
 
 .active-custom{
