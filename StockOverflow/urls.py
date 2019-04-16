@@ -40,10 +40,12 @@ urlpatterns = [
     url(r'^blogs/',TemplateView.as_view(template_name='blogs.html'), name='blogs'),
     url(r'^compare/',TemplateView.as_view(template_name='compare.html'), name='compare'),
     url(r'^stock-view/(?P<pk>\d+)/$',stockview.stock_view,name='stockview'),
-    url(r'^stock-view/$',TemplateView.as_view(template_name='compare.html'), name='default-stockview'),
+    # url(r'^stock-view/$',TemplateView.as_view(template_name='search_stock.html'), name='default-stockview'),
+    url(r'^stock-view/$',stockview.find_stock, name='default-stockview'),
     url(r'^stock-view/(?P<pk>\d+)/$',stockview.stock_view,name='stockview'),
     url(r'^stock-predict/(?P<pk>\d+)/$',stockview.stock_predict,name='stockpredict'),
     url(r'^logapi/', include('eventlog.api.urls', namespace="api-log")),
     url(r'^profile/$', user_views.user_profile, name ='userprofile' ),
     url(r'^portfolio/',include('portfolio.urls')),
+    url(r'^wishlist/$', stockview.add_wishlist, )
 ]

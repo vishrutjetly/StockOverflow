@@ -1,83 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <title>Homepage</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+{% extends 'base.html' %}
+{% load static %}
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+{% block title %} Stock View {% endblock %}
+{% block content %}
 
-  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
-
-  <!-- AOS -->
-  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-
-  <script>
-    AOS.init();
-  </script>
-
-  <script src="temp.js"></script>
-  <link rel="stylesheet" href="temp.css">
-  <link rel="stylesheet" href="cardflip.css">
-  <link rel="stylesheet" href="logincss.css">
-</head>
-
-<body style="padding-top:50px;">
-
-<!--***************NAVBAR******************-->
-  <nav class="navbar navbar-inverse navbar-fixed-top navbar-custom">
-    <div class="container-fluid">
-      <div class="navbar-header" style="padding-left:10%;">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="#" >Website Name/Logo </a>
-      </div>
-      <!--<form class="navbar-form navbar-left" autocomplete="off" action="">
-        <div class="input-group autocomplete">
-          <input type="text" class="form-control" id="myInput" placeholder="Search">
-          <div class="input-group-btn">
-            <button class="btn btn-default" type="submit">
-              <i class="glyphicon glyphicon-search"></i>
-            </button>
-          </div>
-        </div>
-      </form>-->
-      <div class="collapse navbar-collapse" id="myNavbar">
-        <ul class="nav navbar-nav navbar-right" style="padding-right:10%;">
-          <!--<li>
-            <form autocomplete="off" action="">
-              <div class="autocomplete" style="width:300px;">
-                <input id="myInput" type="text" name="myCountry" placeholder="Country">
-              </div>
-              <input type="submit">
-            </form>
-          </li>-->
-          <li class="active-custom"><a href="#" class="nav-item"><i class="fa fa-home" style="font-size:20px"></i> Home</a></li>
-          <li class="dropdown nav-item">
-            <a class="dropdown-toggle nav-item" data-toggle="dropdown" href="#">Page 1 <span class="caret"></span></a>
-            <ul class="dropdown-menu animate slideIn">
-              <li><a href="#">Page 1-1</a></li>
-              <li><a href="#">Page 1-2</a></li>
-              <li><a href="#">Page 1-3</a></li>
-            </ul>
-          </li>
-          <li><a class="nav-item" href="#">Page 2</a></li>
-          <li><a class="nav-item" href="#"><span class="nav-item glyphicon glyphicon-user"></span> Signin</a></li>
-          <li><a class="nav-item" href="#"><span class="nav-item glyphicon glyphicon-log-in"></span> Login</a></li>
-        </ul>
-      </div>
-    </div>
-  </nav>
+{% load widget_tweaks %}
 
 <div class="container" align="center  ">
   <div class="row" style="padding:10% 0 0 0;">
@@ -112,10 +39,12 @@
         </form>
       </div>
     -->
-      <form autocomplete="off" action="">
+      <form autocomplete="off" action="" method="post">
         <div class="">
           <div class="autocomplete">
-            <input id="myInput" type="text" name="myCountry" placeholder="Type here...">
+          	{% csrf_token %}
+          	{% render_field form.stock_name id="myInput" type="text" placeholder="Search Stock"%}
+            <!-- <input id="myInput" type="text" placeholder="Search Stock"> -->
           </div>
           <button type="submit" class="btn btn-default">
             <span class="glyphicon glyphicon-search"></span>
@@ -127,21 +56,9 @@
 
     </div>
   </div>
-</div>
-<!--***************FOOTER***************-->
-  <div class="futer">
-    <div class="row">
-      <div class="col-12 col-sm-6">
-        Left
-      </div>
-      <div class="col-12 col-sm-6">
-        <p>CONTACT US</p>
-        <p><i class="fa fa-phone futer-icon"></i> &nbsp Phone :</p>
-        <p><i class="fa fa-envelope futer-icon"></i> &nbsp Email :</p>
-      </div>
-    </div>
+  {% block error %}
+  {% endblock %}
   </div>
-
   <script>
   function autocomplete(inp, arr) {
     /*the autocomplete function takes two arguments,
@@ -241,8 +158,12 @@
   }
 
   /*An array containing all the country names in the world:*/
-  var stocks = ["stock1","stock2","stock3"];
-
+  var i=0;
+  var stocks = []
+  {% for item in stock_name %}
+	  stocks[i] = "{{item}}";
+	  i = i + 1
+  {% endfor %}
   /*initiate the autocomplete function on the "myInput" element, and pass along the countries array as possible autocomplete values:*/
   autocomplete(document.getElementById("myInput"), stocks);
   </script>
@@ -308,8 +229,4 @@
   }
   </style>
 
-  <script>
-    AOS.init();
-  </script>
-</body>
-</html>
+{% endblock %}
