@@ -1,0 +1,256 @@
+body{
+  font-family: "Raleway", sans-serif;
+  height: 100%;
+}
+/*
+.navbar {
+  min-height: 55px;
+}
+
+.navbar-brand {
+  padding: 0 15px;
+  height: 55px;
+  line-height: 60px;
+}
+
+.navbar-toggle {
+  margin-top: 23px;
+  padding: 9px 10px !important;
+}
+
+@media (min-width: 768px) {
+  .navbar-nav > li > a {
+    padding-top: 17px;
+    padding-bottom: 17px;
+    line-height: 27px;
+  }
+}
+*/
+
+
+
+@media (min-width: 992px) {
+  .animate {
+    animation-duration: 0.3s;
+    -webkit-animation-duration: 0.3s;
+    animation-fill-mode: both;
+    -webkit-animation-fill-mode: both;
+  }
+}
+
+@keyframes slideIn {
+  0% {
+    transform: translateY(1rem);
+    opacity: 0;
+  }
+  100% {
+    transform:translateY(0rem);
+    opacity: 1;
+  }
+  0% {
+    transform: translateY(1rem);
+    opacity: 0;
+  }
+}
+
+@-webkit-keyframes slideIn {
+  0% {
+    -webkit-transform: transform;
+    -webkit-opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateY(0);
+    -webkit-opacity: 1;
+  }
+  0% {
+    -webkit-transform: translateY(1rem);
+    -webkit-opacity: 0;
+  }
+}
+
+.slideIn {
+  -webkit-animation-name: slideIn;
+  animation-name: slideIn;
+}
+
+.navbar-custom {
+    background-color: #000;
+}
+
+.nav-item{
+/*  font-weight: 600;*/
+}
+
+.navbar-inverse .navbar-nav>li>a{
+	color:#fff;
+}
+.navbar-inverse .navbar-brand{
+	color:#fff;
+}
+
+.nav-item:hover{
+  color: white;
+  transform : scale(1.12);
+  transition: 0.7s;
+}
+
+.active-custom{
+  background-color: #003999;
+}
+
+/*-----------FIRST--------------*/
+.bgimg1{
+  background-position: center;
+  background-size: cover;
+  background-image: url("/static/images/img1.jpg");
+  min-height: 100%;
+  height: 738px;
+}
+
+/*-----------SECOND-------------*/
+.bgimg2{
+  background-position: center;
+  background-size: cover;
+  background-image: url("/static/images/img1.jpg");
+  height: 400px;
+  min-height: 50%;
+  border-radius: 15px;
+}
+
+.btn2{
+  background-color: black;
+  color:white;
+  height: 40px;
+  width: 200px;
+  padding: 0px 15px 0px 15px;
+  border: 5px solid transparent;
+  border-radius: 5px;
+}
+
+/*-----------THIRD----------------*/
+.content3{
+  background-color: black;
+}
+
+.bgimg3{
+  background-position: center;
+  background-size: cover;
+  background-image: url("/static/images/img1.jpg");
+  height: 500px;
+  min-height: 100%;
+  border-radius: 15px;
+}
+
+.desc3{
+  color:white;
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  height: 50%;
+  box-sizing: border-box;
+  padding: 0px 10px 10px 10px;
+  display: none;
+}
+
+.desc3inner{
+  padding: 0px 10px 0px 10px;
+}
+
+.btn3{
+  background-color: red;
+  color:white;
+  height: 40px;
+  width: 100%;
+  box-sizing: border-box;
+  border: 5px solid transparent;
+  border-radius: 5px;
+}
+
+.showdesc{
+  padding:0px 10px 10px 10px;
+  display: s;
+  width: 100%;
+  border: none;
+  position: absolute;
+  bottom: 5%;
+  text-align: center;
+}
+
+/*
+#showdesc1:hover + #desc31{
+  z-index: 1;
+}
+*/
+
+.showdescbtn{
+  color: white;
+  font-weight: 600;
+  background: transparent;
+  height: 50px;
+  width: 200px;
+  border : 3px solid white;
+  border-radius: 10px;
+}
+
+/*
+@media screen and (max-width: 576px){
+  content3row{
+    padding : 100px 200px 100px 200px;
+  }
+}
+*/
+
+/*-----------ABOUT US--------------*/
+.abtus-icon{
+  font-size:70px;
+  color:#0d1e3a;
+}
+
+.abtus-title{
+  font-size:20px;
+  padding:10px 0px 10px 0px;
+}
+
+.abtus-card{
+  padding : 0px 15px 0px 15px;
+}
+
+.abtus1{
+  transition-delay: 0s;
+}
+.abtus2{
+  transition-delay: 0.2s;
+}
+.abtus3{
+  transition-delay: 0.2s;
+}
+.abtus4{
+  transition-delay: 0s;
+}
+
+.btn3{
+  background-color: black;
+  color:white;
+  height: 35px;
+  width : 150px;
+  padding: 0px 15px 0px 15px;
+  border: 5px solid transparent;
+  border-radius: 5px;
+}
+
+/*----------FOOTER----------------*/
+.futer {
+  padding : 50px 25px 50px 25px;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #000;
+  color: white;
+ /*text-align: center;*/
+  padding: 25px 70px 25px 70px;
+}
+
+.futer-icon{
+  font-size:20px;
+}

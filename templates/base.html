@@ -43,7 +43,7 @@
   </script>
 
   <link rel="stylesheet" href="{% static 'css/homepage.css' %}">
-  
+
   {% block pagecss %}
   {% endblock %}
 
@@ -65,7 +65,7 @@
 	  </div>
 	  <div class="collapse navbar-collapse" id="myNavbar">
 	    <ul class="nav navbar-nav navbar-right" style="padding-right:10%;">
-	    	{% if user.is_authenticated %}
+	    	<!--{% if user.is_authenticated %}
 		    	<form class="navbar-form navbar-left" action="">
 			  <div class="input-group">
 			    <input type="text" class="form-control" placeholder="Search Stock">
@@ -76,7 +76,7 @@
 			    </div>
 			  </div>
 			</form>
-		{% endif %}
+		{% endif %}-->
 	      <li class="active-custom"><a href="{% url 'home' %}" class="nav-item"><i class="fa fa-home" style="font-size:20px"></i> Home</a></li>
 	      <li class="dropdown nav-item">
 	        <a class="dropdown-toggle nav-item" data-toggle="dropdown" href="#">Page 1 <span class="caret"></span></a>
