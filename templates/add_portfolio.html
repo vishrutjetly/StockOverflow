@@ -87,11 +87,11 @@
             <label>Company/Stock Name</label>
             <select class="form-control" style="max-height:100px;overflow-y:scroll;" name="company">
               <option value="" disabled selected>Select name</option>
-              <option>A</option>
-              <option>B</option>
-              <option>C</option>
-              <option>D</option>
-              <option>Es</option>
+              <option>AAPL</option>
+              <option>BANF</option>
+              <option>CASH</option>
+              <option>FCEL</option>
+              <option>JNJ</option>
             </select>
           </div>
           <div class="form-group col-md-6">
@@ -150,6 +150,7 @@
     </div>
   </div>
   <div class="row" align="center" style="padding:10px 0px 135px 0px;">
+	{% csrf_token %}
     <button type="submit" class="btn btn-primary">Save Trade</button>
   </div>
   </form>

@@ -1,0 +1,6 @@
+
+  <h1> Portfolio list </h1>
+    {% for pf in pfs %}
+        <h2><a href="{% url 'portfolio:details' idy=pf.idy %}">{{pf.company}}</a></h2>
+    {% endfor %}
+</div>
