@@ -192,6 +192,7 @@ def portfolio(request):
                         for l in range(0,ind+1):
                             ansx[l]=ansx[l]+(float(JNJ.at[l,'close'])*float(quant[i]))
             data = ansx.tolist()
+            data.reverse()
             val = []
             val.append(data)
             data_label = ["Portfolio"]
@@ -201,7 +202,6 @@ def portfolio(request):
 
             view = create.data_plot(div_id, 'linechart', val, data_label, xlabel, ylabel)
             return render(request,'csv_done.html', {'r1': ansx, 'r2':ansy, 'stockview':view})
-            return render(request,'csv_done.html', {'r1': ansx, 'r2':ansy})
         else:
             return render(request,'invalid.html')
     else:

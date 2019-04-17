@@ -26,7 +26,7 @@ class linechart:
 		        }
 			},
 			'color': {
-		        'pattern': ['#F57C00','#325da3' ]
+		        'pattern': ['#325da3','#F57C00' ]
 		    },
 			'area': {
 				'zerobased': 0
