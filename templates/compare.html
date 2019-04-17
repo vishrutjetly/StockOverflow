@@ -15,13 +15,13 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 
 <ul id="dropdown1" class="dropdown-content">
-  <<li><a href="#!" style="color:cornflowerblue">My Profile</a></li>
+  <li><a href="#!" style="color:cornflowerblue">My Profile</a></li>
   <li>
     <a href="#" style="color:cornflowerblue">Portfolio</a>
   </li>
   <li><a href="#" style="color:cornflowerblue">Settings</a></li>
   <li><a href="#" style="color:cornflowerblue">Logout</a></li>
-</ul>-->
+</ul>
     <nav class="light-blue lighten-1" role="navigation">
       <div class="nav-wrapper container">
         <a id="logo-container" href="#" class="brand-logo">StockOverflow</a>
@@ -79,21 +79,24 @@
     <div class="container" align="center">
       <div class="row">
         <div class="col-md-2">
-
         </div>
-        <div class="col-md-8"  align="center">
-          <form class="navbar-form" autocomplete="off" action="">
+          <br>
+        <form class="navbar-form" autocomplete="off" action="">
+          <div class="col-md-5"  align="center">
             <div class="input-group autocomplete">
-              <input type="text" class="form-control" id="myInput" placeholder="Search">
-              <div class="input-group-btn">
-                <a class="waves-effect waves-teal btn-flat"><i class="glyphicon glyphicon-search"></i></a>
-                <button class="btn btn-default" type="submit" style="border:none;background:none;">
-                  <i class="glyphicon glyphicon-search"></i>
-                </button>
-              </div>
+              <input type="text" class="form-control" id="myInput" placeholder="Search Company 1">
             </div>
-          </form>
-        </div>
+          </div>
+          <div class="col-md-5"  align="center">
+            <div class="input-group autocomplete">
+              <input type="text" class="form-control" id="myInput1" placeholder="Search Company 2">
+            </div>
+          </div>
+          <div class="input-group-btn" align="center">
+            <button class="btn btn-primary">Compare</button>
+          </div>
+        </form>
+
         <div class="col-md-2">
 
         </div>
@@ -280,6 +283,7 @@
 
     /*initiate the autocomplete function on the "myInput" element, and pass along the countries array as possible autocomplete values:*/
     autocomplete(document.getElementById("myInput"), stocks);
+    autocomplete(document.getElementById("myInput1"), stocks);
     </script>
 
     <style>
