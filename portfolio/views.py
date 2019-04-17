@@ -209,6 +209,8 @@ def manually(request):
         comps.append(request.POST['company'])
         dates.append(request.POST['date'])
         quant.append(request.POST['quantity'])
+        if float(quant[0]) < 0:
+            return render(request,'invalid.html')
         print("comps=")
         print(comps)
         ansy=[]
