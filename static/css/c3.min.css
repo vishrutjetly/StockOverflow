@@ -16,7 +16,7 @@
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  font-size: px2rem(12px);
+  font-size: px2rem(14px);
 }
 
 .c3-legend-item-tile,
@@ -223,15 +223,15 @@
 }
 
 .c3-axis {
-  fill: #9aa0ac;
+  fill: #858596;
 }
 
 .c3-axis-y text 
 {
-  font-size: 10px; //change the size of the fonts
+  font-size: 13px; //change the size of the fonts
 }
 
 .c3-axis-x text 
 {
-  font-size: 10px; //change the size of the fonts
+  font-size: 13px; //change the size of the fonts
 }

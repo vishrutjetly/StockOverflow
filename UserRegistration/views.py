@@ -165,4 +165,19 @@ def user_profile(request):
 		return render(request, 'profile.html',{'stocks':stocks, 'stocks_recent': stocks_recent, 'status2':status2, 'status3': status3, 'stocks_trending': stocks_trending})
 
 	else:
-		return redirect('/login/?next=/profile/')	
+		return redirect('/login/?next=/profile/')
+
+def del_user_direct(request):
+	if request.user.is_authenticated():
+		return render(request, 'deluser.html')
+	else:
+		return redirect('home')
+
+def del_user(request):
+	if request.user.is_authenticated():
+		user = request.user
+		print(user)
+		user.delete()
+		return render(request, 'delsucc.html')
+	else:
+		return redirect('home')

@@ -30,12 +30,15 @@ class linechart:
 		    },
 			'area': {
 				'zerobased': 0
-			}
+			},
 #			'tooltip': {
 #		        'format': {
 #		            'title': function (d) {' +displayheader+  '},
 #		        }
 #    		}
+			'legend': {
+		        'show': 0
+		    }
 		}
 		return body	
 

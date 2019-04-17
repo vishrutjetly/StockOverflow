@@ -1,0 +1,9 @@
+{% extends 'search_stock.html' %}
+
+{% if not_found != false %}
+	{% block error %}
+		<div class="row">
+	  	<h6> Stock of company {{ not_found }} does not exist </h6>
+	  </div>
+	{% endblock %}
+{% endif %}
