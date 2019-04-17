@@ -26,7 +26,7 @@ class linechart:
 		        }
 			},
 			'color': {
-		        'pattern': ['#00FF00','#FF0000' ]
+		        'pattern': ['#F57C00','#325da3' ]
 		    },
 			'area': {
 				'zerobased': 0
@@ -37,7 +37,8 @@ class linechart:
 #		        }
 #    		}
 			'legend': {
-		        'show': 1
+		        'show': 1,
+				'position': 'right'
 		    }
 		}
 		return body	

@@ -8,6 +8,7 @@ from datetime import date
 import numpy as np
 from .models import pf_inst
 from .models import blogs
+from graphs import create
 
 @login_required(login_url='login')
 def portfolio(request):
@@ -190,9 +191,16 @@ def portfolio(request):
                         #        ansy.append(JNJ.at[l,'timestamp'])
                         for l in range(0,ind+1):
                             ansx[l]=ansx[l]+(float(JNJ.at[l,'close'])*float(quant[i]))
-            print("ansy=")
-            print(ansx)
-            print(ansy)
+            data = ansx.tolist()
+            val = []
+            val.append(data)
+            data_label = ["Portfolio"]
+            xlabel = "Time"
+            ylabel = "Portfolio Value"
+            div_id = "mygraph1"
+
+            view = create.data_plot(div_id, 'linechart', val, data_label, xlabel, ylabel)
+            return render(request,'csv_done.html', {'r1': ansx, 'r2':ansy, 'stockview':view})
             return render(request,'csv_done.html', {'r1': ansx, 'r2':ansy})
         else:
             return render(request,'invalid.html')

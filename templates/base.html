@@ -96,6 +96,7 @@
 		        <a class="dropdown-toggle nav-item" data-toggle="dropdown" href="#">{{user.first_name}} <span class="caret"></span></a>
 		        <ul class="dropdown-menu animate slideIn">
 		        	<li><a href="{% url 'change_password' %}">Change Password</a></li>
+		        	<li><a href="{% url 'userprofile' %}">My Profile</a></li>
 		        	<li><a href="{% url 'delacc' %}">Delete Account</a></li>
 		          <li><a href="{% url 'logout' %}">Logout</a></li>
 		        </ul>

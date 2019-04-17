@@ -3,80 +3,56 @@ from django.shortcuts import get_object_or_404
 from stocks.models import Stock
 from graphs import create
 from stocks.models import Stock,Wishlist
-
-import pandas as pd
-import numpy as np
+from .forms import SearchStock, SearchStockCompare
 import requests
-
-# import matplotlib.pyplot as plt
-# import matplotlib.dates as mdates
-import os
-
-from sklearn.metrics import mean_squared_error, r2_score
-from sklearn.preprocessing import MinMaxScaler
-from sklearn.preprocessing import PolynomialFeatures
-
-from sklearn import preprocessing;
-# from sklearn import cross_validation;
-from sklearn import linear_model;
-from sklearn.linear_model import LinearRegression
-# from sklearn import preprocessing, cross_validation, svm
 
 from decouple import config
 from .forms import SearchStock, SearchStockCompare
 
 URL_BASIC = config('URL_BASIC')
 
-# Create your views here.
-
 def get_url(ticker):
 	url = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol='+ticker+'&apikey=WURUTBFP9P5F15BQ&datatype=csv'
 	return url
 
-def get_all_tickers():
-	stock_all = Stock.objects.all()
-	stock_ticker = []
-	for item in stock_all:
-		stock_ticker.append(item.ticker)
-	return stock_ticker
 
-def get_stock_data():
-	data_stock = [] 
-	i = 0
-	tickers = get_all_tickers()
-	for item in tickers:
-		data_stock.append(pd.read_csv(get_url(item)))
-	for item in tickers:
-		data_stock[i]['ticker'] = [item]*len(data_stock[i])
-		i = i + 1
-	i = 0
-	for item in tickers:
-		if i == 0:
-			df = data_stock[i]
-		else:
-			df = df.append(data_stock[i], sort = False)
+def new_dataset(dataset, step_size):
+    data_X, data_Y = [], []
+    for i in range(len(dataset)-step_size-1):
+        a = dataset[i:(i+step_size), 0]
+        data_X.append(a)
+        data_Y.append(dataset[i + step_size, 0])
+    return np.array(data_X), np.array(data_Y)
 
-	df=df.rename(columns={'timestamp':'date'})
-	df['date'] = pd.to_datetime(df['date'])
-	df["intdate"] = df['date'].dt.strftime("%Y%m%d")
+# IMPORTING LIBRARIES
+import datetime
+import pandas as pd
+import numpy as np 
+import math
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.metrics import mean_squared_error
+from keras.models import Sequential
+from keras.layers import Dense, Activation
+from keras.layers import LSTM
 
-	data=df
-	n = data.shape[0]
-	c = data.shape[1]
+# FOR REPRODUCIBILITY
+def mainfunc_view(tick):
+	np.random.seed(7)
 
-	flags=np.zeros(len(tickers))
-	flags[0]=1
-	flags[1]=1
-	legnames=[]
-	stock_price = []
-	for i in range(len(tickers)):
-	    if flags[i]==1:
-	        legnames.append(tickers[i])
-	        x=data[data['ticker']==tickers[i]]
-	        # plt.plot(x['date'],x['close'])
-	        stock_price.append(x['close'])
-	print(len(stock_price))
-	return stock_price
+	ticker=tick
+
+	# IMPORTING DATASET 
+	dataset=pd.read_csv('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol='+ticker+'&apikey=WURUTBFP9P5F15BQ&datatype=csv',usecols=[1,2,3,4])
+	dataset = dataset.reindex(index = dataset.index[::-1])
+
+	# CREATING OWN INDEX FOR FLEXIBILITY
+	obs = np.arange(1, len(dataset) + 1, 1)
+
+	# TAKING DIFFERENT INDICATORS FOR PREDICTION
+	OHLC_avg = dataset.mean(axis = 1)
+	HLC_avg = dataset[['high', 'low', 'close']].mean(axis = 1)
+	close_val = dataset[['close']]
+	return close_val
 
 def stock_view(request,pk):
 	# get_stock_data()
@@ -100,9 +76,11 @@ def stock_view(request,pk):
 		form = SearchStock()
 		stock = get_object_or_404(Stock, pk = pk)
 		ticker = stock.ticker
-		url = get_url(ticker)
+		# url = get_url(ticker)
 
-		data = np.random.normal(1, 0.001, 100).tolist()
+
+		# data = np.random.normal(1, 0.001, 100).tolist()
+		data = mainfunc_view(ticker)
 		# data = 0
 		val = []
 		val.append(data)

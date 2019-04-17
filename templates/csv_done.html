@@ -1,5 +1,8 @@
+{% extends 'base.html' %}
 
 {% block content %}
-<p>{{r1}}</p>
-<p>{{r2}}</p>
+<div id = "mygraph1" style="height: 300px; margin-top: 3%; margin-right: 9%"></div>
+<script>
+  var chart = c3.generate({{ stockview|safe }});
+</script>
 {% endblock %}
