@@ -48,7 +48,7 @@ urlpatterns = [
     url(r'^profile/$', user_views.user_profile, name ='userprofile' ),
     url(r'^portfolio/',include('portfolio.urls')),
     url(r'^wishlist/$', stockview.add_wishlist, ),
-    url(r'^stock-compare/$',stockview.find_stock, name='default-compare'),
+    url(r'^stock-compare/$',stockview.find_stock_compare, name='default-compare'),
     url(r'^deluser/$', user_views.del_user_direct, name='delacc'),
     url(r'^delacc/$', user_views.del_user, name='delaccfinal'),
 ]

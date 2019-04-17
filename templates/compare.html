@@ -279,7 +279,12 @@
     }
 
     /*An array containing all the country names in the world:*/
-    var stocks = ["stock1","stock2","stock3"];
+    var i=0;
+	  var stocks = []
+	  {% for item in stock_name %}
+		  stocks[i] = "{{item}}";
+		  i = i + 1
+	  {% endfor %}
 
     /*initiate the autocomplete function on the "myInput" element, and pass along the countries array as possible autocomplete values:*/
     autocomplete(document.getElementById("myInput"), stocks);

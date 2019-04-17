@@ -25,9 +25,12 @@
 		<div class="container-login100">
 			<div class="wrap-login100 p-l-50 p-r-50 p-t-77 p-b-30">
 				<form class="login100-form validate-form" method="post" id=email-form>
+					<!-- <a href = "{% url 'home' %}"> -->
 					<span class="login100-form-title p-b-55">
 							StockOverFlow
 					</span>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="location.href='{% url 'home' %}'"><span aria-hidden="true">&times;</span></button>
+
 					{% csrf_token %}
 					{% include 'includes/login.html' %}
 					<div class="shift" > </div>

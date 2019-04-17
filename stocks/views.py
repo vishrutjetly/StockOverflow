@@ -201,3 +201,23 @@ def find_stock(request):
 	else:
 		form = SearchStock()
 	return render(request, 'search_stock.html', {'form': form, 'stock_name': stock_name	})
+
+def find_stock_compare(request):
+	stock_all = Stock.objects.all()
+	stock_name = []
+	for item in stock_all:
+		stock_name.append(str(item))
+	if request.method == "POST":
+		form = SearchStock(request.POST)
+		if form.is_valid():
+			stockname = form.cleaned_data['stock_name']
+			if stockname not in stock_name:
+				not_found = stockname
+				return render(request, 'search_stock_notfound.html', {'form': form, 'stock_name': stock_name, 'not_found': not_found })
+			else:
+				stock = Stock.objects.filter(name = stockname)
+				# print(stock[0].pk)
+				return redirect('/stock-view/'+ str(stock[0].pk))
+	else:
+		form = SearchStock()
+	return render(request, 'search_stock.html', {'form': form, 'stock_name': stock_name	})
