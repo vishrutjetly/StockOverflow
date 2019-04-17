@@ -5,7 +5,7 @@ from graphs import create
 from stocks.models import Stock,Wishlist
 from .forms import SearchStock, SearchStockCompare
 import requests
-
+import os
 from decouple import config
 from .forms import SearchStock, SearchStockCompare
 
@@ -118,6 +118,7 @@ def stock_predict(request,pk):
 			ticker = stock.ticker
 			url = get_url(ticker)
 
+			os.environ['TF_CPP_MIN_LOG_LEVEL']='2'
 			np.random.seed(7)
 
 			# IMPORTING DATASET 
@@ -161,7 +162,7 @@ def stock_predict(request,pk):
 
 			# LSTM MODEL
 			model = Sequential()
-			model.add(LSTM(1, input_shape=(1, step_size), return_sequences = True))
+			model.add(LSTM(32, input_shape=(1, step_size), return_sequences = True))
 			model.add(LSTM(16))
 			model.add(Dense(1))
 			model.add(Activation('linear'))
@@ -223,17 +224,41 @@ def stock_predict(request,pk):
 			RETURN_Y1=trainPredictPlot[0:75]
 			RETURN_Y2=testPredictPlot[75:100]
 			RETURN_NEXTDAYSVALUE = next_val
+
+			# print(RETURN_Y1)
+			# print("\n\n\n")
+			# print(RETURN_Y2)
+
+			return_y1 = []
+			return_y2 = []
+
+			for item in RETURN_Y1:
+				if np.isnan(item[0]):
+					pass
+				else:
+					return_y1.append(item[0])
+					return_y2.append(item[0])
+
+			for item in RETURN_Y2:
+				if np.isnan(item[0]):
+					pass
+				else:
+					return_y1.append(item[0])
 			
+			print(return_y1)
 			# print(url)
 
 			# data = np.random.normal(1, 0.001, 1000).tolist()
-			data = RETURN_Y1.tolist()
-			RETURN_Y2 = RETURN_Y2.tolist()
-			for item in RETURN_Y2:
-				data.append(item)
+			# data = RETURN_Y1.tolist()
+			# RETURN_Y2 = RETURN_Y2.tolist()
+			# for item in RETURN_Y2:
+			# 	data.append(item)
+			data1 = return_y1
+			data2 = return_y2
 			val = []
-			val.append(data)
-			data_label = [stock.name]
+			val.append(data1)
+			val.append(data2)
+			data_label = ['Predicted', 'Actual']
 			xlabel = "Time"
 			ylabel = "Stock Price"
 			div_id = "mygraph1"

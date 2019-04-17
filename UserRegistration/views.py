@@ -163,7 +163,7 @@ def user_profile(request):
 			status3 = 'not found'
 
 
-		return render(request, 'profile.html',{'stocks':stocks, 'stocks_recent': stocks_recent, 'status2':status2, 'status3': status3, 'stocks_trending': stocks_trending})
+		return render(request, 'profile_new.html',{'stocks':stocks, 'stocks_recent': stocks_recent, 'status2':status2, 'status3': status3, 'stocks_trending': stocks_trending})
 
 	else:
 		return redirect('/login/?next=/profile/')
