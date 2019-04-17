@@ -22,10 +22,13 @@ def portfolio(request):
                 dates=[]
                 quant=[]
                 ansy=[]
-                for row in csv_reader:
-                    comps.append(row[0])
-                    dates.append(row[1])
-                    quant.append(float(row[2]))
+                try:
+                    for row in csv_reader:
+                        comps.append(row[0])
+                        dates.append(row[1])
+                        quant.append(float(row[2]))
+                except:
+                    return render(request,'invalid.html')
                 tickers=['AAPL','BANF','CASH','FCEL','JNJ']
                 AAPL=pd.read_csv('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=AAPL&apikey=WURUTBFP9P5F15BQ&datatype=csv')
                 BANF=pd.read_csv('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=BANF&apikey=WURUTBFP9P5F15BQ&datatype=csv')
@@ -196,7 +199,7 @@ def portfolio(request):
         form = forms.csv_upload()
         return render(request, "csv_upload.html", {'form': form})
 
-      
+
 @login_required(login_url='login')
 def manually(request):
     if request.method=="POST":
@@ -316,7 +319,7 @@ def manually(request):
             pf.x=x
             pf.y=y
             pf.save()
-            																																																									
+
             return render(request,'csv_done.html', {'r1': ansx, 'r2':ansy})
     else:
         return render(request, "add_portfolio.html")
