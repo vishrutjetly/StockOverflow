@@ -7,6 +7,7 @@ import pandas as pd
 from datetime import date
 import numpy as np
 from .models import pf_inst
+from .models import blogs
 
 @login_required(login_url='login')
 def portfolio(request):
@@ -354,6 +355,10 @@ def my_pf(request):
 def pf_clear(request):
 	pfs=pf_inst.objects.filter(pf_user=request.user).delete()
 	return render(request, 'invalid.html')
+
+def blog(request):
+	b=blogs.objects.all()
+	return render(request, 'myblog.html', {'blogs': b})
 '''
 def pf_details(request,idy):
 	pfs=pf_inst.objects.get(idy=idy)

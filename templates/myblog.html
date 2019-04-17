@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+
+{% for b in blogs %}
+<h2> {{b.title}} </h2>
+<p> {{b.body}} </p>
+{% endfor %}

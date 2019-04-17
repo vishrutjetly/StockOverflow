@@ -11,3 +11,7 @@ class pf_inst(models.Model):
     pf_user=models.ForeignKey(User, default=None, on_delete=models.CASCADE)
     x=models.TextField()
     y=models.TextField()
+
+class blogs(models.Model):
+	title=models.TextField()
+	body=models.TextField()
