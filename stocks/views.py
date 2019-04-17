@@ -23,7 +23,7 @@ from sklearn.linear_model import LinearRegression
 # from sklearn import preprocessing, cross_validation, svm
 
 from decouple import config
-from .forms import SearchStock
+from .forms import SearchStock, SearchStockCompare
 
 URL_BASIC = config('URL_BASIC')
 
@@ -200,24 +200,96 @@ def find_stock(request):
 				return redirect('/stock-view/'+ str(stock[0].pk))
 	else:
 		form = SearchStock()
+		print(form)
 	return render(request, 'search_stock.html', {'form': form, 'stock_name': stock_name	})
 
 def find_stock_compare(request):
-	stock_all = Stock.objects.all()
-	stock_name = []
-	for item in stock_all:
-		stock_name.append(str(item))
-	if request.method == "POST":
-		form = SearchStock(request.POST)
-		if form.is_valid():
-			stockname = form.cleaned_data['stock_name']
-			if stockname not in stock_name:
-				not_found = stockname
-				return render(request, 'search_stock_notfound.html', {'form': form, 'stock_name': stock_name, 'not_found': not_found })
-			else:
-				stock = Stock.objects.filter(name = stockname)
-				# print(stock[0].pk)
-				return redirect('/stock-view/'+ str(stock[0].pk))
+	if request.user.is_authenticated():
+		stock_all = Stock.objects.all()
+		stock_name = []
+		for item in stock_all:
+			stock_name.append(str(item))
+		if request.method == "POST":
+			form = SearchStockCompare(request.POST)
+			if form.is_valid():
+				stockname1 = form.cleaned_data['stock_name1']
+				stockname2 = form.cleaned_data['stock_name2']
+				if stockname1 not in stock_name:
+					not_found = stockname1
+					error = "Stock of company "+not_found+" does not exist"
+					return render(request, 'search_stock_notfound_compare.html', {'form': form, 'stock_name': stock_name, 'not_found': error })
+				elif stockname2 not in stock_name:
+					not_found = stockname2
+					error = "Stock of company "+not_found+" does not exist"
+					return render(request, 'search_stock_notfound_compare.html', {'form': form, 'stock_name': stock_name, 'not_found': error })
+				elif stockname1 == stockname2:
+					error = "Stocks of same company are selected"
+					return render(request, 'search_stock_notfound_compare.html', {'form': form, 'stock_name': stock_name, 'not_found': error })
+
+				else:
+					stock1 = Stock.objects.filter(name = stockname1)
+					stock2 = Stock.objects.filter(name = stockname2)
+					# print(stock[0].pk)
+					return redirect('/stock-compare/'+ str(stock1[0].pk)+'/'+str(stock2[0].pk))
+		else:
+			form = SearchStockCompare()
+		return render(request, 'search_stock_compare.html', {'form': form, 'stock_name': stock_name	})
 	else:
-		form = SearchStock()
-	return render(request, 'search_stock.html', {'form': form, 'stock_name': stock_name	})
+		return redirect('/login/?next=/stock-compare/')
+
+def stock_view_compare(request,pk1,pk2):
+	# get_stock_data()
+	if request.user.is_authenticated():
+		stock_all = Stock.objects.all()
+		stock_name = []
+		for item in stock_all:
+			stock_name.append(str(item))
+		if request.method == "POST":
+			form = SearchStockCompare(request.POST)
+			if form.is_valid():
+				stockname1 = form.cleaned_data['stock_name1']
+				stockname2 = form.cleaned_data['stock_name2']
+				if stockname1 not in stock_name:
+					not_found = stockname1
+					error = "Stock of company "+not_found+" does not exist"
+					return render(request, 'search_stock_notfound_compare.html', {'form': form, 'stock_name': stock_name, 'not_found': error })
+				elif stockname2 not in stock_name:
+					not_found = stockname2
+					error = "Stock of company "+not_found+" does not exist"
+					return render(request, 'search_stock_notfound_compare.html', {'form': form, 'stock_name': stock_name, 'not_found': error })
+				elif stockname1 == stockname2:
+					error = "Stocks of same company are selected"
+					return render(request, 'search_stock_notfound_compare.html', {'form': form, 'stock_name': stock_name, 'not_found': error })
+
+				else:
+					stock1 = Stock.objects.filter(name = stockname1)
+					stock2 = Stock.objects.filter(name = stockname2)
+					# print(stock[0].pk)
+					return redirect('/stock-compare/'+ str(stock1[0].pk)+'/'+str(stock2[0].pk))
+		else:
+			form = SearchStockCompare()
+			stock1 = get_object_or_404(Stock, pk = pk1)
+			stock2 = get_object_or_404(Stock, pk = pk2)
+			ticker1 = stock1.ticker
+			ticker2 = stock2.ticker
+
+			url = get_url(ticker1)
+
+			data1 = np.random.normal(1, 0.001, 100).tolist()
+			data2 = np.random.normal(1, 0.001, 100).tolist()
+
+			# data = 0
+			val = []
+			val.append(data1)
+			val.append(data2)
+			data_label = [stock1.name, stock2.name]
+			xlabel = "Time"
+			ylabel = "Stock Price"
+			div_id = "mygraph1"
+
+			view = create.data_plot(div_id, 'linechart', val, data_label, xlabel, ylabel)
+			return render(request, 'search_stock_with_graph_compare.html',{'stockview':view, 'pk':pk1, 'form': form, 'stock_name': stock_name, 'stock': stock1.name})
+
+		return render(request, 'search_stock_compare.html', {'form': form, 'stock_name': stock_name	})
+	else:
+		return redirect('/login/?next=/stock-compare/')

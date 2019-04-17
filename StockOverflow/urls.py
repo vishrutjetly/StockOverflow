@@ -39,16 +39,21 @@ urlpatterns = [
     url(r'^trial1/',TemplateView.as_view(template_name='trial1.html'), name='trial1'),
     url(r'^blogs/',TemplateView.as_view(template_name='blogs.html'), name='blogs'),
     url(r'^compare/',TemplateView.as_view(template_name='compare.html'), name='compare'),
+
     url(r'^stock-view/(?P<pk>\d+)/$',stockview.stock_view,name='stockview'),
     # url(r'^stock-view/$',TemplateView.as_view(template_name='search_stock.html'), name='default-stockview'),
     url(r'^stock-view/$',stockview.find_stock, name='default-stockview'),
     url(r'^stock-view/(?P<pk>\d+)/$',stockview.stock_view,name='stockview'),
     url(r'^stock-predict/(?P<pk>\d+)/$',stockview.stock_predict,name='stockpredict'),
+
     url(r'^logapi/', include('eventlog.api.urls', namespace="api-log")),
     url(r'^profile/$', user_views.user_profile, name ='userprofile' ),
     url(r'^portfolio/',include('portfolio.urls')),
     url(r'^wishlist/$', stockview.add_wishlist, ),
-    url(r'^stock-compare/$',stockview.find_stock_compare, name='default-compare'),
     url(r'^deluser/$', user_views.del_user_direct, name='delacc'),
     url(r'^delacc/$', user_views.del_user, name='delaccfinal'),
+
+	url(r'^stock-compare/$',stockview.find_stock_compare, name='default-compare'),
+	url(r'^stock-compare/(?P<pk1>\d+)/(?P<pk2>\d+)/$',stockview.stock_view_compare, name='compare'),
+
 ]

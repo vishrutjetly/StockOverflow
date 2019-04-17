@@ -1,99 +1,32 @@
-{% extends 'base2.html' %}
+{% extends 'base.html' %}
 {% load static %}
+{% load widget_tweaks %}
+
 
 {% block title %}Compare{% endblock %}
 
 {% block content %}
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-
-<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
-
-<ul id="dropdown1" class="dropdown-content">
-  <li><a href="#!" style="color:cornflowerblue">My Profile</a></li>
-  <li>
-    <a href="#" style="color:cornflowerblue">Portfolio</a>
-  </li>
-  <li><a href="#" style="color:cornflowerblue">Settings</a></li>
-  <li><a href="#" style="color:cornflowerblue">Logout</a></li>
-</ul>
-    <nav class="light-blue lighten-1" role="navigation">
-      <div class="nav-wrapper container">
-        <a id="logo-container" href="#" class="brand-logo">StockOverflow</a>
-        <ul class="right hide-on-med-and-down">
-          <li>
-            <a class="dropdown-trigger" href="#" data-target="dropdown1"
-              >My Account<i class="material-icons right">arrow_drop_down</i></a
-            >
-          </li>
-        </ul>
-        <ul class="right hide-on-med-and-down">
-          <li><a href="#">Compare And Analyse</a></li>
-        </ul>
-        <ul class="right hide-on-med-and-down">
-          <li><a href="{% url 'home' %}">Home</a></li>
-        </ul>
-        <ul class="right hide-on-med-and-down">
-          <li><a href="#"></a></li>
-        </ul>
-        <!--<ul class="right hide-on-med-and-down nav-wrapper">
-          <form>
-            <div class="input-field">
-              <input id="search" class='search' placeholder="Search" type="search" required />
-              <label class="label-icon" for="search"
-                ><i class="material-icons">search</i></label
-              >
-              <i class="material-icons">close</i>
-            </div>
-          </form>
-        </ul>-->
-      </div>
-    </nav>
-    <!--<div class="container">
-      <br /><br />
-      <div class="nav-wrapper">
-        <form>
-          <div class="input-field">
-            <input
-              id=""
-              class="searchtocompare"
-              placeholder="Enter Company Name"
-              type="search"
-              required
-            />
-            <label class="label-icon" for="search"
-              ><i class="material-icons">search</i></label
-            >
-            <i class="material-icons">close</i>
-          </div>
-        </form>
-      </div>
-      <br /><br />
-    </div>-->
-
     <div class="container" align="center">
       <div class="row">
         <div class="col-md-2">
         </div>
           <br>
-        <form class="navbar-form" autocomplete="off" action="">
+        <form class="navbar-form" autocomplete="off" action="" method="post">
+        	{% csrf_token %}
           <div class="col-md-5"  align="center">
             <div class="input-group autocomplete">
-              <input type="text" class="form-control" id="myInput" placeholder="Search Company 1">
+            	<!-- <input type="text" class="form-control" id="myInput" placeholder="Search Company 1"> -->
+            	{% render_field form.stock_name1 id="myInput" type="text" placeholder="Search Stock 1"%}
             </div>
           </div>
           <div class="col-md-5"  align="center">
             <div class="input-group autocomplete">
-              <input type="text" class="form-control" id="myInput1" placeholder="Search Company 2">
+              <!-- <input type="text" class="form-control" id="myInput1" placeholder="Search Company 2"> -->
+              {% render_field form.stock_name2 id="myInput1" type="text" placeholder="Search Stock 2"%}
             </div>
           </div>
           <div class="input-group-btn" align="center">
-            <button class="btn btn-primary">Compare</button>
+            <button class="btn btn-primary" type = "submit">Compare</button>
           </div>
         </form>
 
@@ -102,6 +35,10 @@
         </div>
       </div>
     </div>
+    <div class="row" align="center" style="padding:2% 0 20.5% 0;color:red;">
+	    {% block error %}
+	    {% endblock %}
+	  </div>
 
     <div class="container">
       <!-- <canvas
@@ -112,8 +49,8 @@
         style="display: block"
       >
       </canvas> -->
-      <div id = "mygraph1" style="height: 300px"></div>
-      <br /><br />
+      <!-- <div id = "mygraph1" style="height: 300px"></div>
+      <br /><br /> -->
       <!-- <a
         class="waves-effect waves-light btn-large modal-trigger"
         href="{% url 'stockpredict' 1 %}"
@@ -146,40 +83,6 @@
       </div>
       <br /><br /><br />
     </div>
-
-    <footer class="page-footer orange">
-      <div class="container">
-        <div class="row">
-          <div class="col l6 s12">
-            <h5 class="white-text">Company Bio</h5>
-            <p class="grey-text text-lighten-4">
-              We are a team of college students working on this project like
-              it's our full time job. Any amount would help support and continue
-              development on this project and is greatly appreciated.
-            </p>
-          </div>
-          <div class="col l3 s12">
-            <h5 class="white-text">Settings</h5>
-            <ul>
-              <li><a class="white-text" href="#!">Link 1</a></li>
-              <li><a class="white-text" href="#!">Link 2</a></li>
-              <li><a class="white-text" href="#!">Link 3</a></li>
-              <li><a class="white-text" href="#!">Link 4</a></li>
-            </ul>
-          </div>
-          <div class="col l3 s12">
-            <h5 class="white-text">Connect</h5>
-            <ul>
-              <li><a class="white-text" href="#!">Link 1</a></li>
-              <li><a class="white-text" href="#!">Link 2</a></li>
-              <li><a class="white-text" href="#!">Link 3</a></li>
-              <li><a class="white-text" href="#!">Link 4</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="footer-copyright"></div>
-    </footer>
     <script>
     function autocomplete(inp, arr) {
       /*the autocomplete function takes two arguments,
