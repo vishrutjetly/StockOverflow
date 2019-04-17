@@ -5,4 +5,27 @@
 <script>
   var chart = c3.generate({{ stockview|safe }});
 </script>
+<div class="container" style="padding:11% 0 11% 0;">
+  <div class="row" align="center" style="padding:5% 0;">
+    <h2> Upload CSV</h2>
+  </div>
+  <div class="row" align="center">
+    <div class="col-md-4">
+
+    </div>
+    <div class="col-md-4">
+      <form class="site-form" action="{% url 'portfolio' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form.csv_file}}
+        <div class="" style="padding:5% 0;">
+          <input type="submit" class ="btn btn-primary" value="Upload" style="border-radius:5px;">
+        </div>
+      </form>
+    </div>
+    <div class="col-md-4">
+
+    </div>
+  </div>
+</div>
+
 {% endblock %}
