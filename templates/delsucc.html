@@ -1,6 +1,21 @@
-{% extends 'base.html' %}
+{% extends 'base2.html' %}
 
-{% block content %}
 	Deleted succesfully
-	<a href ="{% url 'home' %}">Return to Home</a>
+
+{% block title %}Deleted Seccesfully{% endblock %}
+ 
+{% block content %}
+    <div class="section no-pad-bot" id="index-banner">
+      <div class="container">
+        <br /><br />
+        <h1 class="header center orange-text">StockOverflow</h1>
+        <div class="row center">
+          <h5 class="header col s12 light">
+          Your account has been deleted succesfully.
+          </h5>
+        </div>
+        <br /><br />
+        <h5><a href ="{% url 'home' %}">Return to Home</a></h5>
+      </div>
+    </div>
 {% endblock %}

@@ -46,7 +46,7 @@ def signup(request):
             to_email = form.cleaned_data.get('email')
             email = EmailMessage(mail_subject, message, to=[to_email])
             email.send()
-            return HttpResponse('Please confirm your email address to complete the registration')
+            return render(request, 'email_sent.html')
     else:
         form = SignUpForm()
     return render(request, 'signup.html', {'form': form})
@@ -62,7 +62,8 @@ def activate(request, uidb64, token, backend='django.contrib.auth.backends.Model
         user.save()
         login(request, user,backend='django.contrib.auth.backends.ModelBackend')
         # return redirect('home')
-        return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
+        # return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
+        return render(request, 'email_confirm.html')
     else:
         return HttpResponse('Activation link is invalid!')
 

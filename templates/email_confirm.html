@@ -1,0 +1,19 @@
+{% extends 'base2.html' %}
+{% load static %}
+
+{% block title %}Login{% endblock %}
+ 
+{% block content %}
+  <div class="section no-pad-bot" id="index-banner">
+    <div class="container">
+      <br /><br />
+      <h1 class="header center orange-text">StockOverflow</h1>
+      <div class="row center">
+        <h5 class="header col s12 light">
+        	Thank you for your email confirmation. Now you can <a href = "{% url 'login' %}">login</a> your account.
+        </h5>
+      </div>
+      <br /><br />
+    </div>
+  </div>
+{% endblock %}
