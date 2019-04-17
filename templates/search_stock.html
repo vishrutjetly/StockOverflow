@@ -7,10 +7,10 @@
 {% load widget_tweaks %}
 
 <div class="container" align="center  ">
-  <div class="row" style="padding:10% 0 0 0;">
+  <div class="row" style="padding:11% 0 0 0;" align="center">
     <h1>Search Stocks</h1>
   </div>
-  <div class="row" style="padding:5% 0 26% 0;">
+  <div class="row" style="padding:5% 0 0 0;" align="center">
     <div class="col-md-3">
 
     </div>
@@ -43,10 +43,10 @@
         <div class="">
           <div class="autocomplete">
           	{% csrf_token %}
-          	{% render_field form.stock_name id="myInput" type="text" placeholder="Search Stock"%}
+          	{% render_field form.stock_name id="myInput" style="border:none;border-bottom:1px solid black;" type="text" placeholder="Search Stock"%}
             <!-- <input id="myInput" type="text" placeholder="Search Stock"> -->
           </div>
-          <button type="submit" class="btn btn-default">
+          <button type="submit" class="btn btn-default" style="border:none;">
             <span class="glyphicon glyphicon-search"></span>
           </button>
         </div>
@@ -56,8 +56,10 @@
 
     </div>
   </div>
-  {% block error %}
-  {% endblock %}
+  <div class="row" align="center" style="padding:2% 0 20.5% 0;color:red;">
+    {% block error %}
+    {% endblock %}
+  </div>
   </div>
   <script>
   function autocomplete(inp, arr) {

@@ -46,7 +46,7 @@ def signup(request):
             to_email = form.cleaned_data.get('email')
             email = EmailMessage(mail_subject, message, to=[to_email])
             email.send()
-            return HttpResponse('Please confirm your email address to complete the registration')
+            return render(request, 'email_sent.html')
     else:
         form = SignUpForm()
     return render(request, 'signup.html', {'form': form})
@@ -62,7 +62,8 @@ def activate(request, uidb64, token, backend='django.contrib.auth.backends.Model
         user.save()
         login(request, user,backend='django.contrib.auth.backends.ModelBackend')
         # return redirect('home')
-        return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
+        # return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
+        return render(request, 'email_confirm.html')
     else:
         return HttpResponse('Activation link is invalid!')
 
@@ -165,4 +166,19 @@ def user_profile(request):
 		return render(request, 'profile.html',{'stocks':stocks, 'stocks_recent': stocks_recent, 'status2':status2, 'status3': status3, 'stocks_trending': stocks_trending})
 
 	else:
-		return redirect('/login/?next=/profile/')	
+		return redirect('/login/?next=/profile/')
+
+def del_user_direct(request):
+	if request.user.is_authenticated():
+		return render(request, 'deluser.html')
+	else:
+		return redirect('home')
+
+def del_user(request):
+	if request.user.is_authenticated():
+		user = request.user
+		print(user)
+		user.delete()
+		return render(request, 'delsucc.html')
+	else:
+		return redirect('home')

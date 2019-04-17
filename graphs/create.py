@@ -26,16 +26,19 @@ class linechart:
 		        }
 			},
 			'color': {
-		        'pattern': ['#00FF00']
+		        'pattern': ['#00FF00','#FF0000' ]
 		    },
 			'area': {
 				'zerobased': 0
-			}
+			},
 #			'tooltip': {
 #		        'format': {
 #		            'title': function (d) {' +displayheader+  '},
 #		        }
 #    		}
+			'legend': {
+		        'show': 1
+		    }
 		}
 		return body	
 
@@ -84,8 +87,6 @@ class bargraph:
 		            }
 		        }
 			}
-
-
 		}
 		return body
 

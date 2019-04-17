@@ -1,0 +1,9 @@
+{% extends 'search_stock_compare.html' %}
+
+{% if not_found != false %}
+	{% block error %}
+		<div class="row">
+	  	<h6> {{not_found}} </h6>
+	  </div>
+	{% endblock %}
+{% endif %}
