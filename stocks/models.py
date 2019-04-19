@@ -16,6 +16,14 @@ class Stock(models.Model):
         max_length=(500 * 21),
         blank=True
     )
+
+	meta_predict = ListCharField(
+		base_field=models.CharField(max_length=20),
+        size=500,
+        max_length=(500 * 21),
+        blank=True
+    )
+
 	updated_at = models.DateTimeField(auto_now=True)
 
 	def __str__(self):
