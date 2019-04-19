@@ -2,17 +2,19 @@
 {% block content %}
 {% for b in blogs %}
 <div class="container" style="padding:5% 0;">
-  <div class="row">
-    <h2> {{b.title}} </h2>
+  <div class="row" style="margin:0;">
+    <div class="col-md-12">
+      <h2> {{b.title}} </h2>
+    </div>
   </div>
-  <div class="row" style="padding:2% 0">
-    <div class="col-md-1">
+  <div class="row" style="padding:2% 0;margin:0;">
+    <div class="col-md-1 col-1">
 
     </div>
-    <div class="col-md-9">
+    <div class="col-md-10 col-8">
       <p> {{b.body}} </p>
     </div>
-    <div class="col-md-1">
+    <div class="col-md-1 col-1">
 
     </div>
   </div>

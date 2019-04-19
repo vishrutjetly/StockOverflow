@@ -16,31 +16,33 @@
 	}
 </script>
 
-    <div class="container" align="center">
+    <div class="container" align="center" style="padding-top:7%;">
       <div class="row">
-        <div class="col-md-2">
+        <div class="col-md-1">
         </div>
           <br>
         <form class="navbar-form" autocomplete="off" action="" method="post">
         	{% csrf_token %}
-          <div class="col-md-5"  align="center">
-            <div class="input-group autocomplete">
+          <div class="col-md-4"  align="center" style="padding-top:5%;">
+            <div class="input-group autocomplete" >
             	<!-- <input type="text" class="form-control" id="myInput" placeholder="Search Company 1"> -->
-            	{% render_field form.stock_name1 id="myInput" type="text" placeholder="Search Stock 1"%}
+            	{% render_field form.stock_name1 id="myInput" type="text" style="border:none;border-bottom:1px solid black;" placeholder="Search Stock 1"%}
             </div>
           </div>
-          <div class="col-md-5"  align="center">
-            <div class="input-group autocomplete">
+          <div class="col-md-4"  align="center" style="padding-top:5%;">
+            <div class="input-group autocomplete" >
               <!-- <input type="text" class="form-control" id="myInput1" placeholder="Search Company 2"> -->
-              {% render_field form.stock_name2 id="myInput1" type="text" placeholder="Search Stock 2"%}
+              {% render_field form.stock_name2 id="myInput1" type="text" style="border:none;border-bottom:1px solid black;" placeholder="Search Stock 2"%}
             </div>
           </div>
-          <div class="input-group-btn" align="center">
-            <button class="btn btn-primary" type = "submit">Compare</button>
-          </div>
+					<div class="col-md-2" align="center" style="padding-top:5%;">
+						<div class="input-group-btn" align="center" >
+	            <button class="btn btn-primary" type = "submit">Compare</button>
+	          </div>
+					</div>
         </form>
 
-        <div class="col-md-2">
+        <div class="col-md-1">
 
         </div>
       </div>
