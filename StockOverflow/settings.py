@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_mysql',
     'social_django',
     'widget_tweaks',
     'session_security',
@@ -120,6 +121,14 @@ DATABASES = {
         'PASSWORD': config('DB_PASSWORD'),
         'HOST': config('DB_HOST'),
         'PORT': config('DB_PORT',cast = int),
+        'OPTIONS': {
+            # Tell MySQLdb to connect with 'utf8mb4' character set
+            'charset': 'utf8mb4',
+        },
+        'TEST': {
+            'CHARSET': 'utf8mb4',
+            'COLLATION': 'utf8mb4_unicode_ci',
+        }
     }
 }
 
@@ -173,7 +182,7 @@ EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = config('EMAIL_PORT', cast=int)
 
-SESSION_SECURITY_EXPIRE_AFTER=600
+SESSION_SECURITY_EXPIRE_AFTER=6000
 SESSION_EXPIRE_AT_BROWSER_CLOSE=True
 
 MEDIA_URL = '/portfolio/'

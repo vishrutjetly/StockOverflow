@@ -2,7 +2,6 @@ class linechart:
 		
 	def plot(self,lockto,y_val,xlabel='',ylabel='',displayheader = ''):
 		y_val=list(y_val)
-		false = False
 		body = {
 			'bindto': '#'+lockto ,
 			'data': {
@@ -42,6 +41,48 @@ class linechart:
 		    }
 		}
 		return body	
+		
+	def plotdate(self,lockto,y_val,xlabel='',ylabel='',displayheader = ''):
+		y_val=list(y_val)
+		body = {
+			'bindto': '#'+lockto ,
+			'data': {
+				'columns':
+					y_val,
+				'type': 'area'
+				},
+			'axis': {
+				'x': {
+		            'label': {
+		                'text': xlabel,
+		                'position': 'outer-center'
+		            }
+		        },
+		        'y': {
+		            'label': {
+		                'text': ylabel,
+		                'position': 'outer-middle'
+		            },
+		            # 'min': 0.999,
+		        }
+			},
+			'color': {
+		        'pattern': ['#325da3','#F57C00' ]
+		    },
+			'area': {
+				'zerobased': 0
+			},
+#			'tooltip': {
+#		        'format': {
+#		            'title': function (d) {' +displayheader+  '},
+#		        }
+#    		}
+			'legend': {
+		        'show': 1,
+				'position': 'right'
+		    }
+		}
+		return body
 
 class piechart:
 	def plot(self,lockto, data):

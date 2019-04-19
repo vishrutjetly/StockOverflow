@@ -7,7 +7,9 @@ from .forms import SearchStock, SearchStockCompare
 import requests
 import os
 from decouple import config
+import json
 from .forms import SearchStock, SearchStockCompare
+from datetime import datetime, timezone
 
 URL_BASIC = config('URL_BASIC')
 
@@ -35,9 +37,12 @@ from keras.models import Sequential
 from keras.layers import Dense, Activation
 from keras.layers import LSTM
 from keras import backend as K
+import tensorflow as tf
+
 
 # FOR REPRODUCIBILITY
 def mainfunc_view(tick):
+	K.clear_session()
 	np.random.seed(7)
 
 	ticker=tick
@@ -82,7 +87,38 @@ def stock_view(request,pk):
 
 
 		# data = np.random.normal(1, 0.001, 100).tolist()
-		data = mainfunc_view(ticker)
+
+		# if not data_stock:
+		# 	data = mainfunc_view(ticker)
+		# 	data_stock = data
+		# else:
+		# 	pass
+
+		if not stock.meta:
+			stock.meta = mainfunc_view(stock.ticker)
+			stock.save()
+			data = stock.meta
+			print("Saved")
+		elif (datetime.datetime.now(timezone.utc)-stock.updated_at).days == 0:
+			stock.meta = mainfunc_view(stock.ticker)
+			stock.save()
+			data = stock.meta
+			print("Updated Stock prices")
+		else:
+			data = []
+			print("Exists")
+			for item in stock.meta:
+				data.append(json.loads(item))
+
+		# num = request.session.get('num')
+		# if not num:
+		# 	num = 1
+		# 	print("Set num to 1")
+		# 	request.session['num'] = num
+		# else:
+		# 	print("Exists")
+
+		# print(num)
 
 		# data = 0
 		val = []
@@ -118,6 +154,7 @@ def stock_predict(request,pk):
 			stock = get_object_or_404(Stock, pk = pk)
 			ticker = stock.ticker
 			url = get_url(ticker)
+			print(tf.__version__)
 
 			# os.environ['TF_CPP_MIN_LOG_LEVEL']='2'
 			np.random.seed(7)
