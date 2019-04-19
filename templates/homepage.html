@@ -13,6 +13,15 @@
 
 
 {% block content %}
+
+<script type="text/javascript">
+	window.onload = function(){
+		myFunction();
+	}
+	function myFunction(){
+		document.getElementById("homepg").className = "active-custom";
+	}
+</script>
 <!--**************MAIN IMAGE************-->
   <div class="container-fluid bgimg1" >
     <img src="{% static 'images/img1.jpg' %}" alt="" style="visibility: hidden;width:10px;">

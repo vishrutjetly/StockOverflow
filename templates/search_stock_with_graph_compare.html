@@ -1,16 +1,25 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %} Stock View {% endblock %}
+{% block title %} Stock Compare {% endblock %}
 {% block content %}
+
+<script type="text/javascript">
+	window.onload = function(){
+		myFunction();
+	}
+	function myFunction(){
+		document.getElementById("comparepg").className = "active-custom";
+	}
+</script>
 
 {% load widget_tweaks %}
   <div class="container" align="center">
-      <div class="row">
+      <div class="row"style="padding-top: 2%">
         <div class="col-md-2">
         </div>
           <br>
-        <form class="navbar-form" autocomplete="off" action="" method="post">
+        <form class="navbar-form" autocomplete="off" action="" method="post" style="margin: 0">
         	{% csrf_token %}
           <div class="col-md-5"  align="center">
             <div class="input-group autocomplete">

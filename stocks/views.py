@@ -34,6 +34,7 @@ from sklearn.metrics import mean_squared_error
 from keras.models import Sequential
 from keras.layers import Dense, Activation
 from keras.layers import LSTM
+from keras import backend as K
 
 # FOR REPRODUCIBILITY
 def mainfunc_view(tick):
@@ -118,7 +119,7 @@ def stock_predict(request,pk):
 			ticker = stock.ticker
 			url = get_url(ticker)
 
-			os.environ['TF_CPP_MIN_LOG_LEVEL']='2'
+			# os.environ['TF_CPP_MIN_LOG_LEVEL']='2'
 			np.random.seed(7)
 
 			# IMPORTING DATASET 
@@ -167,6 +168,7 @@ def stock_predict(request,pk):
 			model.add(Dense(1))
 			model.add(Activation('linear'))
 
+			# K.clear_session()
 			# MODEL COMPILING AND TRAINING
 			model.compile(loss='mean_squared_error', optimizer='adagrad') # Try SGD, adam, adagrad and compare!!!
 			model.fit(trainX, trainY, epochs=5, batch_size=1, verbose=2)

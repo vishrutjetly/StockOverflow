@@ -3,7 +3,14 @@
 
 {% block title %} Stock View {% endblock %}
 {% block content %}
-
+<script type="text/javascript">
+	window.onload = function(){
+		myFunction();
+	}
+	function myFunction(){
+		document.getElementById("stockviewpg").className = "active-custom";
+	}
+</script>
 {% load widget_tweaks %}
 
 <div class="container" align="center  ">

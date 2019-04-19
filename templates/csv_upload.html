@@ -1,7 +1,17 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container" style="padding:11% 0 11% 0;">
+
+<script type="text/javascript">
+	window.onload = function(){
+		myFunction();
+	}
+	function myFunction(){
+		document.getElementById("portfoliopg").className = "active-custom";
+	}
+</script>
+
+<div class="container" style="padding:8.2% 0 9% 0;">
   <div class="row" align="center" style="padding:5% 0;">
     <h2> Upload CSV</h2>
   </div>
@@ -14,12 +24,20 @@
         {% csrf_token %}
         {{form.csv_file}}
         <div class="" style="padding:5% 0;">
-          <input type="submit" class ="btn btn-primary" value="Upload" style="border-radius:5px;">
+          <input type="submit" class ="btn btn-primary" value="Upload" style="border-radius:5px;margin-top: 7%">
         </div>
       </form>
     </div>
     <div class="col-md-4">
 
+    </div>
+  </div>
+  <div class="row" align="center">
+  	OR
+  </div>
+  <div class="row" align="center">
+  	<div class="" style="padding:5% 0;">
+      <input type="submit" class ="btn btn-primary" value="Upload" style="border-radius:5px;margin-top: 7%">
     </div>
   </div>
 </div>

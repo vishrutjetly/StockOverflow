@@ -4,8 +4,17 @@
 {% block title %} Stock View {% endblock %}
 {% block content %}
 
+<script type="text/javascript">
+	window.onload = function(){
+		myFunction();
+	}
+	function myFunction(){
+		document.getElementById("stockviewpg").className = "active-custom";
+	}
+</script>
+
 {% load widget_tweaks %}
-  <div class="row" style="padding:3% 0 10% 0;" align="center">
+  <div class="row" style="padding:3% 0 10% 0; margin: 0" align="center">
     <div class="col-md-3">
 
     </div>

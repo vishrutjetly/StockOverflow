@@ -591,6 +591,7 @@ def my_pf(request):
 		print(ansx)
 	return render(request,'csv_done.html', {'r1': ansx, 'r2':ansy})
 
+
 def pf_clear(request):
 	pfs=pf_inst.objects.filter(pf_user=request.user).delete()
 	return render(request, 'invalid.html')

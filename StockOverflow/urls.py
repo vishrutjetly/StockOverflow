@@ -19,6 +19,7 @@ from django.contrib.auth import views as auth_views
 from django.views.generic.base import TemplateView
 from UserRegistration import views as user_views
 from stocks import views as stockview
+from portfolio import views as port_views
 
 urlpatterns = [
 	url(r'^$', TemplateView.as_view(template_name='homepage.html'), name='home'),
@@ -37,8 +38,9 @@ urlpatterns = [
     url(r'^reset/done/$', auth_views.password_reset_complete, {'template_name':'password_reset_complete.html'}, name='password_reset_complete'),
     url(r'^trial/',TemplateView.as_view(template_name='change_password_new.html'), name='trial'),
     url(r'^trial1/',TemplateView.as_view(template_name='trial1.html'), name='trial1'),
-    url(r'^blogs/',TemplateView.as_view(template_name='blogs.html'), name='blogs'),
+    # url(r'^blogs/',TemplateView.as_view(template_name='blogs.html'), name='blogs'),
     url(r'^compare/',TemplateView.as_view(template_name='compare.html'), name='compare'),
+
 
     url(r'^stock-view/(?P<pk>\d+)/$',stockview.stock_view,name='stockview'),
     # url(r'^stock-view/$',TemplateView.as_view(template_name='search_stock.html'), name='default-stockview'),
@@ -48,12 +50,19 @@ urlpatterns = [
 
     url(r'^logapi/', include('eventlog.api.urls', namespace="api-log")),
     url(r'^profile/$', user_views.user_profile, name ='userprofile' ),
-    url(r'^portfolio/',include('portfolio.urls')),
+    # url(r'^portfolio/',include('portfolio.urls'), name='portfolio'),
     url(r'^wishlist/$', stockview.add_wishlist, ),
     url(r'^deluser/$', user_views.del_user_direct, name='delacc'),
     url(r'^delacc/$', user_views.del_user, name='delaccfinal'),
 
 	url(r'^stock-compare/$',stockview.find_stock_compare, name='default-compare'),
 	url(r'^stock-compare/(?P<pk1>\d+)/(?P<pk2>\d+)/$',stockview.stock_view_compare, name='compare'),
+
+	
+	url(r'^portfolio/$', port_views.portfolio, name='portfolio'),
+	url(r'^portfolio/manually/', port_views.manually, name='manually'),
+	url(r'^portfolio/my_pf/', port_views.my_pf, name='my_pf'),
+	url(r'^portfolio/pf_clear/',port_views.pf_clear, name='pf_clear'),
+	url(r'^portfolio/blog/',port_views.blog, name='blog'),
 
 ]

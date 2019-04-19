@@ -20,7 +20,14 @@
   <a href="{% url 'stockpredict' pk %}">
 	  <input type="button" value="Predict Future Trend" style="width: 75%; background-color:dodgerblue; color:white; border-color: dodgerblue;">
 	</a>
-
+<script type="text/javascript">
+	window.onload = function(){
+		myFunction();
+	}
+	function myFunction(){
+		document.getElementById("stockviewpg").className = "active-custom";
+	}
+</script>
   <!-- <button type="submit">Add</button> -->
  {% endautoescape%}
 {% endblock %}

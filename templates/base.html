@@ -80,7 +80,7 @@
 			  </div>
 			</form>
 		{% endif %}-->
-	      <li class="active-custom"><a href="{% url 'home' %}" class="nav-item"><i class="fa fa-home" style="font-size:20px"></i> Home</a></li>
+	      <li class="nav-item" id="homepg"><a href="{% url 'home' %}" class="nav-item"><i class="fa fa-home" style="font-size:20px"></i> Home</a></li>
 	      <!-- <li class="dropdown nav-item">
 	        <a class="dropdown-toggle nav-item" data-toggle="dropdown" href="#">Page 1 <span class="caret"></span></a>
 	        <ul class="dropdown-menu animate slideIn">
@@ -89,14 +89,16 @@
 	          <li><a href="#">Page 1-3</a></li>
 	        </ul>
 	      </li> -->
-	      <li><a class="nav-item" href="{% url 'default-stockview' %}">Stock View</a></li>
+	      <li><a class="nav-item" id="stockviewpg" href="{% url 'default-stockview' %}">Stock View</a></li>
+	      <li><a class="nav-item" id="blogspg" href="{% url 'blog' %}">Blogs</a></li>
 	      {% if user.is_authenticated %}
-	      <li><a class="nav-item" href="{% url 'default-compare' %}">Compare</a></li>
+	      <li><a class="nav-item" id="comparepg" href="{% url 'default-compare' %}">Compare</a></li>
+	      <li><a class="nav-item" id="portfoliopg" href="{% url 'portfolio' %}">Portfolio</a></li>
 	      	<li class="dropdown nav-item">
 		        <a class="dropdown-toggle nav-item" data-toggle="dropdown" href="#">{{user.first_name}} <span class="caret"></span></a>
 		        <ul class="dropdown-menu animate slideIn">
-		        	<li><a href="{% url 'change_password' %}">Change Password</a></li>
 		        	<li><a href="{% url 'userprofile' %}">My Profile</a></li>
+		        	<li><a href="{% url 'change_password' %}">Change Password</a></li>
 		        	<li><a href="{% url 'delacc' %}">Delete Account</a></li>
 		          <li><a href="{% url 'logout' %}">Logout</a></li>
 		        </ul>

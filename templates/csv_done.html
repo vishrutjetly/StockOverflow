@@ -1,13 +1,21 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div id = "mygraph1" style="height: 300px; margin-top: 3%; margin-right: 9%"></div>
+<div id = "mygraph1" style="height: 300px; margin: 5% 10% 2% 10%"></div>
 <script>
   var chart = c3.generate({{ stockview|safe }});
 </script>
-<div class="container" style="padding:11% 0 11% 0;">
+<script type="text/javascript">
+	window.onload = function(){
+		myFunction();
+	}
+	function myFunction(){
+		document.getElementById("portfoliopg").className = "active-custom";
+	}
+</script>
+<div class="container" style="padding:0 0 10% 0;">
   <div class="row" align="center" style="padding:5% 0;">
-    <h2> Upload CSV</h2>
+    <h2> Upload Another CSV</h2>
   </div>
   <div class="row" align="center">
     <div class="col-md-4">
@@ -24,6 +32,14 @@
     </div>
     <div class="col-md-4">
 
+    </div>
+  </div>
+  <div class="row" align="center">
+  	<h4> OR</h4>
+  </div>
+  <div class="row" align="center">
+  	<div class="" style="padding:0 0;">
+      <input type="button" class ="btn btn-primary" value="Add Manually" onclick="location.href='{% url 'manually' %}'" style="border-radius:5px;margin-top: 0%">
     </div>
   </div>
 </div>
