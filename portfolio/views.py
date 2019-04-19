@@ -553,7 +553,7 @@ def manually(request):
             xlabel = "Time"
             ylabel = "Portfolio Value"
             div_id = "mygraph1"
-
+            form = forms.csv_upload()
             view = create.data_plot(div_id, 'linechart', val, data_label, xlabel, ylabel)
             return render(request,'csv_done.html', {'r1': ansx, 'r2':ansy, 'stockview':view})
 
@@ -589,7 +589,19 @@ def my_pf(request):
 			if x[j]!=" " and x[j]!="":
 				ansx[j]=ansx[j]+float(x[j])
 		print(ansx)
-	return render(request,'csv_done.html', {'r1': ansx, 'r2':ansy})
+	data = ansx
+	data.reverse()
+	val = []
+	val.append(data)
+	data_label = ["Portfolio"]
+	xlabel = "Time"
+	ylabel = "Portfolio Value"
+	div_id = "mygraph1"
+	form = forms.csv_upload()
+	view = create.data_plot(div_id, 'linechart', val, data_label, xlabel, ylabel)
+	return render(request,'csv_done.html', {'r1': ansx, 'r2':ansy, 'stockview':view, 'form':form})
+
+	#return render(request,'csv_done.html', {'r1': ansx, 'r2':ansy})
 
 
 def pf_clear(request):
