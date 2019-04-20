@@ -11,6 +11,11 @@
 		document.getElementById("stockviewpg").className = "active-custom";
 	}
 </script>
+<style type="text/css">
+	.row{
+		margin: 0;
+	}
+</style>
 {% load widget_tweaks %}
 
 {% if user.is_authenticated %}
@@ -73,7 +78,7 @@
 
     </div>
   </div>
-  <div class="row" align="center" style="padding:2% 0 0% 0;color:red;">
+  <div class="row" align="center" style="padding:2% 0 0% 0;color:red;margin: 0">
     {% block error %}
     {% endblock %}
   </div>
