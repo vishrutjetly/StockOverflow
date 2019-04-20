@@ -24,23 +24,33 @@ SERVER_CONF["proxies"] = {}
 SERVER_CONF["proxy_auth"] = {}
 
 COMMON_FIELDS = {
-            "user-agent": logprocess.process_user_agent,
-            "ip-address": logprocess.process_host_ip,
-            "server-host": logprocess.process_server_host,
-            "referer": logprocess.process_referer,
-            "accept-language": logprocess.process_accept_language,
-            "session-id": logprocess.process_session_id,
-            "path-info": logprocess.process_path_info,
-            "time-stamp": logprocess.process_time_stamp,
-            "event-source": logprocess.proces_attach_event_source,
-            "user-id": logprocess.process_user_info,
+    "user-agent": logprocess.process_user_agent,
+    "ip-address": logprocess.process_host_ip,
+    "server-host": logprocess.process_server_host,
+    "referer": logprocess.process_referer,
+    "accept-language": logprocess.process_accept_language,
+    "session-id": logprocess.process_session_id,
+    "path-info": logprocess.process_path_info,
+    "time-stamp": logprocess.process_time_stamp,
+    "event-source": logprocess.proces_attach_event_source,
+    "user-id": logprocess.process_user_info,
 }
 
 CONTEXT_SPECIFIC_FIELDS = {    
         #stock specific events
         "event.stock.view": {
             "stock-id": logprocess.process_stock_info,
+            "stock-name": logprocess.process_stock_name,
         },
+
+        "event.stock.predict": {
+            "stock-id": logprocess.process_stock_predict_info,
+            "stock-name": logprocess.process_stock_name,
+        },
+
+        "event.blog.view":{},
+        "event.portfolio.view":{},
+        "event.portfolio.add":{},
 
         #login event
         "event.user.login":{

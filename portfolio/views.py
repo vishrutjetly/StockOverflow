@@ -212,14 +212,19 @@ def portfolio(request):
             form = forms.csv_upload()
             data = ansx.tolist()
             data.reverse()
+            print(data)
             val = []
+            ansy.reverse()
+            print(ansy)
+            val.append(ansy)
             val.append(data)
-            data_label = ["Portfolio"]
+            data_label = ['x', 'Portfolio']
             xlabel = "Time"
             ylabel = "Portfolio Value"
             div_id = "mygraph1"
 
             view = create.data_plot(div_id, 'linechart', val, data_label, xlabel, ylabel)
+            print(view)
             return render(request,'csv_done.html', {'r1': ansx, 'r2':ansy, 'stockview':view, 'form':form})
 
 #            return render(request,'csv_done.html', {'r1': ansx, 'r2':ansy, 'form':form})
@@ -410,15 +415,18 @@ def portfolio(request):
             print(ansx)
             print(ansy)
             data = ansx.tolist()
+            ansy.reverse()
             data.reverse()
             val = []
+            val.append(ansy)
             val.append(data)
-            data_label = ["Portfolio"]
+            data_label = ['x',"Portfolio"]
             xlabel = "Time"
             ylabel = "Portfolio Value"
             div_id = "mygraph1"
 
             view = create.data_plot(div_id, 'linechart', val, data_label, xlabel, ylabel)
+            print(view)
             return render(request,'csv_done.html', {'r1': ansx, 'r2':ansy, 'stockview':view, 'form':form})
 
 #            return render(request,'csv_done.html', {'r1': ansx, 'r2':ansy, 'form':form})
@@ -546,10 +554,12 @@ def manually(request):
             pf.y=y
             pf.save()
             data = ansx.tolist()
+            ansy.reverse()
             data.reverse()
             val = []
+            val.append(ansy)
             val.append(data)
-            data_label = ["Portfolio"]
+            data_label = ['x',"Portfolio"]
             xlabel = "Time"
             ylabel = "Portfolio Value"
             div_id = "mygraph1"
@@ -591,9 +601,11 @@ def my_pf(request):
 		print(ansx)
 	data = ansx
 	data.reverse()
+	ansy.reverse()
 	val = []
+	val.append(ansy)
 	val.append(data)
-	data_label = ["Portfolio"]
+	data_label = ['x',"Portfolio"]
 	xlabel = "Time"
 	ylabel = "Portfolio Value"
 	div_id = "mygraph1"

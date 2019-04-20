@@ -8,6 +8,30 @@ EVENT_NAME_DICT={
         }
     },
 
+    r'^stock-predict/(?P<pk>\d+)/$':{
+        'GET':{
+               'event_name' : 'event.stock.predict'
+        }
+    },
+
+    r'^portfolio/blog/$':{
+        'GET':{
+               'event_name' : 'event.blog.view'
+        }
+    },
+
+    r'^portfolio/$':{
+        'GET':{
+               'event_name' : 'event.portfolio.view'
+        }
+    },
+
+    r'^portfolio/manually/$':{
+        'GET':{
+               'event_name' : 'event.portfolio.add'
+        }
+    },
+
     #maps  login event
     r'^login/$':{
         'POST':{

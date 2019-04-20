@@ -1,5 +1,7 @@
 import time
 import datetime
+from stocks.models import Stock
+from django.shortcuts import get_object_or_404
 
 def process_user_agent(data):
     request = data['request']
@@ -73,6 +75,25 @@ def process_stock_info(data):
         return args['pk']
     else:
         return ""
+def process_stock_name(data):
+	args = data['view_kwargs']
+	if 'pk' in list(args.keys()):
+		try:
+			stock = get_object_or_404(Stock, pk = args['pk'])
+			print(stock.name)
+			return stock.name
+		except:
+			pass
+	else:
+	    return ""
+
+def process_stock_predict_info(data):
+    args = data['view_kwargs']
+    if 'pk' in list(args.keys()):
+        return args['pk']
+    else:
+        return ""
+
 
 def process_time_stamp(data):
     ts = time.time()

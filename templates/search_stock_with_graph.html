@@ -63,20 +63,34 @@
   <div class="row" style="padding:8% 0 0 0;" align="center">
     <h1>{{ stock }}</h1>
   </div>
+  {% if showon == '1' %}
 	<div class="row">
 		<div class="col-md-4">
 
 		</div>
-		<div class="col-md-2">
-			<span style="color:green;font-size:25px;">1860 &#36;</span>
-		</div>
-		<div class="col-md-2">
-			<span style="color:red;font-size:25px;">55.55▲▼</span>
-		</div>
 		<div class="col-md-4">
-			<a href="#">visit nasdaq for more info</a>
+			<span style="font-size:25px;"> &#36; {{price}}&nbsp; &nbsp; &nbsp; &nbsp;</span>
+		<!-- </div>
+		<div class="col-md-3"> -->
+			<span style="color:{{ col }};font-size:25px;">
+				{% if col == 'green' %}
+					<span style="font-size:25px;">+</span>{{abs_change}}
+				{% else %}
+					{{abs_change}}
+				{% endif %}
+				{% if col == 'red' %}
+				▼
+				{% else %}
+				▲
+				{% endif %}
+				({{cent_change}}%)
+			</span>
+		</div>
+		<div class="col-md-4" style="padding-top: 0.8%">
+			Visit <a href={{url}}, style="color: blue">NASDAQ</a> for more info
 		</div>
 	</div>
+	{% endif %}
   <div id = "mygraph1" style="height: 300px; margin-top: 3%; margin-left: 0%"></div>
   <br /><br />
    {% block button %}

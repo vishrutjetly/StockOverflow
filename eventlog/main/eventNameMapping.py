@@ -24,17 +24,16 @@ def get_eventName_from_request(request):
 				else:
 					return None
 
-			elif method == 'POST':
-				if 'GET' in EVENTS_DICT[key]:
-					return EVENTS_DICT[key]['GET']['event_name']
-				else:
-					return None
-				if 'function' in EVENTS_DICT[key]['POST']:
-					event_type = EVENTS_DICT[key]['POST']['function'](dict(request.POST))
-					if event_type is None:
-						return None
-					else:
-						return EVENTS_DICT[key]['POST'][event_type]
-				else:
-					return EVENTS_DICT[key]['POST']['event_name']
+			# elif method == 'POST':
+				# if 'GET' in EVENTS_DICT[key]:
+				# 	return EVENTS_DICT[key]['GET']['event_name']
+				# # el
+				# if 'function' in EVENTS_DICT[key]['POST']:
+				# 	event_type = EVENTS_DICT[key]['POST']['function'](dict(request.POST))
+				# 	if event_type is None:
+				# 		return None
+				# 	else:
+				# 		return EVENTS_DICT[key]['POST'][event_type]
+				# else:
+				# 	return EVENTS_DICT[key]['POST']['event_name']
 	return None

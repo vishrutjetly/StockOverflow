@@ -10,6 +10,7 @@ from decouple import config
 import json
 from .forms import SearchStock, SearchStockCompare
 from datetime import datetime, timezone
+import collections
 
 URL_BASIC = config('URL_BASIC')
 
@@ -64,17 +65,105 @@ def mainfunc_view(tick):
 def stock_view(request,pk):
 	# get_stock_data()
 	stock_all = Stock.objects.all()
-	stock_name = []
+	stock_name_actual = []
 	for item in stock_all:
-		stock_name.append(str(item))
+		stock_name_actual	.append(str(item))
 	if request.method == "POST":
 		form = SearchStock(request.POST)
 		if form.is_valid():
 			stockname = form.cleaned_data['stock_name']
-			if stockname not in stock_name:
-				# print(stockname)
+			if stockname not in stock_name_actual:
 				not_found = stockname
-				return render(request, 'search_stock_notfound2.html', {'form': form, 'stock_name': stock_name, 'not_found': not_found })
+				if request.user.is_authenticated():
+					color = ['#95b7ed', '#ffe2a0', '#ffbfe6']
+					data_mostviewed = requests.get(URL_BASIC + 'logapi/user/{!s}/event/stock/view/?limit=3&agg_type=terms&agg_field=stock-id'.format(request.user.id)).json()
+
+					stocks=[]
+					status = 'found'
+					if 'status code' in list(data_mostviewed.keys()) and data_mostviewed['status code'] == 200:
+						stocks_keys = []
+						for item in data_mostviewed['result']:
+							stocks_keys.append(item['key'])
+						if len(stocks_keys) == 0:
+							status = 'not found'
+						else:
+							i = 0
+							for key in stocks_keys:
+								try:
+									stock_name = Stock.objects.filter(id=key).first().name
+									stocks.append({'stock_id':key,'stock_name':stock_name, 'stock_color': color[i]})
+									i = i + 1
+								except:
+									continue
+					else:
+						status = 'not found'
+
+					print("\n\n\n\n",stocks,"\n\n\n\n")
+					stocks_recent=[]
+					recently_viewed = []
+
+					recently_viewed = requests.get(URL_BASIC + 'logapi/user/{!s}/event/stock/view/?after=1970-1-1T0:0:0&limit=1000'.format(request.user.id)).json()
+
+					status2 = 'found'
+					if 'status code' in list(recently_viewed.keys()) and recently_viewed['status code'] == 200:
+						stocks_keys = []
+						for item in recently_viewed['result']:
+							stocks_keys.append(item['event']['stock-id'])
+						if len(stocks_keys) == 0:
+							status2 = 'not found'
+						else:
+							# counts = collections.Counter(stocks_keys)
+							# stocks_keys = sorted(stocks_keys, key=lambda x: counts[x])
+							used = set()
+							stocks_keys = [x for x in stocks_keys  if x not in used and (used.add(x) or True)]
+							if len(stocks_keys)>5:
+								stocks_keys=stocks_keys[:5]
+							print(stocks_keys)
+							i = 0
+							for key in stocks_keys:
+								try:
+									stock_name = Stock.objects.filter(id=key).first().name
+									stocks_recent.append({'stock_id':key,'stock_name':stock_name, 'stock_color': color[i]})
+									i=i+1
+								except:
+									continue
+					else:
+						status2 = 'not found'
+
+					stocks_trending=[]
+
+					trending = requests.get(URL_BASIC + 'logapi/event/stock/view/?after=1970-1-1T0:0:0&limit=10').json()
+
+					status3 = 'found'
+					if 'status code' in list(trending.keys()) and trending['status code'] == 200:
+						stocks_keys = []
+						for item in trending['result']:
+							stocks_keys.append(item['event']['stock-id'])
+						if len(stocks_keys) == 0:
+							status3 = 'not found'
+						else:
+							counts = collections.Counter(stocks_keys)
+							stocks_keys = sorted(stocks_keys, key=lambda x: counts[x])
+							used = set()
+							stocks_keys = [x for x in stocks_keys  if x not in used and (used.add(x) or True)]
+							if len(stocks_keys)>5:
+								stocks_keys=stocks_keys[:5]
+							print(stocks_keys)
+							i = 0
+							for key in stocks_keys:
+								try:
+									stock_name = Stock.objects.filter(id=key).first().name
+									stocks_trending.append({'stock_id':key,'stock_name':stock_name,'stock_color': color[i]})
+									i = i +1
+								except:
+									continue
+					else:
+						status3 = 'not found'
+
+					return render(request, 'search_stock_notfound.html',{'form': form, 'stock_name': stock_name_actual, 'stocks':stocks, 'stocks_recent': stocks_recent, 'status2':status2, 'status3': status3, 'stocks_trending': stocks_trending, 'not_found': not_found})
+				else:
+					return render(request, 'search_stock_notfound.html',{'form': form, 'stock_name': stock_name_actual, 'not_found': not_found})
+
 			else:
 				stock = Stock.objects.filter(name = stockname)
 				# print(stock[0].pk)
@@ -121,15 +210,55 @@ def stock_view(request,pk):
 		# print(num)
 
 		# data = 0
+
+		d = datetime.datetime.today()
+		TRAINDATES=[]
+		TESTDATES=[]
+		TRAINDATES.append(d.strftime('%Y-%m-%d'))
+		# print(TRAINDATES)
+		for j in range(100):
+		    d -= datetime.timedelta(days=1)
+		    TRAINDATES.append(d.strftime('%Y-%m-%d'))
+		TRAINDATES.reverse()
+
 		val = []
+		val.append(TRAINDATES)
 		val.append(data)
-		data_label = [stock.name]
+		price = data[-1][0]
+		prev_price = data[-2][0]
+		print(price, prev_price)
+		abs_change = price - prev_price
+		if prev_price != 0:
+			cent_change = abs_change/prev_price*100
+		else:
+			cent_change = 0
+					
+
+		if abs_change<0:
+			col = 'red'
+		else:
+			col = 'green'
+
+		data_label = ['x', stock.name]
 		xlabel = "Time"
 		ylabel = "Stock Price"
 		div_id = "mygraph1"
 
 		view = create.data_plot(div_id, 'linechart', val, data_label, xlabel, ylabel)
-		return render(request, 'stockview.html',{'stockview':view, 'pk':pk, 'form': form, 'stock_name': stock_name, 'stock': stock.name})
+
+		stockurl = "https://www.nasdaq.com/symbol/" + stock.ticker
+		if round(abs_change,2) == 0:
+			abs_change = round(abs_change,3)
+		else:
+			abs_change = round(abs_change,2)
+		
+		if round(abs_change,2) == 0:
+			cent_change = round(cent_change,3)
+		else:
+			cent_change = round(cent_change,2)
+		abs(cent_change)
+
+		return render(request, 'stockview.html',{'stockview':view, 'pk':pk, 'form': form, 'stock_name': stock_name_actual, 'stock': stock.name, 'price': price, 'abs_change': abs_change, 'cent_change': cent_change, 'col': col, 'url': stockurl, 'showon': '1' })
 
 def stock_predict(request,pk):
 	if request.user.is_authenticated():
@@ -156,7 +285,7 @@ def stock_predict(request,pk):
 			url = get_url(ticker)
 
 			if not stock.meta_predict or (datetime.datetime.now(timezone.utc)-stock.updated_at).days != 0:
-
+				K.clear_session()
 				np.random.seed(7)
 
 				# IMPORTING DATASET 
@@ -248,19 +377,6 @@ def stock_predict(request,pk):
 				print ("Last Day Value:", np.asscalar(last_val))
 				print ("Next Day Value:", np.asscalar(last_val+next_val))
 
-				d = datetime.date.today()
-				TRAINDATES=[]
-				TESTDATES=[]
-				for j in range(75):
-				    d -= datetime.timedelta(1)
-				    TRAINDATES.append(d.strftime('%d/%m/%y'))
-				for i in range(25):
-				    d += datetime.timedelta(1)
-				    TESTDATES.append(d.strftime('%d/%m/%y'))
-
-				X_1=TRAINDATES
-				X_2=TESTDATES
-
 
 				RETURN_Y1=trainPredictPlot[0:75]
 				RETURN_Y2=testPredictPlot[75:100]
@@ -277,14 +393,14 @@ def stock_predict(request,pk):
 					if np.isnan(item[0]):
 						pass
 					else:
-						return_y1.append(item[0])
-						return_y2.append(item[0])
+						return_y1.append(round(item[0],3))
+						return_y2.append(round(item[0],3))
 
 				for item in RETURN_Y2:
 					if np.isnan(item[0]):
 						pass
 					else:
-						return_y1.append(item[0])
+						return_y1.append(round(item[0],3))
 				
 				print(return_y1)
 
@@ -299,17 +415,42 @@ def stock_predict(request,pk):
 				print("Exists")
 				for item in stock.meta_predict:
 					data.append(json.loads(item))
+
+			# import datetime
+			d = datetime.datetime.today()
+			TRAINDATES=[]
+			TESTDATES=[]
+			TRAINDATES.append(d.strftime('%Y-%m-%d'))
+			# print(TRAINDATES)
+			for j in range(74):
+			    d -= datetime.timedelta(days=1)
+			    TRAINDATES.append(d.strftime('%Y-%m-%d'))
+			TRAINDATES.reverse()
+			# print(TRAINDATES)
+			d = datetime.datetime.today()
+			for i in range(len(data)-75):
+			    d += datetime.timedelta(1)
+			    TRAINDATES.append(d.strftime('%Y-%m-%d'))
+			print(len(TRAINDATES),len(data))
+
+
+
+			X_1=TRAINDATES
+			X_2=TESTDATES
+
 			data1 = data
 			data2 = data[:75]
 			val = []
+			val.append(TRAINDATES)
 			val.append(data1)
 			val.append(data2)
-			data_label = ['Predicted', 'Actual']
+			data_label = ['x','Predicted', 'Actual']
 			xlabel = "Time"
 			ylabel = "Stock Price"
 			div_id = "mygraph1"
 
 			view = create.data_plot(div_id, 'linechart', val, data_label, xlabel, ylabel)
+			print("\n\n\n\n",view,"\n\n\n\n")
 			return render(request, 'predict.html',{'stockview':view, 'pk':pk, 'form': form, 'stock_name': stock_name, 'stock': stock.name})
 
 	else:
@@ -345,24 +486,197 @@ def rem_wishlist(request):
 
 def find_stock(request):
 	stock_all = Stock.objects.all()
-	stock_name = []
+	stock_name_actual = []
 	for item in stock_all:
-		stock_name.append(str(item))
+		stock_name_actual.append(str(item))
 	if request.method == "POST":
 		form = SearchStock(request.POST)
 		if form.is_valid():
 			stockname = form.cleaned_data['stock_name']
-			if stockname not in stock_name:
+			if stockname not in stock_name_actual:
 				not_found = stockname
-				return render(request, 'search_stock_notfound.html', {'form': form, 'stock_name': stock_name, 'not_found': not_found })
+				if request.user.is_authenticated():
+					color = ['#95b7ed', '#ffe2a0', '#ffbfe6']
+					data_mostviewed = requests.get(URL_BASIC + 'logapi/user/{!s}/event/stock/view/?limit=3&agg_type=terms&agg_field=stock-id'.format(request.user.id)).json()
+
+					stocks=[]
+					status = 'found'
+					if 'status code' in list(data_mostviewed.keys()) and data_mostviewed['status code'] == 200:
+						stocks_keys = []
+						for item in data_mostviewed['result']:
+							stocks_keys.append(item['key'])
+						if len(stocks_keys) == 0:
+							status = 'not found'
+						else:
+							i = 0
+							for key in stocks_keys:
+								try:
+									stock_name = Stock.objects.filter(id=key).first().name
+									stocks.append({'stock_id':key,'stock_name':stock_name, 'stock_color':color[i]})
+									i = i + 1
+								except:
+									continue
+					else:
+						status = 'not found'
+
+					print("\n\n\n\n",stocks,"\n\n\n\n")
+					stocks_recent=[]
+					recently_viewed = []
+
+					recently_viewed = requests.get(URL_BASIC + 'logapi/user/{!s}/event/stock/view/?after=1970-1-1T0:0:0&limit=1000'.format(request.user.id)).json()
+
+					status2 = 'found'
+					if 'status code' in list(recently_viewed.keys()) and recently_viewed['status code'] == 200:
+						stocks_keys = []
+						for item in recently_viewed['result']:
+							stocks_keys.append(item['event']['stock-id'])
+						if len(stocks_keys) == 0:
+							status2 = 'not found'
+						else:
+							used = set()
+							stocks_keys = [x for x in stocks_keys  if x not in used and (used.add(x) or True)]
+							if len(stocks_keys)>3:
+								stocks_keys=stocks_keys[:3]
+							print(stocks_keys)
+							i = 0
+							for key in stocks_keys:
+								try:
+									stock_name = Stock.objects.filter(id=key).first().name
+									stocks_recent.append({'stock_id':key,'stock_name':stock_name, 'stock_color':color[i]})
+									i = i + 1
+								except:
+									continue
+					else:
+						status2 = 'not found'
+
+					stocks_trending=[]
+
+					trending = requests.get(URL_BASIC + 'logapi/event/stock/view/?after=1970-1-1T0:0:0&limit=10').json()
+
+					status3 = 'found'
+					if 'status code' in list(trending.keys()) and trending['status code'] == 200:
+						stocks_keys = []
+						for item in trending['result']:
+							stocks_keys.append(item['event']['stock-id'])
+						if len(stocks_keys) == 0:
+							status3 = 'not found'
+						else:
+							counts = collections.Counter(stocks_keys)
+							stocks_keys = sorted(stocks_keys, key=lambda x: -counts[x])
+							used = set()
+							stocks_keys = [x for x in stocks_keys  if x not in used and (used.add(x) or True)]
+							if len(stocks_keys)>3:
+								stocks_keys=stocks_keys[:3]
+							print(stocks_keys)
+							i = 0
+							for key in stocks_keys:
+								try:
+									stock_name = Stock.objects.filter(id=key).first().name
+									stocks_trending.append({'stock_id':key,'stock_name':stock_name,'stock_color': color[i]})
+									i = i +1
+								except:
+									continue
+					else:
+						status3 = 'not found'
+
+					return render(request, 'search_stock_notfound.html',{'form': form, 'stock_name': stock_name_actual, 'stocks':stocks, 'stocks_recent': stocks_recent, 'status2':status2, 'status3': status3, 'stocks_trending': stocks_trending, 'not_found': not_found})
+				else:
+					return render(request, 'search_stock_notfound.html', {'form': form, 'stock_name': stock_name_actual, 'not_found': not_found })
 			else:
 				stock = Stock.objects.filter(name = stockname)
 				# print(stock[0].pk)
 				return redirect('/stock-view/'+ str(stock[0].pk))
 	else:
 		form = SearchStock()
-		print(form)
-	return render(request, 'search_stock.html', {'form': form, 'stock_name': stock_name	})
+		if request.user.is_authenticated():
+			color = ['#95b7ed', '#ffe2a0', '#ffbfe6']
+			data_mostviewed = requests.get(URL_BASIC + 'logapi/user/{!s}/event/stock/view/?limit=3&agg_type=terms&agg_field=stock-id'.format(request.user.id)).json()
+
+			stocks=[]
+			status = 'found'
+			if 'status code' in list(data_mostviewed.keys()) and data_mostviewed['status code'] == 200:
+				stocks_keys = []
+				for item in data_mostviewed['result']:
+					stocks_keys.append(item['key'])
+				if len(stocks_keys) == 0:
+					status = 'not found'
+				else:
+					i = 0 
+					for key in stocks_keys:
+						try:
+							stock_name = Stock.objects.filter(id=key).first().name
+							stocks.append({'stock_id':key,'stock_name':stock_name, 'stock_color': color[i]})
+							i = i + 1
+						except:
+							continue
+			else:
+				status = 'not found'
+
+			print("\n\n\n\n",stocks,"\n\n\n\n")
+			stocks_recent=[]
+			recently_viewed = []
+
+			recently_viewed = requests.get(URL_BASIC + 'logapi/user/{!s}/event/stock/view/?after=1970-1-1T0:0:0&limit=1000'.format(request.user.id)).json()
+
+			status2 = 'found'
+			if 'status code' in list(recently_viewed.keys()) and recently_viewed['status code'] == 200:
+				stocks_keys = []
+				for item in recently_viewed['result']:
+					stocks_keys.append(item['event']['stock-id'])
+				if len(stocks_keys) == 0:
+					status2 = 'not found'
+				else:
+					# counts = collections.Counter(stocks_keys)
+					# stocks_keys = sorted(stocks_keys, key=lambda x: counts[x])
+					used = set()
+					stocks_keys = [x for x in stocks_keys  if x not in used and (used.add(x) or True)]
+					if len(stocks_keys)>3:
+						stocks_keys=stocks_keys[:3]
+					print(stocks_keys)
+					i = 0
+					for key in stocks_keys:
+						try:
+							stock_name = Stock.objects.filter(id=key).first().name
+							stocks_recent.append({'stock_id':key,'stock_name':stock_name, 'stock_color': color[i]})
+							i = i + 1
+						except:
+							continue
+			else:
+				status2 = 'not found'
+
+			stocks_trending=[]
+
+			trending = requests.get(URL_BASIC + 'logapi/event/stock/view/?after=1970-1-1T0:0:0&limit=10').json()
+
+			status3 = 'found'
+			if 'status code' in list(trending.keys()) and trending['status code'] == 200:
+				stocks_keys = []
+				for item in trending['result']:
+					stocks_keys.append(item['event']['stock-id'])
+				if len(stocks_keys) == 0:
+					status3 = 'not found'
+				else:
+					counts = collections.Counter(stocks_keys)
+					stocks_keys = sorted(stocks_keys, key=lambda x: -counts[x])
+					used = set()
+					stocks_keys = [x for x in stocks_keys  if x not in used and (used.add(x) or True)]
+					if len(stocks_keys)>3:
+						stocks_keys=stocks_keys[:3]
+					print(stocks_keys)
+					i = 0
+					for key in stocks_keys:
+						try:
+							stock_name = Stock.objects.filter(id=key).first().name
+							stocks_trending.append({'stock_id':key,'stock_name':stock_name,'stock_color': color[i]})
+							i = i +1
+						except:
+							continue
+			else:
+				status3 = 'not found'
+
+			return render(request, 'search_stock.html',{'form': form, 'stock_name': stock_name_actual, 'stocks':stocks, 'stocks_recent': stocks_recent, 'status2':status2, 'status3': status3, 'stocks_trending': stocks_trending})
+		else:
+			return render(request, 'search_stock.html', {'form': form, 'stock_name': stock_name_actual	})
 
 def find_stock_compare(request):
 	if request.user.is_authenticated():

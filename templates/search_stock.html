@@ -13,12 +13,22 @@
 </script>
 {% load widget_tweaks %}
 
+{% if user.is_authenticated %}
 <div class="container" align="center  ">
   <div class="row" style="padding:5% 0 0 0;" align="center">
     <h1>Search Stocks</h1>
   </div>
   <div class="row" style="padding:3% 0 0 0;" align="center">
     <div class="col-md-3">
+{% else %}
+<div class="container" align="center  ">
+  <div class="row" style="padding:17% 0 0 0;" align="center">
+    <h1>Search Stocks</h1>
+  </div>
+  <div class="row" style="padding:3% 0 0 0;" align="center">
+    <div class="col-md-3">
+{% endif %}
+
 
     </div>
     <div class="col-md-6 col-sm-12">
@@ -82,116 +92,80 @@
       padding : 3% 0;
     }
   </style>
+{% if user.is_authenticated %}
 
-<div class="container" style="padding:3% 0;" align="center">
-  <div class="row">
-    <div class="col-md-4">
-      <div class="row rowss" >
-        <h2>Recently Viewed</h2>
-      </div>
-      <div class="row rowsss">
-          <a href="#" style="text-decoration:none;">
-            <div class="card cardss" style="background-color:#95b7ed;">
-              <div class="card-body">
-                <h4 class="card-title"><u>Apple</u></h4>
-                <p class="card-text">Price : 203.13</p>
-              </div>
-            </div>
-          </a>
-      </div>
-      <div class="row rowsss">
-          <a href="#" style="text-decoration:none;">
-            <div class="card cardss" style="background-color:#ffe2a0;width:70%;">
-              <div class="card-body">
-                <h4 class="card-title"><u>Johnson & Johnson</u></h4>
-                <p class="card-text">Price : 138.52</p>
-              </div>
-            </div>
-          </a>
-      </div>
-      <div class="row rowsss">
-          <a href="#" style="text-decoration:none;">
-            <div class="card cardss" style="background-color:#ffbfe6;width:70%;">
-              <div class="card-body">
-                <h4 class="card-title"><u>Meta Financial Group Inc.</u></h4>
-                <p class="card-text">Price : 22.21</p>
-              </div>
-            </div>
-          </a>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="row rowss">
-        <h2>Most Viewed</h2>
-      </div>
-      <div class="row rowsss">
-          <a href="#" style="text-decoration:none;">
-            <div class="card cardss" style="background-color:#95b7ed;width:70%;">
-              <div class="card-body">
-                <h4 class="card-title"><u>Apple</u></h4>
-                <p class="card-text">Price : 203.13</p>
-              </div>
-            </div>
-          </a>
-      </div>
-      <div class="row rowsss">
-          <a href="#" style="text-decoration:none;">
-            <div class="card cardss" style="background-color:#ffe2a0;width:70%;">
-              <div class="card-body">
-                <h4 class="card-title"><u>Meta Financial Group Inc.</u></h4>
-                <p class="card-text">Price : 22.21</p>
-              </div>
-            </div>
-          </a>
-      </div>
-      <div class="row rowsss">
-          <a href="#" style="text-decoration:none;">
-            <div class="card cardss" style="background-color:#ffbfe6;width:70%;">
-              <div class="card-body">
-                <h4 class="card-title"><u>FuelCell Energy Inc</u></h4>
-                <p class="card-text">Price : 0.223</p>
-              </div>
-            </div>
-          </a>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="row rowss">
-        <h2>Trending</h2>
-      </div>
-      <div class="row rowsss">
-          <a href="#" style="text-decoration:none;">
-            <div class="card cardss" style="background-color:#95b7ed;width:70%;">
-              <div class="card-body">
-                <h4 class="card-title"><u>Apple</u></h4>
-                <p class="card-text">Price : 203.13</p>
-              </div>
-            </div>
-          </a>
-      </div>
-      <div class="row rowsss">
-          <a href="#" style="text-decoration:none;">
-            <div class="card cardss" style="background-color:#ffe2a0;width:70%;">
-              <div class="card-body">
-                <h4 class="card-title"><u>Johnson & Johnson</u></h4>
-                <p class="card-text">Price : 138.52</p>
-              </div>
-            </div>
-          </a>
-      </div>
-      <div class="row rowsss">
-          <a href="#" style="text-decoration:none;">
-            <div class="card cardss" style="background-color:#ffbfe6;width:70%;">
-              <div class="card-body">
-                <h4 class="card-title"><u>BancFirst</u></h4>
-                <p class="card-text">Price : 55.77</p>
-              </div>
-            </div>
-          </a>
-      </div>
-    </div>
-  </div>
-</div>
+	<div class="container" style="padding:3% 0;" align="center">
+	  <div class="row">
+	    <div class="col-md-4">
+	      <div class="row rowss" >
+	        <h2>Recently Viewed</h2>
+	      </div>
+      	{% if status == 'not found' %}
+			  	<h5>No recent activity</h5>
+			  {% else %}
+			    {% for stock in stocks_recent %}
+			      <div class="row rowsss">
+			          <a href="{% url 'stockview' stock.stock_id %}" style="text-decoration:none;">
+			            <div class="card cardss" style="background-color:{{stock.stock_color}};">
+			              <div class="card-body">
+			                <h4 class="card-title"><u>{{ stock.stock_name }}</u></h4>
+			                <!-- <p class="card-text">Price : 203.13</p> -->
+			              </div>
+			            </div>
+			          </a>
+			      </div>
+			    {% endfor %}
+			  {% endif %}
+			</div>
+	    <div class="col-md-4">
+	      <div class="row rowss">
+	        <h2>Most Viewed</h2>
+	      </div>
+	      {% if status2 == 'not found' %}
+			  	<h5>No recent activity</h5>
+			  {% else %}
+			    {% for stock in stocks %}
+			      <div class="row rowsss">
+			          <a href="{% url 'stockview' stock.stock_id %}" style="text-decoration:none;">
+			            <div class="card cardss" style="background-color:{{stock.stock_color}};">
+			              <div class="card-body">
+			                <h4 class="card-title"><u>{{ stock.stock_name }}</u></h4>
+			                <!-- <p class="card-text">Price : 203.13</p> -->
+			              </div>
+			            </div>
+			          </a>
+			      </div>
+			    {% endfor %}
+			  {% endif %}
+	    </div>
+	    <div class="col-md-4">
+	      <div class="row rowss">
+	        <h2>Trending</h2>
+	      </div>
+	      {% if status3 == 'not found' %}
+			  	<h5>No recent activity</h5>
+			  {% else %}
+			    {% for stock in stocks_trending %}
+			      <div class="row rowsss">
+			          <a href="{% url 'stockview' stock.stock_id %}" style="text-decoration:none;">
+			            <div class="card cardss" style="background-color:{{stock.stock_color}};">
+			              <div class="card-body">
+			                <h4 class="card-title"><u>{{ stock.stock_name }}</u></h4>
+			                <!-- <p class="card-text">Price : 203.13</p> -->
+			              </div>
+			            </div>
+			          </a>
+			      </div>
+			    {% endfor %}
+			  {% endif %}
+			</div>
+	  </div>
+	</div>
+{% else %}
+	<div class="container" style="height:187px;">
+		
+	</div>
+{% endif %}
 
   <script>
   function autocomplete(inp, arr) {
