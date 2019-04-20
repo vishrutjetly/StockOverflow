@@ -433,11 +433,6 @@ def stock_predict(request,pk):
 			    TRAINDATES.append(d.strftime('%Y-%m-%d'))
 			print(len(TRAINDATES),len(data))
 
-
-
-			X_1=TRAINDATES
-			X_2=TESTDATES
-
 			data1 = data
 			data2 = data[:75]
 			val = []
@@ -757,10 +752,21 @@ def stock_view_compare(request,pk1,pk2):
 			data2 = mainfunc_view(ticker2)
 
 			# data = 0
+			d = datetime.datetime.today()
+			TRAINDATES=[]
+			TESTDATES=[]
+			TRAINDATES.append(d.strftime('%Y-%m-%d'))
+			# print(TRAINDATES)
+			for j in range(100):
+			    d -= datetime.timedelta(days=1)
+			    TRAINDATES.append(d.strftime('%Y-%m-%d'))
+			TRAINDATES.reverse()
+
 			val = []
+			val.append(TRAINDATES)
 			val.append(data1)
 			val.append(data2)
-			data_label = [stock1.name, stock2.name]
+			data_label = ['x',stock1.name, stock2.name]
 			xlabel = "Time"
 			ylabel = "Stock Price"
 			div_id = "mygraph1"
