@@ -42,16 +42,29 @@ def portfolio(request):
                 try:
                     for row in csv_reader:
                         comps.append(row[0])
+                        if row[0]!="AAPL" and row[0]!="BANF" and row[0]!="CASH" and row[0]!="FCEL" and row[0]!="JNJ":
+                        	return render(request,'invalid.html')
                         dates.append(row[1])
+                        dates_parsed=row[1].split("-")
+                        dtemp=date(int(dates_parsed[0]),int(dates_parsed[1]),int(dates_parsed[2]))
+                        if dtemp>date.today() or dtemp<date(2010,1,1):
+                        	print("in the date")
+                        	return render(request,'invalid.html')
                         quant.append(float(row[2]))
+                        if float(row[2])>1000000 or float(row[2])<-1000000:
+                        	print("quanti")
+                        	return render(request,'invalid.html')
                 except:
                     return render(request,'invalid.html')
-                tickers=['AAPL','BANF','CASH','FCEL','JNJ']
-                AAPL=pd.read_csv('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=AAPL&apikey=WURUTBFP9P5F15BQ&datatype=csv')
-                BANF=pd.read_csv('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=BANF&apikey=WURUTBFP9P5F15BQ&datatype=csv')
-                CASH=pd.read_csv('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=CASH&apikey=WURUTBFP9P5F15BQ&datatype=csv')
-                FCEL=pd.read_csv('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=FCEL&apikey=WURUTBFP9P5F15BQ&datatype=csv')
-                JNJ=pd.read_csv('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=JNJ&apikey=WURUTBFP9P5F15BQ&datatype=csv')
+                try:
+                	tickers=['AAPL','BANF','CASH','FCEL','JNJ']
+                	AAPL=pd.read_csv('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=AAPL&apikey=WURUTBFP9P5F15BQ&datatype=csv')
+                	BANF=pd.read_csv('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=BANF&apikey=WURUTBFP9P5F15BQ&datatype=csv')
+                	CASH=pd.read_csv('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=CASH&apikey=WURUTBFP9P5F15BQ&datatype=csv')
+                	FCEL=pd.read_csv('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=FCEL&apikey=WURUTBFP9P5F15BQ&datatype=csv')
+                	JNJ=pd.read_csv('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=JNJ&apikey=WURUTBFP9P5F15BQ&datatype=csv')
+                except:
+                	return render(request,'trylater.html')
                 for i in range(0,len(comps)):
                 	dates_parsed=dates[i].split("-")
                 	try:
@@ -60,11 +73,16 @@ def portfolio(request):
                 		return render(request,'invalid.html')
                 	if i==0:
                 		maxd=d0-d0
-                	dtemp=AAPL.at[0,'timestamp']
-                	dtemp_parsed=dtemp.split("-")
-                	dtemp=date(int(dtemp_parsed[0]),int(dtemp_parsed[1]),int(dtemp_parsed[2]))
+                	#dtemp=date.today()
+                	try:
+                		dtemp=AAPL.at[0,'timestamp']
+                		dtemp_parsed=dtemp.split("-")
+                		dtemp=date(int(dtemp_parsed[0]),int(dtemp_parsed[1]),int(dtemp_parsed[2]))
+                	except:
+                		return render(request,'trylater.html')
                 	if dtemp-d0>maxd:
                 		maxd=dtemp-d0
+                #dtemp=date.today()
                 dtemp=AAPL.at[0,'timestamp']
                 dtemp_parsed=dtemp.split("-")
                 dtemp=date(int(dtemp_parsed[0]),int(dtemp_parsed[1]),int(dtemp_parsed[2]))
@@ -77,6 +95,7 @@ def portfolio(request):
                     if dtemp<d0:
                         ind=j-1
                         break
+                    #dtemp=dtemp-1
                 ansx=np.zeros(ind+1)
                 for l in range(0,ind+1):
                     ansy.append(AAPL.at[l,'timestamp'])
@@ -100,112 +119,152 @@ def portfolio(request):
                         #    for l in range(0,ind+1):
                         #        ansy.append(AAPL.at[l,'timestamp'])
                         try:
-                        	if float(quant[i])<0:
-                        		return render(request, 'invalid.html')
+                        	a=float(quant[i])
+                        	#if float(quant[i])<0:
+                        	#	return render(request, 'invalid.html')
                         except:
                         	return render(request, 'invalid.html')
                         for l in range(0,ind+1):
-                            ansx[l]=ansx[l]+(float(AAPL.at[l,'close'])*float(quant[i]))
+                            try:
+                            	if float(quant[i])>=0:
+                            		ansx[l]=ansx[l]+(float(AAPL.at[l,'close'])*float(quant[i]))
+                            	else:
+                            		for l in range(0,ind+1):
+                            			ansx[l]=ansx[l]+(float(AAPL.at[ind,'close'])*float(quant[i]))
+                            except:
+                            	return render(request,'trylater.html')
                     elif comps[i]=="BANF":
                         dates_parsed=dates[i].split("-")
                         try:
                         	d0=date(int(dates_parsed[0]),int(dates_parsed[1]),int(dates_parsed[2]))
                         except:
                         	return render(request,'invalid.html')
-                        ind=99
-                        for j in range(0,100):
-                            dtemp=AAPL.at[j,'timestamp']
-                            dtemp_parsed=dtemp.split("-")
-                            dtemp=date(int(dtemp_parsed[0]),int(dtemp_parsed[1]),int(dtemp_parsed[2]))
-                            if dtemp<d0:
-                                ind=j-1
-                                break
+                        try:
+                        	ind=99
+                        	for j in range(0,100):
+                        	    dtemp=BANF.at[j,'timestamp']
+                        	    dtemp_parsed=dtemp.split("-")
+                        	    dtemp=date(int(dtemp_parsed[0]),int(dtemp_parsed[1]),int(dtemp_parsed[2]))
+                        	    if dtemp<d0:
+                        	        ind=j-1
+                        	        break
                         #if i==0:
                         #    ansx=np.zeros(ind+1)
                         #    for l in range(0,ind+1):
                         #        ansy.append(BANF.at[l,'timestamp'])
-                        try:
-                        	if float(quant[i])<0:
+                        	try:
+                        		a=quant[i]
+                        		#if float(quant[i])<0:
+                        	#		return render(request, 'invalid.html')
+                        	except:
                         		return render(request, 'invalid.html')
+                        	if float(quant[i])>=0:
+                        		for l in range(0,ind+1):
+                        		    ansx[l]=ansx[l]+(float(BANF.at[l,'close'])*float(quant[i]))
+                        	else:
+                            		for l in range(0,ind+1):
+                            			ansx[l]=ansx[l]+(float(BANF.at[ind,'close'])*float(quant[i]))
                         except:
-                        	return render(request, 'invalid.html')
-                        for l in range(0,ind+1):
-                            ansx[l]=ansx[l]+(float(BANF.at[l,'close'])*float(quant[i]))
+                        	return render(request,'trylater.html')
                     elif comps[i]=="CASH":
                         dates_parsed=dates[i].split("-")
                         try:
                         	d0=date(int(dates_parsed[0]),int(dates_parsed[1]),int(dates_parsed[2]))
                         except:
                         	return render(request,'invalid.html')
-                        ind=99
-                        for j in range(0,100):
-                            dtemp=CASH.at[j,'timestamp']
-                            dtemp_parsed=dtemp.split("-")
-                            dtemp=date(int(dtemp_parsed[0]),int(dtemp_parsed[1]),int(dtemp_parsed[2]))
-                            if dtemp<d0:
-                                ind=j-1
-                                break
+                        try:
+                        	ind=99
+                        	for j in range(0,100):
+                        	    dtemp=CASH.at[j,'timestamp']
+                        	    dtemp_parsed=dtemp.split("-")
+                        	    dtemp=date(int(dtemp_parsed[0]),int(dtemp_parsed[1]),int(dtemp_parsed[2]))
+                        	    if dtemp<d0:
+                        	        ind=j-1
+                        	        break
                         #if i==0:
                         #    ansx=np.zeros(ind+1)
                         #    for l in range(0,ind+1):
                         #        ansy.append(CASH.at[l,'timestamp'])
-                        try:
-                        	if float(quant[i])<0:
+                        	try:
+                            		a=float(quant[i])
+#                        		if float(quant[i])<0:
+ #                       			return render(request, 'invalid.html')
+                        	except:
                         		return render(request, 'invalid.html')
+                        	if float(quant[i])>=0:
+                        		for l in range(0,ind+1):
+                        		    ansx[l]=ansx[l]+(float(CASH.at[l,'close'])*float(quant[i]))
+                        	else:
+                            		for l in range(0,ind+1):
+                            			ansx[l]=ansx[l]+(float(CASH.at[ind,'close'])*float(quant[i]))
                         except:
-                        	return render(request, 'invalid.html')
-                        for l in range(0,ind+1):
-                            ansx[l]=ansx[l]+(float(CASH.at[l,'close'])*float(quant[i]))
+                        	return render(request,'trylater.html')
                     elif comps[i]=="FCEL":
                         dates_parsed=dates[i].split("-")
                         try:
                         	d0=date(int(dates_parsed[0]),int(dates_parsed[1]),int(dates_parsed[2]))
                         except:
                         	return render(request, 'invalid.html')
-                        ind=99
-                        for j in range(0,100):
-                            dtemp=AAPL.at[j,'timestamp']
-                            dtemp_parsed=dtemp.split("-")
-                            dtemp=date(int(dtemp_parsed[0]),int(dtemp_parsed[1]),int(dtemp_parsed[2]))
-                            if dtemp<d0:
-                                ind=j-1
-                                break
+                        try:
+                        	ind=99
+                        	for j in range(0,100):
+                        	    dtemp=FCEL.at[j,'timestamp']
+                        	    dtemp_parsed=dtemp.split("-")
+                        	    dtemp=date(int(dtemp_parsed[0]),int(dtemp_parsed[1]),int(dtemp_parsed[2]))
+                        	    if dtemp<d0:
+                        	        ind=j-1
+                        	        break
                         #if i==0:
                         #    ansx=np.zeros(ind+1)
                         #    for l in range(0,ind+1):
                         #        ansy.append(FCEL.at[l,'timestamp'])
-                        try:
-                        	if float(quant[i])<0:
+                        	try:
+                        		a=float(quant[i])
+#                        		if float(quant[i])<0:
+ #                       			return render(request, 'invalid.html')
+                        	except:
                         		return render(request, 'invalid.html')
+                        	if float(quant[i])>=0:
+                        		for l in range(0,ind+1):
+                        		    ansx[l]=ansx[l]+(float(FCEL.at[l,'close'])*float(quant[i]))
+                        	else:
+                            		for l in range(0,ind+1):
+                            			ansx[l]=ansx[l]+(float(FCEL.at[ind,'close'])*float(quant[i]))
                         except:
-                        	return render(request, 'invalid.html')
-                        for l in range(0,ind+1):
-                            ansx[l]=ansx[l]+(float(FCEL.at[l,'close'])*float(quant[i]))
+                        	return render(request,'trylater.html')
                     elif comps[i]=="JNJ":
                         dates_parsed=dates[i].split("-")
                         try:
                         	d0=date(int(dates_parsed[0]),int(dates_parsed[1]),int(dates_parsed[2]))
                         except:
                         	return render(request,'invalid.html')
-                        ind=99
-                        for j in range(0,100):
-                            dtemp=JNJ.at[j,'timestamp']
-                            dtemp_parsed=dtemp.split("-")
-                            dtemp=date(int(dtemp_parsed[0]),int(dtemp_parsed[1]),int(dtemp_parsed[2]))
-                            if dtemp<d0:
-                                ind=j-1
-                                break
                         try:
-                        	if float(quant[i])<0:
+                        	ind=99
+                        	for j in range(0,100):
+                        	    dtemp=JNJ.at[j,'timestamp']
+                        	    dtemp_parsed=dtemp.split("-")
+                        	    dtemp=date(int(dtemp_parsed[0]),int(dtemp_parsed[1]),int(dtemp_parsed[2]))
+                        	    if dtemp<d0:
+                        	        ind=j-1
+                        	        break
+                        	try:
+                        		a=float(quant[i])
+                        		#if float(quant[i])<0:
+                        		#	return render(request, 'invalid.html')
+                        	except:
                         		return render(request, 'invalid.html')
-                        except:
-                        	return render(request, 'invalid.html')
                         #if i==0:
                         #    ansx=np.zeros(ind+1)
                         #    for l in range(0,ind+1):
                         #        ansy.append(JNJ.at[l,'timestamp'])
-                        for l in range(0,ind+1):
-                            ansx[l]=ansx[l]+(float(JNJ.at[l,'close'])*float(quant[i]))
+                        	if float(quant[i])>=0:
+                        		for l in range(0,ind+1):
+                        		    ansx[l]=ansx[l]+(float(JNJ.at[l,'close'])*float(quant[i]))
+                        	else:
+                            		for l in range(0,ind+1):
+                            			ansx[l]=ansx[l]+(float(JNJ.at[ind,'close'])*float(quant[i]))
+                        except:
+                        	return render(request,'trylater.html')
             print("ansy=")
             print(ansx)
             print(ansy)
@@ -231,10 +290,56 @@ def portfolio(request):
         else:
             return render(request,'invalid.html')
     else:
-        if find(request.user,"portfolio/")=="nulll":
-        	form = forms.csv_upload()
-        	return render(request, "csv_upload.html", {'form': form})
-        else:
+        pfs=pf_inst.objects.filter(pf_user=request.user)
+        if len(pfs)==0:
+            form = forms.csv_upload()
+            return render(request, "csv_upload.html", {'form': form})
+	#return HttpResponse('<p>no portfolio!</p>')
+        print(len(pfs))
+        maxlen=0
+        ind=0
+        for i in range(0,len(pfs)):
+        	x=pfs[i]
+        	x=pfs[i].x.split(" ")
+        	if maxlen<len(x):
+        		maxlen=len(x)
+        		ind=i
+        x=pfs[ind].x.split(" ")
+        y=pfs[ind].y.split(" ")
+        ansx=[]
+        ansy=[]
+        for i in range(0,len(x)):
+        	if x[i]!=" " and x[i]!="":
+        		ansx.append(float(x[i]))
+        	if y[i]!=" " and y[i]!="":
+        		ansy.append(y[i])
+        print(ansx)
+        for i in range(0,len(pfs)):
+        	if i==ind:
+        		continue
+        	x=pfs[i].x.split(" ")
+        	print(len(x))
+        	for j in range(0,len(x)):
+        		if x[j]!=" " and x[j]!="":
+        			ansx[j]=ansx[j]+float(x[j])
+        	print(ansx)
+        data = ansx
+        data.reverse()
+        ansy.reverse()
+        val = []
+        val.append(ansy)
+        val.append(data)
+        data_label = ['x',"Portfolio"]
+        xlabel = "Time"
+        ylabel = "Portfolio Value"
+        div_id = "mygraph1"
+        form = forms.csv_upload()
+        view = create.data_plot(div_id, 'linechart', val, data_label, xlabel, ylabel)
+        return render(request,'csv_done.html', {'r1': ansx, 'r2':ansy, 'stockview':view, 'form':form})
+#        if find(request.user,"portfolio/")=="nulll":
+#        	form = forms.csv_upload()
+#        	return render(request, "csv_upload.html", {'form': form})
+'''        else:
             name = request.user
             form = forms.csv_upload()
             with open('portfolio/'+str(name)) as csv_file:
@@ -430,7 +535,7 @@ def portfolio(request):
             return render(request,'csv_done.html', {'r1': ansx, 'r2':ansy, 'stockview':view, 'form':form})
 
 #            return render(request,'csv_done.html', {'r1': ansx, 'r2':ansy, 'form':form})
-
+'''
 
 @login_required(login_url='login')
 def manually(request):
@@ -441,103 +546,141 @@ def manually(request):
         comps.append(request.POST['company'])
         dates.append(request.POST['date'])
         quant.append(request.POST['quantity'])
-        if float(quant[0]) < 0:
-            return render(request,'invalid.html')
+        #if float(quant[0]) < 0:
+        #    return render(request,'invalid.html')
         print("comps=")
         print(comps)
         ansy=[]
-        tickers=['AAPL','BANF','CASH','FCEL','JNJ']
-        AAPL=pd.read_csv('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=AAPL&apikey=WURUTBFP9P5F15BQ&datatype=csv')
-        BANF=pd.read_csv('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=BANF&apikey=WURUTBFP9P5F15BQ&datatype=csv')
-        CASH=pd.read_csv('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=CASH&apikey=WURUTBFP9P5F15BQ&datatype=csv')
-        FCEL=pd.read_csv('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=FCEL&apikey=WURUTBFP9P5F15BQ&datatype=csv')
-        JNJ=pd.read_csv('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=JNJ&apikey=WURUTBFP9P5F15BQ&datatype=csv')
+        try:
+        	tickers=['AAPL','BANF','CASH','FCEL','JNJ']
+        	AAPL=pd.read_csv('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=AAPL&apikey=WURUTBFP9P5F15BQ&datatype=csv')
+        	BANF=pd.read_csv('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=BANF&apikey=WURUTBFP9P5F15BQ&datatype=csv')
+        	CASH=pd.read_csv('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=CASH&apikey=WURUTBFP9P5F15BQ&datatype=csv')
+        	FCEL=pd.read_csv('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=FCEL&apikey=WURUTBFP9P5F15BQ&datatype=csv')
+        	JNJ=pd.read_csv('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=JNJ&apikey=WURUTBFP9P5F15BQ&datatype=csv')
+        except:
+        	return render(request,'trylater.html')
         for i in range(0,len(comps)):
             if comps[i]=="AAPL":
                 dates_parsed=dates[i].split("-")
                 d0=date(int(dates_parsed[0]),int(dates_parsed[1]),int(dates_parsed[2]))
                 ind=99
-                for j in range(0,100):
-                    dtemp=AAPL.at[j,'timestamp']
-                    dtemp_parsed=dtemp.split("-")
-                    dtemp=date(int(dtemp_parsed[0]),int(dtemp_parsed[1]),int(dtemp_parsed[2]))
-                    if dtemp<=d0:
-                        ind=j
-                        break
-                if i==0:
-                    ansx=np.zeros(ind+1)
-                    for l in range(0,ind+1):
-                        ansy.append(AAPL.at[l,'timestamp'])
-                for l in range(0,ind+1):
-                    ansx[l]=ansx[l]+(float(AAPL.at[l,'close'])*float(quant[i]))
+                try:
+                	for j in range(0,100):
+                	    dtemp=AAPL.at[j,'timestamp']
+                	    dtemp_parsed=dtemp.split("-")
+                	    dtemp=date(int(dtemp_parsed[0]),int(dtemp_parsed[1]),int(dtemp_parsed[2]))
+                	    if dtemp<=d0:
+                	        ind=j
+                	        break
+                	if i==0:
+                	    ansx=np.zeros(ind+1)
+                	    for l in range(0,ind+1):
+                	        ansy.append(AAPL.at[l,'timestamp'])
+                	if float(quant[i])>=0:
+                		for l in range(0,ind+1):
+                		    ansx[l]=ansx[l]+(float(AAPL.at[l,'close'])*float(quant[i]))
+                	else:
+                		for l in range(0,ind+1):
+                		    ansx[l]=ansx[l]+(float(AAPL.at[ind,'close'])*float(quant[i]))
+                except:
+                	return render(request,'trylater.html')
             elif comps[i]=="BANF":
                 dates_parsed=dates[i].split("-")
                 d0=date(int(dates_parsed[0]),int(dates_parsed[1]),int(dates_parsed[2]))
                 ind=99
-                for j in range(0,100):
-                    dtemp=AAPL.at[j,'timestamp']
-                    dtemp_parsed=dtemp.split("-")
-                    dtemp=date(int(dtemp_parsed[0]),int(dtemp_parsed[1]),int(dtemp_parsed[2]))
-                    if dtemp<=d0:
-                        ind=j
-                        break
-                if i==0:
-                    ansx=np.zeros(ind+1)
-                    for l in range(0,ind+1):
-                        ansy.append(BANF.at[l,'timestamp'])
-                for l in range(0,ind+1):
-                    ansx[l]=ansx[l]+(float(BANF.at[l,'close'])*float(quant[i]))
+                try:
+                	for j in range(0,100):
+                	    dtemp=AAPL.at[j,'timestamp']
+                	    dtemp_parsed=dtemp.split("-")
+                	    dtemp=date(int(dtemp_parsed[0]),int(dtemp_parsed[1]),int(dtemp_parsed[2]))
+                	    if dtemp<=d0:
+                	        ind=j
+                	        break
+                	if i==0:
+                	    ansx=np.zeros(ind+1)
+                	    for l in range(0,ind+1):
+                	        ansy.append(BANF.at[l,'timestamp'])
+                	if float(quant[i])>=0:
+                		for l in range(0,ind+1):
+                		    ansx[l]=ansx[l]+(float(BANF.at[l,'close'])*float(quant[i]))
+                	else:
+                		for l in range(0,ind+1):
+                		    ansx[l]=ansx[l]+(float(BANF.at[ind,'close'])*float(quant[i]))
+                except:
+                	return render(request,'trylater.html')
             elif comps[i]=="CASH":
                 dates_parsed=dates[i].split("-")
                 d0=date(int(dates_parsed[0]),int(dates_parsed[1]),int(dates_parsed[2]))
                 ind=99
-                for j in range(0,100):
-                    dtemp=CASH.at[j,'timestamp']
-                    dtemp_parsed=dtemp.split("-")
-                    dtemp=date(int(dtemp_parsed[0]),int(dtemp_parsed[1]),int(dtemp_parsed[2]))
-                    if dtemp<=d0:
-                        ind=j
-                        break
-                if i==0:
-                    ansx=np.zeros(ind+1)
-                    for l in range(0,ind+1):
-                        ansy.append(CASH.at[l,'timestamp'])
-                for l in range(0,ind+1):
-                    ansx[l]=ansx[l]+(float(CASH.at[l,'close'])*float(quant[i]))
+                try:
+                	for j in range(0,100):
+                	    dtemp=CASH.at[j,'timestamp']
+                	    dtemp_parsed=dtemp.split("-")
+                	    dtemp=date(int(dtemp_parsed[0]),int(dtemp_parsed[1]),int(dtemp_parsed[2]))
+                	    if dtemp<=d0:
+                	        ind=j
+                	        break
+                	if i==0:
+                	    ansx=np.zeros(ind+1)
+                	    for l in range(0,ind+1):
+                	        ansy.append(CASH.at[l,'timestamp'])
+                	if float(quant[i])>=0:
+                		for l in range(0,ind+1):
+                		    ansx[l]=ansx[l]+(float(CASH.at[l,'close'])*float(quant[i]))
+                	else:
+                		for l in range(0,ind+1):
+                		    ansx[l]=ansx[l]+(float(CASH.at[ind,'close'])*float(quant[i]))                	
+                except:
+                	return render(request,'trylater.html')
             elif comps[i]=="FCEL":
                 dates_parsed=dates[i].split("-")
                 d0=date(int(dates_parsed[0]),int(dates_parsed[1]),int(dates_parsed[2]))
                 ind=99
-                for j in range(0,100):
-                    dtemp=AAPL.at[j,'timestamp']
-                    dtemp_parsed=dtemp.split("-")
-                    dtemp=date(int(dtemp_parsed[0]),int(dtemp_parsed[1]),int(dtemp_parsed[2]))
-                    if dtemp<=d0:
-                        ind=j
-                        break
-                if i==0:
-                    ansx=np.zeros(ind+1)
-                    for l in range(0,ind+1):
-                        ansy.append(FCEL.at[l,'timestamp'])
-                for l in range(0,ind+1):
-                    ansx[l]=ansx[l]+(float(FCEL.at[l,'close'])*float(quant[i]))
+                try:
+                	for j in range(0,100):
+                	    dtemp=AAPL.at[j,'timestamp']
+                	    dtemp_parsed=dtemp.split("-")
+                	    dtemp=date(int(dtemp_parsed[0]),int(dtemp_parsed[1]),int(dtemp_parsed[2]))
+                	    if dtemp<=d0:
+                	        ind=j
+                	        break
+                	if i==0:
+                	    ansx=np.zeros(ind+1)
+                	    for l in range(0,ind+1):
+                	        ansy.append(FCEL.at[l,'timestamp'])
+                	if float(quant[i])>=0:
+                		for l in range(0,ind+1):
+                		    ansx[l]=ansx[l]+(float(FCEL.at[l,'close'])*float(quant[i]))
+                	else:
+                		for l in range(0,ind+1):
+                		    ansx[l]=ansx[l]+(float(FCEL.at[ind,'close'])*float(quant[i]))
+                except:
+                	return render(request,'trylater.html')
             elif comps[i]=="JNJ":
                 dates_parsed=dates[i].split("-")
                 d0=date(int(dates_parsed[0]),int(dates_parsed[1]),int(dates_parsed[2]))
                 ind=99
-                for j in range(0,100):
-                    dtemp=JNJ.at[j,'timestamp']
-                    dtemp_parsed=dtemp.split("-")
-                    dtemp=date(int(dtemp_parsed[0]),int(dtemp_parsed[1]),int(dtemp_parsed[2]))
-                    if dtemp<=d0:
-                        ind=j
-                        break
-                if i==0:
-                    ansx=np.zeros(ind+1)
-                    for l in range(0,ind+1):
-                        ansy.append(JNJ.at[l,'timestamp'])
-                for l in range(0,ind+1):
-                    ansx[l]=ansx[l]+(float(JNJ.at[l,'close'])*float(quant[i]))
+                try:
+                	for j in range(0,100):
+                	    dtemp=JNJ.at[j,'timestamp']
+                	    dtemp_parsed=dtemp.split("-")
+                	    dtemp=date(int(dtemp_parsed[0]),int(dtemp_parsed[1]),int(dtemp_parsed[2]))
+                	    if dtemp<=d0:
+                	        ind=j
+                	        break
+                	if i==0:
+                	    ansx=np.zeros(ind+1)
+                	    for l in range(0,ind+1):
+                	        ansy.append(JNJ.at[l,'timestamp'])
+                	if float(quant[i])>=0:
+                		for l in range(0,ind+1):
+                		    ansx[l]=ansx[l]+(float(JNJ.at[l,'close'])*float(quant[i]))
+                	else:
+                		for l in range(0,ind+1):
+                		    ansx[l]=ansx[l]+(float(JNJ.at[ind,'close'])*float(quant[i]))
+                except:
+                	return render(request,'trylater.html')
             print("ansy=")
             print(ansx)
             print(ansy)
@@ -565,7 +708,7 @@ def manually(request):
             div_id = "mygraph1"
             form = forms.csv_upload()
             view = create.data_plot(div_id, 'linechart', val, data_label, xlabel, ylabel)
-            return render(request,'csv_done.html', {'r1': ansx, 'r2':ansy, 'stockview':view})
+            return render(request,'csv_done.html', {'r1': ansx, 'r2':ansy, 'stockview':view, 'form':form})
 
 #            return render(request,'csv_done.html', {'r1': ansx, 'r2':ansy})
     else:
@@ -580,7 +723,9 @@ def my_pf(request):
 def my_pf(request):
 	pfs=pf_inst.objects.filter(pf_user=request.user)
 	if len(pfs)==0:
-		return HttpResponse('<p>no portfolio!</p>')
+		form = forms.csv_upload()
+		return render(request, "csv_upload.html", {'form': form})
+		#return HttpResponse('<p>no portfolio!</p>')
 	print(len(pfs))
 	x=pfs[0].x.split(" ")
 	y=pfs[0].y.split(" ")
@@ -615,10 +760,11 @@ def my_pf(request):
 
 	#return render(request,'csv_done.html', {'r1': ansx, 'r2':ansy})
 
-
+@login_required(login_url='login')
 def pf_clear(request):
 	pfs=pf_inst.objects.filter(pf_user=request.user).delete()
-	return render(request, 'invalid.html')
+	return portfolio(request)
+	#return render(request, 'invalid.html')
 
 def blog(request):
 	b=blogs.objects.all()

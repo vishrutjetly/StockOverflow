@@ -1,3 +1,167 @@
-AAPL,2019-03-29,2
-JNJ,2019-04-07,3
-JNJ,2019-03-25,1
+#include<bits/stdc++.h>
+#define REP(i,a,b)	for(int i=(int)a;i<=(int)b;i++)
+#define PB push_back
+#define F first
+#define S second
+#define MP make_pair
+using namespace std;
+
+typedef vector<int> VI;
+typedef pair<int,int> PII;
+
+void printStatus(int x,VI &v,int n,int b)
+{
+	cout<<x<<": [";
+	REP(i,0,v.size()-2)
+	{
+		if(v[i]/10==0)
+			cout<<" ";
+		cout<<v[i]<<"|";
+	}
+	if(v[v.size()-1]/10==0)
+		cout<<" ";
+	cout<<v[v.size()-1];
+	REP(i,v.size()+1,n)
+	{
+		cout<<"| ";
+	}
+	cout<<"]";
+	if(b)
+		cout<<" F";
+	cout<<endl;
+}
+
+PII fifo(VI v,int sz,int ifPrint)
+{
+	set<int> s; 
+	VI Queue;
+	int fault = 0,next = 0;
+	PII p = MP(0,0);
+	REP(i,0,v.size()-1)
+	{
+		int f = 0;
+		int flag = 0;
+		if(s.size() < sz)
+		{
+			if(s.find(v[i]) == s.end())
+			{
+				s.insert(v[i]);
+				Queue.PB(v[i]);
+				next = (next+1)%sz;
+			}
+		}
+		else
+		{
+			p.S++;
+			if(s.find(v[i]) == s.end())
+			{
+				s.erase(Queue[next]);
+				s.insert(v[i]);
+				Queue[next] = v[i];
+				f = 1;
+				fault++;
+				next = (next+1)%sz;
+			}
+		}
+		if(ifPrint)
+			printStatus(v[i],Queue,sz,f);
+	}
+	p.F = fault;
+	return p;
+}
+
+PII lru(VI v,int sz,int ifPrint)
+{
+	int atime[100];
+	set<int> s; 
+	VI Queue;
+	int fault = 0;
+	PII p = MP(0,0);
+	REP(i,0,v.size()-1)
+	{
+		int f = 0;
+		if(s.size() < sz)
+		{
+			if(s.find(v[i]) == s.end())
+			{
+				s.insert(v[i]);
+				Queue.PB(v[i]);
+			}
+		}
+		else
+		{
+			p.S++;
+			if(s.find(v[i]) == s.end())
+			{
+				int m = 1e6;
+				int pos = 0;
+				REP(j,0,sz-1)
+				{
+					if(m>atime[Queue[j]])
+					{
+						pos = j;
+						m = atime[Queue[j]];
+					}
+				}
+				s.erase(Queue[pos]);
+				s.insert(v[i]);
+				Queue[pos] = v[i];
+				f = 1;
+				fault++;
+			}
+		}
+		if(ifPrint)
+			printStatus(v[i],Queue,sz,f);
+		atime[v[i]] = i;
+	}
+	p.F = fault;
+	return p;
+}
+
+PII opt(VI &v,int sz,int ifPrint)
+{
+	set<int> s; 
+	VI Queue;
+	int fault = 0;
+	PII p = MP(0,0);
+	REP(i,0,v.size()-1)
+	{
+		int f = 0;
+		if(s.size() < sz)
+		{
+			if(s.find(v[i]) == s.end())
+			{
+				s.insert(v[i]);
+				Queue.PB(v[i]);
+			}
+		}
+		else
+		{
+			p.S++;
+			if(s.find(v[i]) == s.end())
+			{
+				int future[sz];
+				fill_n(future,sz,1000000);
+				REP(j,0,sz-1)
+				{
+					REP(k,i+1,v.size()-1)
+						if(v[k]==Queue[j])
+						{
+							future[j] = k;
+							break;
+						}
+				}
+				int pos = max_element(future,future+sz) - future;
+				s.erase(Queue[pos]);
+				s.insert(v[i]);
+				Queue[pos] = v[i];
+				f = 1;
+				fault++;
+			}
+		}
+		if(ifPrint)
+			printStatus(v[i],Queue,sz,f);
+	}
+	p.F = fault;
+	return p;	
+}
