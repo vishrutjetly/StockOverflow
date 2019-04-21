@@ -31,4 +31,4 @@ class Stock(models.Model):
 
 class Wishlist(object):
 	user = models.ForeignKey(User, related_name='wishlist')
-stock = models.ManyToManyField(Stock, related_name='wishlist')
+	stock = models.ManyToManyField(Stock, related_name='wishlist')
